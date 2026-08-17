@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+:root,
+[data-theme="a"] {
+  --bg: #edf1f5;
+  --bg-elevated: #ffffff;
+  --text-primary: #16213e;
+  --text-secondary: #43506a;
+  --text-muted: #576f89;
+  --accent: #9b6023;
+  --accent-contrast: #edf1f5;
+  --border: #c9d3de;
+  --border-strong: #7c93ac;
+}
+
+[data-theme="b"] {
+  --bg: #0a0e14;
+  --bg-elevated: #10141c;
+  --text-primary: #e6ede6;
+  --text-secondary: #8b9a8f;
+  --text-muted: #6f8074;
+  --accent: #7ee787;
+  --accent-contrast: #0a0e14;
+  --border: #1f2a22;
+  --border-strong: #2c3a2f;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body), sans-serif;
+  text-align: justify;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Systems theme: titles read in caps — section headings, nav links, and card
+   titles (project names, job titles, log entry titles). Excludes the profile
+   name (opted out inline) and in-article Markdown headings inside a log post
+   body, which are the author's own prose, not site UI. */
+[data-theme="a"] h1,
+[data-theme="a"] h2,
+[data-theme="a"] h3,
+[data-theme="a"] h4,
+[data-theme="a"] .nav-link,
+[data-theme="a"] .entry-title-compact {
+  text-transform: capitalize;
+}
+
+[data-theme="a"] .log-content h1,
+[data-theme="a"] .log-content h2,
+[data-theme="a"] .log-content h3 {
+  text-transform: none;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 50;
+  border-radius: 0.375rem;
+  background: var(--text-primary);
+  color: var(--bg);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
