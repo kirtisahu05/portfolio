@@ -71,8 +71,21 @@ body {
 
 [data-theme="a"] .log-content h1,
 [data-theme="a"] .log-content h2,
-[data-theme="a"] .log-content h3 {
+[data-theme="a"] .log-content h3,
+[data-theme="a"] .prep-content h1,
+[data-theme="a"] .prep-content h2,
+[data-theme="a"] .prep-content h3 {
   text-transform: none;
+}
+
+/* A "loose" Markdown list (items separated by a blank line, common when
+   pasting from Google Docs/Sheets) wraps each item's text in its own <p>.
+   That <p> already carries vertical margin for prose use — inside a list
+   item it would stack on top of the list's own spacing, so it's zeroed
+   here and the <ul>/<ol>'s spacing takes over instead. */
+.log-content li > p,
+.prep-content li > p {
+  margin: 0;
 }
 
 .skip-link {
