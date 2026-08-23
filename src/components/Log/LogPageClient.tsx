@@ -85,7 +85,7 @@ export default function LogPageClient({ entries }: { entries: ListEntry[] }) {
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-8">
-      <p className="mb-1 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">log</p>
+      {/* <p className="mb-1 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">log</p> */}
       <h1 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
         {isSignal ? "cat ./logs/*.md" : "Log"}
       </h1>

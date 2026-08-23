@@ -72,9 +72,11 @@ body {
 [data-theme="a"] .log-content h1,
 [data-theme="a"] .log-content h2,
 [data-theme="a"] .log-content h3,
+[data-theme="a"] .log-content h4,
 [data-theme="a"] .prep-content h1,
 [data-theme="a"] .prep-content h2,
-[data-theme="a"] .prep-content h3 {
+[data-theme="a"] .prep-content h3,
+[data-theme="a"] .prep-content h4 {
   text-transform: none;
 }
 

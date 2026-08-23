@@ -7,6 +7,7 @@ import { PREP_TABS } from "@/lib/prep-tabs";
 import { profile } from "@/lib/content";
 import PrepCard from "@/components/Prep/PrepCard";
 import PrepTabSwitcher from "@/components/Prep/PrepTabSwitcher";
+import PrepSort, { type PrepSortMode } from "@/components/Prep/PrepSort";
 import LogSearch from "@/components/Log/LogSearch";
 import LogPagination from "@/components/Log/LogPagination";
 import CategoryFilter from "@/components/Log/LogSidebar/CategoryFilter";
@@ -16,6 +17,7 @@ import ViewSwitcher, { type LogViewMode } from "@/components/Log/ViewSwitcher";
 const PAGE_SIZE = 10;
 const TAB_STORAGE_KEY = "prep-active-tab";
 const VIEW_STORAGE_KEY = "prep-view-mode";
+const SORT_STORAGE_KEY = "prep-sort-mode";
 const ENTRIES_CONTAINER_CLASS: Record<LogViewMode, string> = {
   list: "space-y-4",
   magazine: "space-y-6",
@@ -32,6 +34,7 @@ export default function PrepPageClient({ entries }: { entries: PrepEntry[] }) {
   const [category, setCategory] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [view, setView] = useState<LogViewMode>("list");
+  const [sort, setSort] = useState<PrepSortMode>("newest");
 
   useEffect(() => {
     const stored = window.localStorage.getItem(TAB_STORAGE_KEY);
@@ -42,6 +45,10 @@ export default function PrepPageClient({ entries }: { entries: PrepEntry[] }) {
     const storedView = window.localStorage.getItem(VIEW_STORAGE_KEY);
     if (storedView === "list" || storedView === "compact" || storedView === "magazine" || storedView === "grid") {
       setView(storedView);
+    }
+    const storedSort = window.localStorage.getItem(SORT_STORAGE_KEY);
+    if (storedSort === "newest" || storedSort === "oldest" || storedSort === "title") {
+      setSort(storedSort);
     }
   }, []);
 
@@ -58,6 +65,12 @@ export default function PrepPageClient({ entries }: { entries: PrepEntry[] }) {
     window.localStorage.setItem(VIEW_STORAGE_KEY, next);
   }
 
+  function changeSort(next: PrepSortMode) {
+    setSort(next);
+    setPage(1);
+    window.localStorage.setItem(SORT_STORAGE_KEY, next);
+  }
+
   const tabFiltered = useMemo(() => (tab ? entries.filter((e) => e.tabSlug === tab) : entries), [entries, tab]);
   const latestTopicNumber =
     tabFiltered.length > 0 ? Math.max(...tabFiltered.map((e) => e.topicNumber)) : -1;
@@ -69,12 +82,18 @@ export default function PrepPageClient({ entries }: { entries: PrepEntry[] }) {
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return tabFiltered.filter((e) => {
+    const matches = tabFiltered.filter((e) => {
       if (category && e.category !== category) return false;
       if (q && !e.title.toLowerCase().includes(q) && !e.content.toLowerCase().includes(q)) return false;
       return true;
     });
-  }, [tabFiltered, search, category]);
+
+    // tabFiltered is already newest-first (prep-source.ts sorts entries that
+    // way), so "newest" is a no-op — only "oldest"/"title" need to reorder.
+    if (sort === "oldest") return [...matches].reverse();
+    if (sort === "title") return [...matches].sort((a, b) => a.title.localeCompare(b.title));
+    return matches;
+  }, [tabFiltered, search, category, sort]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
@@ -87,7 +106,7 @@ export default function PrepPageClient({ entries }: { entries: PrepEntry[] }) {
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-8">
-      <p className="mb-1 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">prep</p>
+      {/* <p className="mb-1 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">prep</p> */}
       <h1 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
         {isSignal ? "cat ./prep/*.md" : "Prep"}
       </h1>
@@ -101,6 +120,7 @@ export default function PrepPageClient({ entries }: { entries: PrepEntry[] }) {
 
           <div className="flex items-center justify-between gap-3">
             <ViewSwitcher view={view} onChange={changeView} />
+            <PrepSort value={sort} onChange={changeSort} />
           </div>
 
           <LogSearch

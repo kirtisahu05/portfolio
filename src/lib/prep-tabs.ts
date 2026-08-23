@@ -14,6 +14,6 @@ export const PREP_TABS: PrepTab[] = [
   { slug: "react", label: "React", gid: "838875975" },
   { slug: "js", label: "JS", gid: "551953404" },
   { slug: "system-design", label: "System Design", gid: "1977653959" },
-  { slug: "lld", label: "LLD", gid: "28777499" },
+  { slug: "production-questions", label: "Production Questions", gid: "28777499" },
   { slug: "frontend", label: "Frontend", gid: "1542534022" },
 ];
