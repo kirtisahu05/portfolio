@@ -51,6 +51,9 @@ export default function Hero() {
                 &gt; LOCATION: {profile.location.toUpperCase()}_
               </p>
               <p style={{ color: "var(--accent)" }}>
+                &gt; PREFERENCE: {profile.workPreference.toUpperCase()}_
+              </p>
+              <p style={{ color: "var(--accent)" }}>
                 &gt; TIMEZONE: {profile.timezone.toUpperCase()}_
               </p>
             </div>
@@ -85,7 +88,8 @@ export default function Hero() {
           <p className="font-[var(--font-display)] text-lg font-semibold text-[var(--text-primary)]">
             {profile.role}
           </p>
-          <p className="mt-1 text-sm text-[var(--text-muted)]">{profile.location}</p>
+          {/* <p className="mt-1 text-sm text-[var(--text-muted)]">{profile.location}</p> */}
+          <p className="mt-1 text-sm text-[var(--text-muted)]">{profile.workPreference}</p>
           <p className="mt-1 text-sm text-[var(--text-muted)]">{profile.timezone}</p>
 
           <p className="mb-2 mt-6 font-[var(--font-mono)] text-[11px] tracking-wide text-[var(--text-muted)]">

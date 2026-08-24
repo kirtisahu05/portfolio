@@ -8,7 +8,10 @@ export const profile = {
   // Falls back to initials in the Hero avatar if this file is ever missing.
   photo: "/my-pic.jpg",
   role: "Software Architect, Frontend",
-  location: "Bengaluru, India · Remote since 2020",
+  location: "Bhopal, India",
+  // In office in Bengaluru 2016–2020 (CenturyLink, Shippable, JFrog — see
+  // `experience` below), fully remote since, now based in Bhopal.
+  workPreference: "Remote since 2020 · Open to relocating to Bengaluru",
   timezone: "IST (UTC+5:30) — overlaps 4–6 hrs with US Eastern and most of the European workday",
   tagline:
     "10+ years architecting and scaling frontend systems for global platforms — 5-6 of them fully remote, leading distributed teams. Now extending that into RAG pipelines, LLM integration, and agent-based tooling.",

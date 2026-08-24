@@ -70,6 +70,7 @@ export default function Contact() {
             {profile.email}
           </a>
           <p className="mt-1 text-sm text-[var(--text-secondary)]">{profile.location}</p>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">{profile.workPreference}</p>
         </div>
 
         {links.map((link) => (
