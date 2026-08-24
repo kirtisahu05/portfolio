@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { navItems, profile } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
-import { MULTI_UI_ENABLED, PREP_NAV_ENABLED } from "@/lib/feature-flags";
+import { MULTI_UI_ENABLED } from "@/lib/feature-flags";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Nav() {
@@ -44,11 +44,6 @@ export default function Nav() {
           <Link href="/log" className="nav-link whitespace-nowrap hover:text-[var(--text-primary)]">
             {isSignal ? "./log" : "log"}
           </Link>
-          {PREP_NAV_ENABLED && (
-            <Link href="/prep" className="nav-link whitespace-nowrap hover:text-[var(--text-primary)]">
-              {isSignal ? "./prep" : "prep"}
-            </Link>
-          )}
           <Link
             href="/ask"
             className="nav-link whitespace-nowrap hover:text-[var(--text-primary)]"
@@ -120,15 +115,6 @@ export default function Nav() {
           >
             {isSignal ? "./log" : "log"}
           </Link>
-          {PREP_NAV_ENABLED && (
-            <Link
-              href="/prep"
-              onClick={() => setMenuOpen(false)}
-              className="nav-link rounded-md px-2 py-2 hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]"
-            >
-              {isSignal ? "./prep" : "prep"}
-            </Link>
-          )}
           <Link
             href="/ask"
             onClick={() => setMenuOpen(false)}

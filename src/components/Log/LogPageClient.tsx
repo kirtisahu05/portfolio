@@ -86,9 +86,18 @@ export default function LogPageClient({ entries }: { entries: ListEntry[] }) {
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-8">
       {/* <p className="mb-1 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">log</p> */}
-      <h1 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
-        {isSignal ? "cat ./logs/*.md" : "Log"}
-      </h1>
+      <div className="flex items-start justify-between gap-3">
+        <h1 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
+          {isSignal ? "cat ./logs/*.md" : "Log"}
+        </h1>
+        {/* <Link
+          href="/log/add-log"
+          className="shrink-0 whitespace-nowrap font-[var(--font-mono)] text-xs hover:underline"
+          style={{ color: "var(--accent)" }}
+        >
+          + add-log
+        </Link> */}
+      </div>
       <p className="mt-2 max-w-lg text-sm text-[var(--text-secondary)]">
         Notes, writing, and things worth remembering.
       </p>

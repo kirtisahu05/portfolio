@@ -1,6 +1,83 @@
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+// Content copied from some sources (e.g. a rendered table pasted out of a
+// chat UI) arrives with every cell — and every "|" — exploded onto its own
+// line, instead of one pipe-delimited line per row. remark-gfm requires the
+// latter, so a table like that renders as broken paragraphs instead of a
+// table. This reassembles any such block back into normal single-line rows
+// before handing the content to ReactMarkdown; well-formed tables pass
+// through untouched since they never contain a line that's just "|".
+function repairBrokenGfmTables(markdown: string): string {
+  const lines = markdown.split("\n");
+  const delimiterRe = /^\|?(?:\s*:?-{3,}:?\s*\|)+\s*:?-{3,}:?\s*\|?$/;
+  // A lone "|" inside a fenced code block (e.g. a shell pipeline in an
+  // example) isn't a broken table row — track fence state so those lines
+  // pass through untouched instead of triggering row detection.
+  const fenceRe = /^ {0,3}(`{3,}|~{3,})/;
+  const out: string[] = [];
+  let i = 0;
+  let inFence = false;
+
+  while (i < lines.length) {
+    if (fenceRe.test(lines[i])) {
+      inFence = !inFence;
+      out.push(lines[i]);
+      i++;
+      continue;
+    }
+
+    if (inFence || lines[i].trim() !== "|") {
+      out.push(lines[i]);
+      i++;
+      continue;
+    }
+
+    // Bare "|" line found — collect header tokens up to the delimiter row.
+    const start = i;
+    i++;
+    const headerTokens: string[] = [];
+    while (i < lines.length && !delimiterRe.test(lines[i].trim())) {
+      const t = lines[i].trim();
+      if (t !== "") headerTokens.push(t);
+      i++;
+    }
+
+    if (i >= lines.length) {
+      // No delimiter ever showed up, so this wasn't a table after all —
+      // preserve everything consumed unchanged.
+      for (let j = start; j < lines.length; j++) out.push(lines[j]);
+      break;
+    }
+
+    const delimiterLine = lines[i].trim();
+    const numColumns = delimiterLine.split("|").filter((s) => s.trim() !== "").length;
+    out.push(`| ${headerTokens.join(" ")}`, delimiterLine);
+    i++;
+
+    // Broken body rows: each is a run of tokens containing exactly
+    // numColumns + 1 "|" markers.
+    while (i < lines.length) {
+      while (i < lines.length && lines[i].trim() === "") i++;
+      if (i >= lines.length || lines[i].trim() !== "|") break;
+
+      const rowTokens: string[] = [];
+      let pipeCount = 0;
+      while (i < lines.length && pipeCount < numColumns + 1) {
+        const t = lines[i].trim();
+        if (t !== "") {
+          rowTokens.push(t);
+          if (t === "|") pipeCount++;
+        }
+        i++;
+      }
+      out.push(rowTokens.join(" "));
+    }
+  }
+
+  return out.join("\n");
+}
+
 // react-markdown injects a `node` prop (the underlying hast node) into every
 // custom component — spreading the rest of props onto a DOM element without
 // stripping it first leaks a stray node="[object Object]" attribute into
@@ -129,7 +206,7 @@ const components: Components = {
     />
   ),
   // GFM task-list items carry a "task-list-item" className — swap in "list-none"
-  // so .prep-content's `ul` bullet marker doesn't double up with the checkbox
+  // so .log-content's `ul` bullet marker doesn't double up with the checkbox
   // the `input` renderer below adds as the item's first child.
   li: (props) => {
     const isTaskItem = typeof props.className === "string" && props.className.includes("task-list-item");
@@ -142,7 +219,7 @@ export default function Markdown({ content, className }: { content: string; clas
   return (
     <div className={className}>
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
-        {content}
+        {repairBrokenGfmTables(content)}
       </ReactMarkdown>
     </div>
   );

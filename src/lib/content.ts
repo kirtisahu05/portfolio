@@ -421,7 +421,7 @@ export const projects = [
       "A live, streaming chat assistant (this site's /ask page) that answers questions about my experience. Grounded using context stuffing — the entire knowledge base (experience, skills, public log entries) is assembled server-side and injected directly into the system prompt on every request, a deliberate choice over RAG since the corpus comfortably fits in the model's context window with no retrieval step needed. Built on the Gemini API, streams tokens to the client over a ReadableStream, enforces per-IP rate limiting, and strips private/draft content server-side before it ever reaches the model.",
     tags: ["Next.js", "Gemini API", "Context Stuffing", "Streaming (SSE)", "Rate limiting"],
     liveUrl: "/ask",
-    sourceUrl: "",
+    sourceUrl: "https://github.com/kirtisahu05/portfolio",
   },
   {
     id: "yourbot-rag-platform",
@@ -430,7 +430,7 @@ export const projects = [
       "A multi-tenant SaaS platform for building, configuring, and embedding custom RAG chatbots trained on a business's own documents. Built the app from scratch, with my work centered on the frontend, the data layer, and auth: the full Next.js (App Router) bot-creation wizard — branding/persona, tone, guardrails, document upload, live indexing progress, testing, and deploy — the Prisma/PostgreSQL schema modeling tenants, bots, documents, ingestion jobs, and subscription entitlements, and end-to-end Keycloak authentication (JWKS-verified JWT sessions read from cookies, RBAC, session refresh). On the RAG side, built the per-bot retrieval configuration (pgvector-backed vector store, tunable top-k and similarity threshold), the ingestion pipeline UI that tracks each document through download, parse, chunk, embed, and index stages via a Redis-stream-triggered worker, and the generated embed snippet that deploys a bot's chat widget onto a customer's site.",
     tags: ["Next.js", "Prisma", "PostgreSQL", "Keycloak", "RAG", "pgvector"],
     liveUrl: "",
-    sourceUrl: "",
+    sourceUrl: "https://github.com/kirtisahu05/sift-rag-chatbot.git",
   },
   {
     id: "venue-management-console",
@@ -439,7 +439,7 @@ export const projects = [
       "A B2B back-office console for restaurant and venue operators — sales dashboards, restaurant/venue onboarding, an item library with categories, modifiers and sales-tax rules, role-based user management, and table management. Rebuilt the entire frontend from the ground up as a migration off the platform's legacy Angular UI to React, using MUI and react-admin for the admin interface, React Router for navigation, and Axios with JWT bearer-token auth against a Spring Boot backend.",
     tags: ["React", "Angular-to-React Migration", "MUI", "react-admin", "React Router", "JWT Auth"],
     liveUrl: "",
-    sourceUrl: "",
+    sourceUrl: "https://github.com/kirtisahu05/venue-pilot-console.git",
   },
 ];
 

@@ -44,14 +44,23 @@ export default function Projects() {
                 </p>
               </div>
               <div className="flex shrink-0 gap-2">
-                {/* TODO: fill in real URLs in src/lib/content.ts — currently point nowhere */}
-                <a
-                  href={project.liveUrl || "#"}
-                  className="rounded-md px-4 py-2 text-center font-[var(--font-mono)] text-xs"
-                  style={{ background: "var(--accent)", color: "var(--accent-contrast)" }}
-                >
-                  live demo
-                </a>
+                {project.liveUrl ? (
+                  <a
+                    href={project.liveUrl}
+                    className="rounded-md px-4 py-2 text-center font-[var(--font-mono)] text-xs"
+                    style={{ background: "var(--accent)", color: "var(--accent-contrast)" }}
+                  >
+                    live demo
+                  </a>
+                ) : (
+                  <span
+                    aria-disabled="true"
+                    className="rounded-md px-4 py-2 text-center font-[var(--font-mono)] text-xs opacity-40"
+                    style={{ background: "var(--accent)", color: "var(--accent-contrast)", cursor: "not-allowed" }}
+                  >
+                    live demo
+                  </span>
+                )}
                 <a
                   href={project.sourceUrl || "#"}
                   className="rounded-md border px-4 py-2 text-center font-[var(--font-mono)] text-xs text-[var(--text-primary)]"

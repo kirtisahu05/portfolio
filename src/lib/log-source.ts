@@ -46,6 +46,20 @@ const REVALIDATE_SECONDS = Number(process.env.LOG_REVALIDATE_SECONDS) || 900;
 // instead of waiting out REVALIDATE_SECONDS.
 export const LOG_CACHE_TAG = "log-entries";
 
+// The spreadsheet ID lives inside LOG_SHEET_CSV_URL already
+// (.../spreadsheets/d/<id>/export?...) — extracted here so the Sheets API
+// write path (google-sheets.ts) doesn't need its own duplicate env var.
+export function getLogSheetId(): string | null {
+  if (!CSV_URL) return null;
+  const id = CSV_URL.match(/\/spreadsheets\/d\/([^/]+)/)?.[1] ?? null;
+  // "Publish to web" CSV links (.../spreadsheets/d/e/<token>/pub?output=csv)
+  // have no real spreadsheet ID in the URL at all — "e" is a literal path
+  // segment there, not an ID, and the Sheets API can't address a document by
+  // it. Treated as unconfigured rather than silently writing to a bogus ID.
+  if (id === "e") return null;
+  return id;
+}
+
 // In-memory fallback for when the sheet fetch fails outright (network error,
 // sheet unpublished, Google outage) — separate from Next's own fetch cache,
 // which only helps when the fetch actually succeeds. Same MVP caveat as
@@ -58,8 +72,10 @@ let lastGoodEntries: ListEntry[] = [];
 // column-format-dependent unless the column is plain text. Column is required
 // to be literal "YYYY-MM-DD" text (see the Log PRD §7) — this only accepts
 // that exact shape and treats anything else as unparseable.
-const DATE_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
-const TIME_RE = /^(\d{2}):(\d{2})$/;
+// Exported so the contribute-form API route can validate against the exact
+// same format contract this reader enforces.
+export const DATE_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
+export const TIME_RE = /^(\d{2}):(\d{2})$/;
 
 function parseDateParts(dateStr: string): { y: number; m: number; d: number } | null {
   const match = DATE_RE.exec(dateStr.trim());

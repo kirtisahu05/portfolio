@@ -2,6 +2,7 @@ import { GoogleGenAI, type GenerateContentResponse } from "@google/genai";
 import type { NextRequest } from "next/server";
 import { buildSystemPrompt } from "@/lib/ai-system-prompt";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/request-ip";
 import { getLogEntries, type LogEntry } from "@/lib/log-source";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
@@ -11,12 +12,6 @@ const MAX_MESSAGE_LENGTH = 500;
 const MAX_HISTORY_TURNS = 6;
 
 type ChatTurn = { role: "user" | "assistant"; content: string };
-
-function getClientIp(request: NextRequest): string {
-  const forwardedFor = request.headers.get("x-forwarded-for");
-  if (forwardedFor) return forwardedFor.split(",")[0].trim();
-  return request.headers.get("x-real-ip") ?? "unknown";
-}
 
 export async function POST(request: NextRequest) {
   const ip = getClientIp(request);
