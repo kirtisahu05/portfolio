@@ -441,6 +441,15 @@ export const projects = [
     liveUrl: "",
     sourceUrl: "https://github.com/kirtisahu05/venue-pilot-console.git",
   },
+  {
+    id: "finsync-finance-tracker",
+    title: "finSync — multi-profile personal finance tracker",
+    description:
+      "A personal finance PWA for tracking multiple financial identities under one account — banks, credit cards, loans, investments, and recurring bills, each scoped to its own profile. Built as a Next.js App Router PWA on Supabase (Postgres + Auth), with a data model built around per-user \"profiles\" (personal, professional, family, spouse — up to five) rather than a single flat account, so every bank, credit card, loan, investment, recurring payment, and transaction is scoped to a profile and isolated via Row Level Security policies that join back to the owning user through auth.uid(). Session handling is hand-rolled rather than the standard Supabase SSR helper — access/refresh tokens are set as httpOnly cookies on login and re-attached per request in middleware, which gates every dashboard route. Feature set spans credit card utilization tracking (limit/utilized/available), EMI loan tracking with part-payments and remaining balance, friend-and-family lending with status and repayment schedules, recurring bill reminders, and an investments ledger — with recent work moving bank/card data fetching into Server Actions and adding page-level cache control for fresher dashboard reads.",
+    tags: ["Next.js", "Supabase", "PostgreSQL", "Row Level Security", "Server Actions", "PWA"],
+    liveUrl: "",
+    sourceUrl: "https://github.com/kirtisahu05/finSync.git",
+  },
 ];
 
 export const navItems = [
