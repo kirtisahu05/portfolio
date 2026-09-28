@@ -25,9 +25,12 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
-const title = "Kirti Kumar Sahu — Frontend Architect";
+// Derived from profile.role rather than hardcoded, so the title/JSON-LD
+// jobTitle can't drift out of sync with the headline shown in the Hero (see
+// portfolio review point 7 — inconsistent titles across the site/resume).
+const title = `${profile.name} — ${profile.role}`;
 const description =
-  "Frontend architect bridging 10 years of systems experience into AI-native product engineering.";
+  "Lead Software Engineer & Frontend Architect building production web platforms with React, Next.js, and TypeScript — now extending into AI-native engineering.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -38,6 +41,7 @@ export const metadata: Metadata = {
   description,
   keywords: [
     "Kirti Kumar Sahu",
+    "Lead Software Engineer",
     "Frontend Architect",
     "Software Architect",
     "React",

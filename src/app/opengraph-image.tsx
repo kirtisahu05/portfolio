@@ -26,7 +26,7 @@ export default function Image() {
         <div style={{ display: "flex", marginTop: 24, fontSize: 64, fontWeight: 700 }}>
           {profile.name}
         </div>
-        <div style={{ display: "flex", marginTop: 16, fontSize: 32, color: "#8b9a8f" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", marginTop: 16, fontSize: 28, color: "#8b9a8f" }}>
           {profile.role} · {profile.location}
         </div>
       </div>

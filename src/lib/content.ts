@@ -14,21 +14,26 @@ export const profile = {
   workPreference: "Remote since 2020 · Open to relocating to Bengaluru",
   timezone: "IST (UTC+5:30) — overlaps 4–6 hrs with US Eastern and most of the European workday",
   tagline:
-    "10+ years architecting and scaling frontend systems for global platforms — 5-6 of them fully remote, leading distributed teams. Now extending that into RAG pipelines, LLM integration, and agent-based tooling.",
+    "I build and scale production web platforms with React, Next.js, and TypeScript — from architecture and system design to implementation, performance, and production delivery.",
+  // Second, shorter line rendered right under `tagline` in the Hero — keep it
+  // honest about what's actually shipped (see `projects`), not "exploring".
+  aiTagline:
+    "Recently extended into AI-native engineering — shipping a streaming LLM assistant and the application layer for a multi-tenant RAG platform.",
   logTagline:
     "I’m Kirti. This is my corner of the internet—a place where I share thoughts on tech, life, things I’m learning, and the occasional rabbit hole I find myself exploring. Glad you’re here.",
-  bio: "I'm a Software Engineer with 10+ years of enterprise experience designing, engineering, and scaling high-performance web applications. Currently working as Software Architect - Frontend at CoffeeWeb, I lead frontend architecture for a mobile-first PWA serving 200,000+ users across 175+ countries. Before that, I led frontend engineering at Peppo across BookMyShow Deals and a suite of B2B consoles, built JFrog Pipelines from inception as part of a CI/CD platform trusted by Amazon, Google, and Netflix, helped scale Shippable's CI/CD platform to 100,000+ Docker containers a month, and built CenturyLink's e-commerce and mobile ordering platforms. Across every team, I've owned tech stack decisions, hiring, and production reliability — and I'm now extending that decade of frontend architecture into AI-native engineering: I've shipped a context-stuffed LLM assistant and YourBot, a multi-tenant RAG chatbot platform with a pgvector-backed retrieval pipeline, and I'm leading how my team adopts AI-assisted development, with agent-based tooling next on my roadmap. This entire site — architecture, the live streaming Ask AI assistant, and deployment — was designed, built, and shipped by me alone, working remotely, with no team in the room.",
-  vitals: [
-    { label: "Frontend", value: 95 },
-    { label: "Backend", value: 72 },
-    { label: "Team Leadership", value: 96 },
-    { label: "Production Reliability", value: 88 },
-    { label: "AI Systems", value: 58 },
+  bio: "Lead Software Engineer and Frontend Architect with 10+ years of experience designing, building, and scaling high-performance web platforms across consumer, B2B SaaS, e-commerce, food tech, and market intelligence products. I currently lead a 9-person frontend engineering team at CoffeeWeb, owning frontend architecture for a mobile-first PWA serving 200,000+ users across 175+ countries — including re-architecting an immature, hard-to-maintain codebase into a structured system with clear component boundaries, consistent state/data patterns, and production observability. Before that, I led frontend engineering at Peppo across BookMyShow Deals and a suite of B2B consoles, built JFrog Pipelines from inception as part of a CI/CD platform trusted by Amazon, Google, and Netflix, helped scale Shippable's CI/CD platform to 100,000+ Docker containers a month, and built CenturyLink's e-commerce and mobile ordering platforms. Across every team, I've owned tech stack decisions, hiring, and production reliability — and I'm now extending that decade of frontend architecture into AI-native engineering: I've shipped a streaming LLM assistant (Ask AI) and built the application layer for YourBot, a multi-tenant RAG chatbot platform. This entire site — architecture, the live streaming Ask AI assistant, and deployment — was designed, built, and shipped by me alone, working remotely, with no team in the room.",
+  // Replaces the old percentage-based skill meters — those implied a false
+  // precision. This groups strengths by category instead.
+  coreStrengths: [
+    { title: "Frontend Architecture", items: "React · Next.js · TypeScript · State Management · Performance" },
+    { title: "Technical Leadership", items: "Architecture · Hiring · Mentoring · Roadmaps · Engineering Standards" },
+    { title: "Full Stack", items: "Node.js · PostgreSQL · Prisma · APIs · Authentication" },
+    { title: "AI Engineering", items: "RAG · LLM Applications · pgvector · Streaming · Context Engineering" },
   ],
   // One single-line achievement per experience, most recent first — keep in sync with `experience` below
   quickFacts: [
     "I've spent 10+ years turning messy, half-formed product ideas into frontend systems that don't fall over — and I like that part more than writing the first line of code.",
-    "Right now I lead frontend for a platform 200,000+ people across 175+ countries use every day, working fully remote.",
+    "Right now I lead a 9-person frontend engineering team building a platform 200,000+ people across 175+ countries use every day, working fully remote.",
     "Early in my career I built the UI for JFrog Pipelines from scratch — the frontend layer of a CI/CD tool that now quietly runs inside Amazon's, Google's, and Netflix's pipelines.",
     "I've hired and grown every frontend team I've led — the team is usually the part I'm proudest of, not the codebase.",
     "5-6 years working fully remote — leading distributed frontend teams and shipping production systems without anyone looking over my shoulder.",
@@ -177,23 +182,16 @@ export const experience = [
       "Google Tag Manager",
     ],
     bullets: [
-      "Working as a Software Architect - Frontend in the CoffeeWeb team, leading a 9-person frontend engineering team and owning the technical direction for the global web platform while remaining roughly 60% hands-on with engineering.",
+      "Leading a 9-person frontend engineering team, owning technical direction, architecture, sprint planning, OKRs, task allocation, performance reviews, hiring, and mentoring — while staying roughly 60% hands-on with engineering.",
       "Architected and evolved two React applications from the ground up — the customer-facing CoffeeWeb platform and the CoffeeWeb Admin Console for managing platform content, news, market information, and operational data.",
-      "Responsible for defining the frontend system architecture, evaluating tech stacks, and making strategic technology selections for all CoffeeWeb products from scratch.",
-      "Driving end-to-end planning, execution, and delivery of core platform interfaces using React.js, JavaScript, TypeScript, ES6, and Node.js technologies.",
-      "Accountable for full team management, setting up sprint workflows, task allocation, tracking project execution, and ensuring high-quality, timely production releases.",
-      "Heading talent acquisition, tech interviewing, and team hiring processes to build and scale a high-performing frontend engineering team.",
-      "Fostering a culture of continuous learning, mentoring developers, establishing best practices for peer code reviews, and designing technical upskilling roadmaps.",
-      "Understanding specifications and design documents.",
-      "Architected and led development of a mobile-first PWA spanning 16 product domains — real-time market data (WebSocket-powered live coffee quotes), pricing differentials, industry reports, weather, news & personalized content, community/social, AI assistance, trade & exchange, and subscriptions — serving 200,000+ users across 175+ countries in English, Hindi, and Kannada via i18next.",
-      "Re-architected an immature frontend codebase — oversized components, duplicated logic, direct API calls from UI components, inconsistent props/state patterns, uncontrolled re-renders, and limited error handling — establishing structured application architecture, reusable patterns, state/data-management conventions, clear API boundaries, and production observability.",
-      "Built and maintained the Node.js market-data service behind CoffeeWeb's live-data pipeline — authenticated external-data collection, market-data processing, persistence, currency processing, and downstream event publishing — and designed the frontend integration that consumes it over WebSocket/realtime APIs to power live quotes, market indicators, and charts.",
-      "Built tiered subscription and monetization flows (Regular, Gold, Platinum) with Razorpay, PayPal, and Stripe payment gateway integrations, trial management, subscription-gated feature access, and Google OAuth login.",
+      "Led frontend architecture for a mobile-first PWA spanning 16 product domains — real-time market data, pricing differentials, industry reports, weather, news, community, AI assistance, trade & exchange, and subscriptions — serving 200,000+ users across 175+ countries in English, Hindi, and Kannada via i18next.",
+      "Re-architected an immature frontend codebase — oversized components, duplicated logic, direct API calls from UI, inconsistent state/props patterns, uncontrolled re-renders, and no consistent error handling — into a structured system with clear component boundaries, reusable patterns, state/data-management conventions, defined API boundaries, and production observability. See the case study below.",
+      "Built and maintain the Node.js market-data service behind CoffeeWeb's live-data pipeline — authenticated external-data collection, market-data processing, persistence, currency processing, and downstream event publishing.",
+      "Designed the frontend integration for real-time market experiences, consuming continuously updated data over WebSocket/realtime APIs to power live quotes, market indicators, and charting.",
+      "Built tiered Regular/Gold/Platinum subscription flows with Razorpay, PayPal, and Stripe integrations, trial management, subscription-gated feature access, and Google OAuth login.",
       "Adopted Supabase (Postgres + realtime subscriptions) and Firebase (Auth, Firestore, push messaging) to power live chat, notifications, and real-time market data feeds across the platform.",
-      "Established the team's testing and quality foundation with Jest and React Testing Library (~165 test files), ESLint (airbnb-base + Prettier), and Husky/lint-staged pre-commit hooks, alongside Sentry error monitoring for production reliability.",
-      "Drove frontend performance and reliability improvements across code splitting, lazy loading, dependency optimization, caching, React rendering, API efficiency, WebSocket handling, and Core Web Vitals.",
-      "Owned CI/CD delivery via Azure DevOps Pipelines across development/staging/production environments, and drove growth tooling — Google Tag Manager, custom analytics events, and SEO meta management (react-helmet) for organic discovery.",
-      "Participated in implementing features, fixing bugs, holding responsibility over various product boundaries, documenting architectural patterns, and supporting users in various forums.",
+      "Established the frontend quality and production-reliability foundation — Jest and React Testing Library (~165 test files), ESLint, Prettier, Husky/lint-staged, Sentry error monitoring, and Azure DevOps CI/CD across development, staging, and production.",
+      "Drove frontend performance work across code splitting, lazy loading, dependency optimization, caching, React rendering, API efficiency, WebSocket handling, and Core Web Vitals.",
     ],
   },
   {
@@ -271,6 +269,32 @@ export const experience = [
     ],
   },
 ];
+
+// Referenced inline by Experience.tsx, directly under the CoffeeWeb entry —
+// kept as its own export rather than a field on `experience` since it's a
+// one-off structured block, not a shape every entry shares.
+export const coffeeWebCaseStudy = {
+  title: "Re-architecting CoffeeWeb",
+  before: [
+    "Large, unbounded components mixing UI, logic, and data fetching",
+    "Duplicated logic across screens with no shared patterns",
+    "Direct API calls from UI components — no clear data layer",
+    "Inconsistent state and prop-drilling patterns",
+    "Uncontrolled re-renders with no performance guardrails",
+    "No consistent error handling, poor structure, difficult to maintain",
+  ],
+  after: [
+    "Application architecture with clear component boundaries",
+    "Structured state and data-management conventions",
+    "Defined API integration patterns and a proper data layer",
+    "Consistent error handling across the platform",
+    "Performance work — code splitting, lazy loading, caching, Core Web Vitals",
+    "Testing (Jest, React Testing Library) and Sentry-based observability",
+    "Azure DevOps CI/CD across development, staging, and production",
+  ],
+  result:
+    "Established a scalable engineering foundation for continued product development across 16 domains and two React applications.",
+};
 
 export const education = [
   {
@@ -424,7 +448,27 @@ export const exploring = [
 
 // Only real, verifiable work belongs here — no placeholders. A RAG or
 // agent/tool-calling entry goes in once one is actually built, not before.
-export const projects = [
+// `architecture` and `ownership` are optional — only set for projects where
+// spelling out the system flow and what's mine vs. a teammate's/backend
+// service's actually adds something (currently just YourBot).
+type Project = {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  liveUrl: string;
+  sourceUrl: string;
+  architecture?: string[];
+  ownership?: { mine: string[]; other: string[] };
+};
+
+// Shown as a subtitle under the Projects heading — Ask AI and YourBot are
+// deliberately the first two entries below, framed as complementary AI
+// builds rather than "I called an LLM API" twice.
+export const projectsIntro =
+  "Ask AI and YourBot are two different AI builds, not the same trick twice — one shows LLM integration, streaming, and context engineering, the other shows RAG architecture and multi-tenancy.";
+
+export const projects: Project[] = [
   {
     id: "ask-ai-assistant",
     title: "Ask AI — portfolio assistant",
@@ -438,10 +482,30 @@ export const projects = [
     id: "yourbot-rag-platform",
     title: "YourBot — multi-tenant RAG chatbot platform",
     description:
-      "A multi-tenant SaaS platform for building, configuring, and embedding custom RAG chatbots trained on a business's own documents. Built the app from scratch, with my work centered on the frontend, the data layer, and auth: the full Next.js (App Router) bot-creation wizard — branding/persona, tone, guardrails, document upload, live indexing progress, testing, and deploy — the Prisma/PostgreSQL schema modeling tenants, bots, documents, ingestion jobs, and subscription entitlements, and end-to-end Keycloak authentication (JWKS-verified JWT sessions read from cookies, RBAC, session refresh). On the RAG side, built the per-bot retrieval configuration (pgvector-backed vector store, tunable top-k and similarity threshold), the ingestion pipeline UI that tracks each document through download, parse, chunk, embed, and index stages via a Redis-stream-triggered worker, and the generated embed snippet that deploys a bot's chat widget onto a customer's site.",
-    tags: ["Next.js", "Prisma", "PostgreSQL", "Keycloak", "RAG", "pgvector"],
+      "A multi-tenant SaaS platform for building, configuring, and embedding custom RAG chatbots trained on a business's own documents. I own the application layer end to end — tenant/team management, the Next.js bot-creation and configuration UI, document management, and the integration surface into backend AI services — while the LLM inference and retrieval execution itself is handled by a separate backend AI service this app integrates with.",
+    tags: ["Next.js", "Prisma", "PostgreSQL", "MinIO", "Keycloak", "RAG", "pgvector"],
     liveUrl: "",
     sourceUrl: "https://github.com/kirtisahu05/sift-rag-chatbot.git",
+    architecture: [
+      "Tenant & auth — Keycloak, RBAC, JWT/JWKS",
+      "Bot configuration — branding, persona, guardrails, retrieval settings",
+      "Document storage — MinIO",
+      "Ingestion pipeline — status tracking UI",
+      "Vector retrieval — pgvector",
+      "AI backend service — LLM inference",
+      "Chat experience — embeddable widget",
+    ],
+    ownership: {
+      mine: [
+        "Multi-tenant data model (Prisma/PostgreSQL)",
+        "Keycloak authentication & RBAC",
+        "Bot creation & configuration UI",
+        "Document management (MinIO) & ingestion-status UI",
+        "RAG configuration UI (retrieval settings)",
+        "Embeddable chat-widget deploy flow",
+      ],
+      other: ["AI/LLM inference & retrieval execution — backend AI service this app integrates with"],
+    },
   },
   {
     id: "venue-management-console",

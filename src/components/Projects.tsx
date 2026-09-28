@@ -1,6 +1,6 @@
 "use client";
 
-import { projects } from "@/lib/content";
+import { projects, projectsIntro } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
 
 export default function Projects() {
@@ -21,6 +21,7 @@ export default function Projects() {
       <h2 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
         {isSignal ? "ls ./featured-projects" : "Selected work"}
       </h2>
+      <p className="mt-2 max-w-lg text-sm text-[var(--text-secondary)]">{projectsIntro}</p>
 
       <div className="mt-8 space-y-5">
         {projects.map((project) => (
@@ -87,6 +88,56 @@ export default function Projects() {
                 </span>
               ))}
             </div>
+
+            {project.architecture && (
+              <div className="mt-5 border-t pt-4" style={{ borderColor: "var(--border)" }}>
+                <p className="font-[var(--font-mono)] text-[11px] uppercase tracking-wide text-[var(--text-muted)]">
+                  Architecture
+                </p>
+                <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1.5">
+                  {project.architecture.map((step, i) => (
+                    <span key={step} className="flex items-center gap-2">
+                      <span
+                        className="rounded px-2 py-1 text-[12px] text-[var(--text-secondary)]"
+                        style={{ border: "1px solid var(--border)" }}
+                      >
+                        {step}
+                      </span>
+                      {i < project.architecture!.length - 1 && (
+                        <span aria-hidden="true" className="text-[var(--text-muted)]">
+                          →
+                        </span>
+                      )}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {project.ownership && (
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div>
+                  <p className="font-[var(--font-mono)] text-[11px] uppercase tracking-wide text-[var(--text-muted)]">
+                    My ownership
+                  </p>
+                  <ul className="mt-2 space-y-1 text-[12px] leading-relaxed text-[var(--text-secondary)]">
+                    {project.ownership.mine.map((item) => (
+                      <li key={item}>· {item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-[var(--font-mono)] text-[11px] uppercase tracking-wide text-[var(--text-muted)]">
+                    Backend / AI service
+                  </p>
+                  <ul className="mt-2 space-y-1 text-[12px] leading-relaxed text-[var(--text-muted)]">
+                    {project.ownership.other.map((item) => (
+                      <li key={item}>· {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>

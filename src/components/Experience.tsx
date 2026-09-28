@@ -1,6 +1,6 @@
 "use client";
 
-import { experience } from "@/lib/content";
+import { coffeeWebCaseStudy, experience } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
 import { getSkillIcon } from "@/lib/skill-icons";
 import BulletList from "./BulletList";
@@ -78,6 +78,35 @@ export default function Experience() {
             </div>
 
             <BulletList items={item.bullets} sign="+" className="mt-4" />
+
+            {item.id === "coffeeweb" && (
+              <div
+                className="mt-5 rounded-lg border border-dashed p-4"
+                style={{ borderColor: "var(--border-strong)" }}
+              >
+                <p className="font-[var(--font-display)] text-sm font-semibold text-[var(--text-primary)]">
+                  {coffeeWebCaseStudy.title}
+                </p>
+                <div className="mt-3 grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <p className="font-[var(--font-mono)] text-[11px] uppercase tracking-wide text-[var(--text-muted)]">
+                      Before
+                    </p>
+                    <BulletList items={coffeeWebCaseStudy.before} sign="-" className="mt-2" />
+                  </div>
+                  <div>
+                    <p className="font-[var(--font-mono)] text-[11px] uppercase tracking-wide text-[var(--text-muted)]">
+                      What I changed
+                    </p>
+                    <BulletList items={coffeeWebCaseStudy.after} sign="+" className="mt-2" />
+                  </div>
+                </div>
+                <p className="mt-4 text-[13px] leading-relaxed text-[var(--text-secondary)]">
+                  <span className="font-semibold text-[var(--text-primary)]">Result: </span>
+                  {coffeeWebCaseStudy.result}
+                </p>
+              </div>
+            )}
           </div>
         ))}
       </div>
