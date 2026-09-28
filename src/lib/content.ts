@@ -7,7 +7,7 @@ export const profile = {
   handle: "/KIRTISAHU05",
   // Falls back to initials in the Hero avatar if this file is ever missing.
   photo: "/my-pic.jpg",
-  role: "Software Architect, Frontend",
+  role: "Lead Software Engineer | Frontend Architect",
   location: "Bhopal, India",
   // In office in Bengaluru 2016–2020 (CenturyLink, Shippable, JFrog — see
   // `experience` below), fully remote since, now based in Bhopal.
@@ -28,7 +28,7 @@ export const profile = {
   // One single-line achievement per experience, most recent first — keep in sync with `experience` below
   quickFacts: [
     "I've spent 10+ years turning messy, half-formed product ideas into frontend systems that don't fall over — and I like that part more than writing the first line of code.",
-    "Right now I lead frontend for a platform 200,000+ people across 175+ countries use every day, working out of Bengaluru.",
+    "Right now I lead frontend for a platform 200,000+ people across 175+ countries use every day, working fully remote.",
     "Early in my career I built the UI for JFrog Pipelines from scratch — the frontend layer of a CI/CD tool that now quietly runs inside Amazon's, Google's, and Netflix's pipelines.",
     "I've hired and grown every frontend team I've led — the team is usually the part I'm proudest of, not the codebase.",
     "5-6 years working fully remote — leading distributed frontend teams and shipping production systems without anyone looking over my shoulder.",
@@ -154,11 +154,10 @@ export const experience = [
     companyProfile:
       "Privately held market intelligence and technology platform headquartered in Bengaluru — the definitive global hub for information, supply chain data, and digital resources in the coffee sector, connecting 200,000+ users across 175+ countries.",
     project: "CoffeeWeb Platform, CoffeeWeb Admin",
-    location: "Remote · Bengaluru",
+    location: "Remote",
     period: "Aug 2023 — Present",
     techStack: [
       "React.js",
-      "Next.js",
       "TypeScript",
       "JavaScript",
       "Node.js",
@@ -170,6 +169,7 @@ export const experience = [
       "OAuth 2.0",
       "Supabase",
       "Firebase / Firestore",
+      "PWA",
       "Jest",
       "React Testing Library",
       "Sentry",
@@ -177,17 +177,21 @@ export const experience = [
       "Google Tag Manager",
     ],
     bullets: [
-      "Working as a Software Architect - Frontend in the CoffeeWeb team, leading the entire frontend team and owning the technical direction for the global web platform.",
+      "Working as a Software Architect - Frontend in the CoffeeWeb team, leading a 9-person frontend engineering team and owning the technical direction for the global web platform while remaining roughly 60% hands-on with engineering.",
+      "Architected and evolved two React applications from the ground up — the customer-facing CoffeeWeb platform and the CoffeeWeb Admin Console for managing platform content, news, market information, and operational data.",
       "Responsible for defining the frontend system architecture, evaluating tech stacks, and making strategic technology selections for all CoffeeWeb products from scratch.",
-      "Driving end-to-end planning, execution, and delivery of core platform interfaces using React.js, Next.js, JavaScript, TypeScript, ES6, and Node.js technologies.",
+      "Driving end-to-end planning, execution, and delivery of core platform interfaces using React.js, JavaScript, TypeScript, ES6, and Node.js technologies.",
       "Accountable for full team management, setting up sprint workflows, task allocation, tracking project execution, and ensuring high-quality, timely production releases.",
       "Heading talent acquisition, tech interviewing, and team hiring processes to build and scale a high-performing frontend engineering team.",
       "Fostering a culture of continuous learning, mentoring developers, establishing best practices for peer code reviews, and designing technical upskilling roadmaps.",
       "Understanding specifications and design documents.",
       "Architected and led development of a mobile-first PWA spanning 16 product domains — real-time market data (WebSocket-powered live coffee quotes), pricing differentials, industry reports, weather, news & personalized content, community/social, AI assistance, trade & exchange, and subscriptions — serving 200,000+ users across 175+ countries in English, Hindi, and Kannada via i18next.",
+      "Re-architected an immature frontend codebase — oversized components, duplicated logic, direct API calls from UI components, inconsistent props/state patterns, uncontrolled re-renders, and limited error handling — establishing structured application architecture, reusable patterns, state/data-management conventions, clear API boundaries, and production observability.",
+      "Built and maintained the Node.js market-data service behind CoffeeWeb's live-data pipeline — authenticated external-data collection, market-data processing, persistence, currency processing, and downstream event publishing — and designed the frontend integration that consumes it over WebSocket/realtime APIs to power live quotes, market indicators, and charts.",
       "Built tiered subscription and monetization flows (Regular, Gold, Platinum) with Razorpay, PayPal, and Stripe payment gateway integrations, trial management, subscription-gated feature access, and Google OAuth login.",
       "Adopted Supabase (Postgres + realtime subscriptions) and Firebase (Auth, Firestore, push messaging) to power live chat, notifications, and real-time market data feeds across the platform.",
       "Established the team's testing and quality foundation with Jest and React Testing Library (~165 test files), ESLint (airbnb-base + Prettier), and Husky/lint-staged pre-commit hooks, alongside Sentry error monitoring for production reliability.",
+      "Drove frontend performance and reliability improvements across code splitting, lazy loading, dependency optimization, caching, React rendering, API efficiency, WebSocket handling, and Core Web Vitals.",
       "Owned CI/CD delivery via Azure DevOps Pipelines across development/staging/production environments, and drove growth tooling — Google Tag Manager, custom analytics events, and SEO meta management (react-helmet) for organic discovery.",
       "Participated in implementing features, fixing bugs, holding responsibility over various product boundaries, documenting architectural patterns, and supporting users in various forums.",
     ],
@@ -201,11 +205,11 @@ export const experience = [
     project: "BookMyShow Deals, Peppo PWA, Merchant/DMS/RewardX Consoles, Event Ordering",
     location: "Remote",
     period: "Aug 2020 — May 2023",
-    techStack: ["Vue.js", "JavaScript", "TypeScript", "HTML5", "CSS3", "Node.js"],
+    techStack: ["Next.js", "TypeScript", "JavaScript", "Node.js", "REST APIs", "PWA", "Sentry"],
     bullets: [
       "Working as a Frontend Lead in the Peppo team, which develops and maintains the frontend for all Peppo products.",
       "Led the frontend engineering team from the ground up to architect, build, and deploy multiple high-traffic consumer web apps and B2B SaaS portals.",
-      "Mostly worked on implementing UI utilizing Vue.js, JavaScript, TypeScript, ES6, HTML5, CSS3, and Node.js technologies.",
+      "Mostly worked on implementing UI utilizing Next.js, TypeScript, JavaScript, ES6, and Node.js technologies.",
       "Engineered the mobile-first Peppo PWA food-ordering application and the Event Ordering reservation flow, ensuring rapid load times, smooth transitions, and reliable transactional steps.",
       "Developed the consumer-facing BookMyShow (BMS) Deals interface, integrating secure checkouts and seamless payment workflows to handle real-time merchant dynamic discounts.",
       "Architected the core suite of control panels including the Merchant Console for live order processing, the geographically-mapped DMS Console for partner onboarding, and the modular RewardX Console loyalty engine infrastructure.",
@@ -222,7 +226,7 @@ export const experience = [
     project: "JFrog Pipelines",
     location: "Bengaluru",
     period: "Mar 2019 — Jul 2020",
-    techStack: ["Vue.js", "JavaScript", "TypeScript", "Node.js"],
+    techStack: ["Vue.js", "Vuex", "JavaScript", "TypeScript", "Node.js"],
     bullets: [
       "Working as a developer on the JFrog Pipelines team, which develops and maintains JFrog Pipelines.",
       "Part of the JFrog Pipelines team from inception, building JFrog Pipelines from scratch.",
@@ -271,7 +275,7 @@ export const experience = [
 export const education = [
   {
     id: "cdac",
-    degree: "Diploma in Advanced Computing",
+    degree: "Post Graduate Diploma in Advanced Computing (PG-DAC)",
     institution: "C-DAC ACTS, Bangalore",
     // PG-DAC is C-DAC's own diploma — not affiliated with a university/board.
     board: "Autonomous - Ministry of Electronics and Information Technology (MeitY), Government of India.",
@@ -320,6 +324,10 @@ export const skills = {
   frontend: [
     "React.js (Redux, Hooks)",
     "Next.js",
+    "Redux Saga",
+    "Zustand",
+    "TanStack Query",
+    "Micro-frontends (Module Federation)",
     "Vue.js (Vuex)",
     "AngularJS",
     "Flutter",
@@ -345,6 +353,9 @@ export const skills = {
     "Firebase / Firestore",
     "Redis",
     "Keycloak",
+    "JWT / JWKS",
+    "RBAC",
+    "MinIO",
   ],
   devops: [
     "Docker",
@@ -387,7 +398,7 @@ export const skills = {
 // Honest roadmap, not claimed expertise — technologies being actively explored,
 // not yet used hands-on in production. Move items into `skills` above once real.
 export const exploring = [
-  { category: "Frontend Ecosystem", items: ["Redux Toolkit", "Zustand", "TanStack Query"] },
+  { category: "Frontend Ecosystem", items: ["Redux Toolkit"] },
   { category: "Backend Frameworks", items: ["NestJS", "Spring Boot", "Spring Cloud", "Spring Security", "gRPC"] },
   { category: "Data & ORM", items: ["TypeORM", "Hibernate / JPA"] },
   { category: "Messaging", items: ["Kafka", "RabbitMQ", "AWS SQS/SNS"] },
@@ -396,7 +407,7 @@ export const exploring = [
   { category: "Observability", items: ["OpenTelemetry", "Prometheus", "Grafana", "ELK Stack"] },
   { category: "Testing", items: ["Vitest", "Playwright"] },
   { category: "Architecture", items: ["Microservices", "Event-Driven Architecture", "CQRS", "DDD"] },
-  { category: "Security", items: ["OIDC", "JWT", "RBAC", "API Security"] },
+  { category: "Security", items: ["OIDC", "API Security"] },
   {
     category: "AI Frontiers",
     items: [

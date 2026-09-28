@@ -140,6 +140,7 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   "React.js": SiReact,
   "Vue.js": SiVuedotjs,
   "Node.js": SiNodedotjs,
+  PWA: SiPwa,
   JavaScript: SiJavascript,
   CSS3: SiCss,
   Bootstrap: SiBootstrap,
