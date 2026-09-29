@@ -51,9 +51,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: profile.name, url: siteUrl }],
   creator: profile.name,
-  alternates: {
-    canonical: siteUrl,
-  },
+  // No canonical here — a layout-level canonical is inherited by every route,
+  // which would tell search engines /log, /ask-ai, and each log post are
+  // duplicates of the homepage. Each page sets its own (relative paths resolve
+  // against metadataBase).
   openGraph: {
     type: "website",
     url: siteUrl,
@@ -87,7 +88,6 @@ const personJsonLd = {
   sameAs: [
     profile.links.github,
     profile.links.linkedin,
-    profile.links.leetcode,
     profile.links.medium,
     profile.links.youtube,
   ].filter(Boolean),

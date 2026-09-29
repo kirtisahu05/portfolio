@@ -12,13 +12,9 @@ export default function Hero() {
     <section id="top" className="mx-auto max-w-5xl px-6 pb-16 pt-14 sm:pt-20">
       <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-start">
         <div className="hero-in min-w-0">
-          {isSignal ? (
+          {isSignal && (
             <p className="mb-4 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">
               {"// portfolio boot sequence"}
-            </p>
-          ) : (
-            <p className="mb-4 font-[var(--font-mono)] text-[11px] uppercase tracking-[0.18em] text-[var(--text-muted)]">
-              {profile.role} · {profile.location}
             </p>
           )}
           <div className="flex items-center gap-4">
@@ -92,7 +88,7 @@ export default function Hero() {
               SYSTEM.INFO
             </p>
           )}
-          <p className="font-[var(--font-display)] text-lg font-semibold text-[var(--text-primary)]">
+          <p className="text-left font-[var(--font-display)] text-base font-semibold tracking-tight text-[var(--text-primary)] sm:whitespace-nowrap lg:text-[15px]">
             {profile.role}
           </p>
           {/* <p className="mt-1 text-sm text-[var(--text-muted)]">{profile.location}</p> */}

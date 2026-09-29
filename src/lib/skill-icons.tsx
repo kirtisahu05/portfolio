@@ -55,6 +55,11 @@ import {
   SiStripe,
   SiGooglegemini,
   SiRedis,
+  SiReactrouter,
+  SiJsonwebtokens,
+  SiMinio,
+  SiSocketdotio,
+  SiD3,
   SiKeycloak,
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa6";
@@ -139,6 +144,9 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   // role's bullets support).
   "React.js": SiReact,
   "Vue.js": SiVuedotjs,
+  Vuex: SiVuedotjs,
+  "Socket.IO (WebSockets)": SiSocketdotio,
+  "D3.js": SiD3,
   "Node.js": SiNodedotjs,
   PWA: SiPwa,
   JavaScript: SiJavascript,
@@ -148,6 +156,18 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   Razorpay: SiRazorpay,
   PayPal: SiPaypal,
   Stripe: SiStripe,
+
+  // Project tags (projects[].tags) — conceptual tags with no product logo
+  // (RAG, Rate limiting, Context Stuffing, Streaming) fall back to TbBraces.
+  React: SiReact,
+  MUI: SiMui,
+  "React Router": SiReactrouter,
+  "JWT Auth": SiJsonwebtokens,
+  MinIO: SiMinio,
+  pgvector: SiPostgresql,
+  "Row Level Security": SiPostgresql,
+  "Server Actions": SiNextdotjs,
+  "Angular-to-React Migration": SiReact,
 };
 
 export function getSkillIcon(skill: string): IconType {

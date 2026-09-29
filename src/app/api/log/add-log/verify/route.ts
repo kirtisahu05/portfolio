@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { checkLogContributeRateLimit } from "@/lib/rate-limit";
+import { logContributePinFailures } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request-ip";
 import { pinMatches } from "@/lib/pin-auth";
 
@@ -10,8 +10,7 @@ export async function POST(request: NextRequest) {
   }
 
   const ip = getClientIp(request);
-  const { allowed } = checkLogContributeRateLimit(ip);
-  if (!allowed) {
+  if (logContributePinFailures.isBlocked(ip)) {
     return Response.json({ error: "rate_limited" }, { status: 429 });
   }
 
@@ -24,6 +23,7 @@ export async function POST(request: NextRequest) {
 
   const pin = typeof body.pin === "string" ? body.pin.trim() : "";
   if (!pin || !pinMatches(pin, expectedPin)) {
+    logContributePinFailures.recordFailure(ip);
     return Response.json({ ok: false }, { status: 401 });
   }
 

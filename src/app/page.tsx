@@ -1,12 +1,17 @@
+import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import WhyHireMe from "@/components/WhyHireMe";
+import WhyHireMeV2 from "@/components/WhyHireMeV2";
 import Projects from "@/components/Projects";
 import Experience from "@/components/Experience";
 import Education from "@/components/Education";
 import Skills from "@/components/Skills";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
@@ -21,7 +26,7 @@ export default function Home() {
         <Experience />
         <Education />
         <Projects />
-        <WhyHireMe />
+        <WhyHireMeV2 />
         <Contact />
       </main>
       <Footer />

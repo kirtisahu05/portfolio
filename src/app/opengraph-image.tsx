@@ -4,6 +4,17 @@ import { profile } from "@/lib/content";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// ImageResponse can't read CSS variables — these mirror theme "a" in
+// globals.css (the palette visitors see), so link previews match the site.
+// Keep them in sync if that palette changes.
+const colors = {
+  bg: "#fef7e5",
+  textPrimary: "#00311e",
+  textSecondary: "#2d4c3c",
+  textMuted: "#547061",
+  border: "#5f7d6a",
+};
+
 export default function Image() {
   return new ImageResponse(
     (
@@ -15,19 +26,31 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background: "#0a0e14",
-          color: "#e6ede6",
+          background: colors.bg,
+          color: colors.textPrimary,
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", color: "#7ee787", fontSize: 28, letterSpacing: 2 }}>
+        <div style={{ display: "flex", color: colors.textMuted, fontSize: 26, letterSpacing: 3 }}>
           {profile.handle}
         </div>
-        <div style={{ display: "flex", marginTop: 24, fontSize: 64, fontWeight: 700 }}>
+        <div style={{ display: "flex", marginTop: 24, fontSize: 68, fontWeight: 700 }}>
           {profile.name}
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap", marginTop: 16, fontSize: 28, color: "#8b9a8f" }}>
-          {profile.role} · {profile.location}
+        <div style={{ display: "flex", flexWrap: "wrap", marginTop: 16, fontSize: 32, color: colors.textSecondary }}>
+          {profile.role}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            marginTop: 40,
+            paddingTop: 24,
+            borderTop: `2px solid ${colors.border}`,
+            fontSize: 24,
+            color: colors.textMuted,
+          }}
+        >
+          React · Next.js · TypeScript · Frontend Architecture · Technical Leadership
         </div>
       </div>
     ),

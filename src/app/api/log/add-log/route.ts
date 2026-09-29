@@ -1,6 +1,6 @@
 import { revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
-import { checkLogContributeRateLimit } from "@/lib/rate-limit";
+import { logContributePinFailures } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request-ip";
 import { pinMatches } from "@/lib/pin-auth";
 import { DATE_RE, TIME_RE, LOG_CACHE_TAG, getLogSheetId } from "@/lib/log-source";
@@ -33,8 +33,7 @@ export async function POST(request: NextRequest) {
   }
 
   const ip = getClientIp(request);
-  const { allowed } = checkLogContributeRateLimit(ip);
-  if (!allowed) {
+  if (logContributePinFailures.isBlocked(ip)) {
     return Response.json({ error: "rate_limited", message: "Too many attempts. Try again later." }, { status: 429 });
   }
 
@@ -47,6 +46,7 @@ export async function POST(request: NextRequest) {
 
   const pin = str(body.pin);
   if (!pin || !pinMatches(pin, expectedPin)) {
+    logContributePinFailures.recordFailure(ip);
     return Response.json({ error: "unauthorized", message: "Incorrect PIN." }, { status: 401 });
   }
 

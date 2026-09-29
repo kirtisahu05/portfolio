@@ -21,7 +21,7 @@ export const profile = {
     "Recently extended into AI-native engineering — shipping a streaming LLM assistant and the application layer for a multi-tenant RAG platform.",
   logTagline:
     "I’m Kirti. This is my corner of the internet—a place where I share thoughts on tech, life, things I’m learning, and the occasional rabbit hole I find myself exploring. Glad you’re here.",
-  bio: "Lead Software Engineer and Frontend Architect with 10+ years of experience designing, building, and scaling high-performance web platforms across consumer, B2B SaaS, e-commerce, food tech, and market intelligence products. I currently lead a 9-person frontend engineering team at CoffeeWeb, owning frontend architecture for a mobile-first PWA serving 200,000+ users across 175+ countries — including re-architecting an immature, hard-to-maintain codebase into a structured system with clear component boundaries, consistent state/data patterns, and production observability. Before that, I led frontend engineering at Peppo across BookMyShow Deals and a suite of B2B consoles, built JFrog Pipelines from inception as part of a CI/CD platform trusted by Amazon, Google, and Netflix, helped scale Shippable's CI/CD platform to 100,000+ Docker containers a month, and built CenturyLink's e-commerce and mobile ordering platforms. Across every team, I've owned tech stack decisions, hiring, and production reliability — and I'm now extending that decade of frontend architecture into AI-native engineering: I've shipped a streaming LLM assistant (Ask AI) and built the application layer for YourBot, a multi-tenant RAG chatbot platform. This entire site — architecture, the live streaming Ask AI assistant, and deployment — was designed, built, and shipped by me alone, working remotely, with no team in the room.",
+  bio: "Lead Software Engineer and Frontend Architect with 10+ years of experience designing, building, and scaling high-performance web platforms across consumer, B2B SaaS, e-commerce, food tech, and market intelligence products. I currently lead a 9-person frontend engineering team at CoffeeWeb, owning frontend architecture for a mobile-first PWA serving 200,000+ users across 175+ countries — including re-architecting an immature, hard-to-maintain codebase into a structured system with clear component boundaries, consistent state/data patterns, and production observability. Before that, I led frontend engineering at Peppo across BookMyShow Deals and a suite of B2B consoles, helped build JFrog Pipelines from inception as part of the JFrog platform — its Vue.js UI and the Node.js client behind it — helped scale Shippable's CI/CD platform to 100,000+ Docker containers a month, and built CenturyLink's e-commerce and mobile ordering platforms. Across every team, I've owned tech stack decisions, hiring, and production reliability — and I'm now extending that decade of frontend architecture into AI-native engineering: I've shipped a streaming LLM assistant (Ask AI) and built the application layer for YourBot, a multi-tenant RAG chatbot platform. This entire site — architecture, the live streaming Ask AI assistant, and deployment — was designed, built, and shipped by me alone, working remotely, with no team in the room.",
   // Replaces the old percentage-based skill meters — those implied a false
   // precision. This groups strengths by category instead.
   coreStrengths: [
@@ -34,7 +34,7 @@ export const profile = {
   quickFacts: [
     "I've spent 10+ years turning messy, half-formed product ideas into frontend systems that don't fall over — and I like that part more than writing the first line of code.",
     "Right now I lead a 9-person frontend engineering team building a platform 200,000+ people across 175+ countries use every day, working fully remote.",
-    "Early in my career I built the UI for JFrog Pipelines from scratch — the frontend layer of a CI/CD tool that now quietly runs inside Amazon's, Google's, and Netflix's pipelines.",
+    "Early in my career I helped build JFrog Pipelines from inception — the Vue.js UI inside JFrog's platform console, plus the Node.js client its middleware uses to talk to the Pipelines service.",
     "I've hired and grown every frontend team I've led — the team is usually the part I'm proudest of, not the codebase.",
     "5-6 years working fully remote — leading distributed frontend teams and shipping production systems without anyone looking over my shoulder.",
     "I'm teaching myself RAG pipelines and agentic AI the same way I've learned everything else: by shipping something real and letting it break in production.",
@@ -44,6 +44,8 @@ export const profile = {
   links: {
     github: "https://github.com/kirtisahu05",
     linkedin: "https://linkedin.com/in/kirtisahu05",
+    // Hidden from the site (not active there) — kept for reference. To show it
+    // again, add it back to the links list in Contact.tsx and sameAs in layout.tsx.
     leetcode: "https://leetcode.com/u/kirtisahu05/",
     medium: "https://medium.com/@kirtisahu05",
     youtube: "", // TODO: add or leave blank to hide
@@ -121,15 +123,73 @@ export const whyHireMeClosing = {
   body: "A technical leader who can **understand the product, shape the architecture, guide the team, stay hands-on with the code, and take ownership through production.**",
 };
 
+// The live "Why work with me" section, rendered by WhyHireMeV2. The older
+// whyHireMe/whyHireMeIntro/whyHireMeClosing and professionalAbilities above
+// are no longer shown on the page but are kept on purpose — whyHireMe and
+// professionalAbilities feed the Ask AI knowledge base.
+export const whyHireMeV2Intro = {
+  lead: "I sit at the intersection of architecture, engineering, and product.",
+  body: "I turn product requirements into technical direction, build systems that scale, help teams execute, and stay accountable for what happens in production — shaped by work across consumer, B2B SaaS, e-commerce, food tech, DevOps, and market intelligence products.",
+};
+
+export const whyHireMeV2 = [
+  {
+    id: "architecture",
+    file: "strengths/architecture.txt",
+    title: "Architecture That Starts With the Product",
+    description:
+      "I design frontend systems around real product requirements, not frameworks or trends. At CoffeeWeb, I architected a mobile-first PWA spanning 16 product domains for 200,000+ users across 175+ countries, and re-architected the existing codebase into clear component boundaries, consistent state and data patterns, and production observability.",
+  },
+  {
+    id: "leadership",
+    file: "strengths/leadership.txt",
+    title: "Hands-On Technical Leadership",
+    description:
+      "I lead a 9-person frontend team while staying roughly 60% hands-on — making architecture calls, writing and reviewing code, and setting engineering standards. I own hiring, mentoring, and performance reviews, and build teams that make good decisions without me in the room.",
+  },
+  {
+    id: "delivery",
+    file: "strengths/delivery.txt",
+    title: "From Roadmap to Production — and After",
+    description:
+      "I take work from PRD to release: shaping the technical solution, breaking roadmaps into milestones, and coordinating with product, design, and backend. Shipping isn't the finish line — at CoffeeWeb I set up the quality foundation: ~165 Jest/React Testing Library test files, Sentry monitoring, and Azure DevOps CI/CD across dev, staging, and production.",
+  },
+  {
+    id: "remote",
+    file: "strengths/remote.txt",
+    title: "Remote and Async-First",
+    description:
+      "Fully remote since 2020, including leading two frontend teams — at Peppo and CoffeeWeb — from hiring through delivery. I document decisions instead of relying on hallway context, run PR-based reviews and async standups, and stay accountable to outcomes, not hours online.",
+  },
+  {
+    id: "individual-contributor",
+    file: "strengths/individual-contributor.txt",
+    title: "Just as Strong as an Individual Contributor",
+    description:
+      "Leading a team hasn't taken me off the keyboard. I still own hard problems end to end: I built CoffeeWeb's Node.js market-data service (external data collection, currency processing, event publishing), the application layer for YourBot (a multi-tenant RAG platform), and a full Angular-to-React rebuild of a venue-management console. I scope the work, unblock myself, write it up clearly, and ship without needing someone to check in.",
+  },
+  {
+    id: "ai",
+    file: "strengths/ai.txt",
+    title: "Building AI-Native Products",
+    description:
+      "I built the application layer for YourBot, a multi-tenant RAG platform (pgvector retrieval, document ingestion, Keycloak RBAC), and shipped this site's streaming Ask AI assistant on the Gemini API. I'm also leading how my team adopts AI-assisted development.",
+  },
+];
+
 // Consulting availability — shown as a distinct callout in the Contact section,
 // separate from the full-time-role line above it.
-// TODO: add your real scheduling link (Calendly, cal.com, etc.) to ctaUrl.
-// Leave ctaUrl blank and the button falls back to a mailto link automatically.
+// ctaUrl is the Google Calendar appointment schedule ("Intro Call") in its full
+// /appointments/schedules/<id> form (Calendar → the schedule → Share → "Website
+// embed") so SchedulingDialog can frame it in-page. The short
+// calendar.app.google/... link can't be embedded and falls back to a new tab.
+// Leave blank to fall back to a mailto link.
 export const consulting = {
   blurb:
-    "Open to consulting engagements in platform engineering, technical leadership, and system architecture — advisory, audits, or hands-on. If you'd like to talk specifics, feel free to block some time for a quick chat.",
-  ctaLabel: "Book a quick chat",
-  ctaUrl: "",
+    "Open to consulting engagements in platform engineering, technical leadership, and system architecture — advisory, audits, or hands-on. Pick a time that works for you and we'll dig into what you're building.",
+  ctaLabel: "Schedule a conversation",
+  ctaUrl:
+    "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2uOfNOPZeuA1-XHHmnfd-kGbk6PHlHnar_nvxLDnU3I43zWtvU6Z0EgMesDhoosh1urBo_s_zu",
 };
 
 // Kept in sync with the "Professional Abilities" section of public/resume.pdf.
@@ -221,17 +281,29 @@ export const experience = [
     company: "JFrog India",
     companyProfile:
       "On a mission to enable continuous updates through Liquid Software. The world's top brands — including Amazon, Facebook, Google, Netflix, Uber, VMware, and Spotify — are among the 4,500+ companies that depend on JFrog to manage binaries for mission-critical applications.",
-    project: "JFrog Pipelines",
+    project: "JFrog Pipelines — UI module in JFrog Platform UI, Pipelines Node.js client",
     location: "Bengaluru",
     period: "Mar 2019 — Jul 2020",
-    techStack: ["Vue.js", "Vuex", "JavaScript", "TypeScript", "Node.js"],
+    techStack: [
+      "Vue.js",
+      "Vuex",
+      "JavaScript",
+      "TypeScript",
+      "Node.js",
+      "Socket.IO (WebSockets)",
+      "D3.js",
+      "Jest",
+      "REST APIs",
+    ],
     bullets: [
-      "Working as a developer on the JFrog Pipelines team, which develops and maintains JFrog Pipelines.",
-      "Part of the JFrog Pipelines team from inception, building JFrog Pipelines from scratch.",
-      "Mostly worked on implementing UI utilizing Vue.js, JavaScript, TypeScript, ES6, and Node.js technologies.",
-      "Collaborated cross-team to implement high-quality, polished user interfaces using Vue.js to integrate JFrog Pipelines into platform-ui (JFrog's all-in-one product platform).",
-      "Understanding specifications and design documents.",
-      "Participated in implementing features, fixing bugs, peer code reviews, holding responsibility over various product boundaries, documenting implemented features, and supporting customers in various forums.",
+      "Joined JFrog Pipelines at inception and helped build its UI from scratch in Vue.js and Vuex — shipped as a module inside JFrog Platform UI, JFrog's unified product console.",
+      "Built the Integrations experience — create, edit, and view flows for 30+ providers (GitHub, GitLab, Bitbucket, AWS, Azure, GCP, Kubernetes, Docker registries, Slack, Jira, webhooks, and more), in both the user and admin consoles.",
+      "Contributed to the Pipelines Node.js client, the typed TypeScript library JFrog Platform UI's middleware uses to talk to the Pipelines microservice — wrote the Integrations, Projects, pipeline-source permissions, Steps, Resource Versions, and Extension Sources modules, each with Jest and nock tests.",
+      "Worked with the team on real-time run monitoring — a Socket.IO connection tied to navigation and a client-side cache of pipeline, run, and step data kept in sync by socket events, so dashboards update live without polling.",
+      "Contributed to the D3-based pipeline graph that visualizes steps, resources, and their dependencies.",
+      "Worked on node pool management (static and dynamic pools on AWS, Azure, GCP, and Kubernetes), plus pipeline source and extension management.",
+      "Worked on the step console log viewer, rendering colored build output for each pipeline step.",
+      "Collaborated across teams on implementation, code reviews, bug fixes, and feature documentation.",
     ],
   },
   {
@@ -243,7 +315,7 @@ export const experience = [
     project: "Shippable Platform",
     location: "Bengaluru",
     period: "Mar 2018 — Mar 2019",
-    techStack: ["JavaScript", "AngularJS", "Node.js", "HTML5", "Bootstrap", "CSS3", "Sass", "Git"],
+    techStack: ["AngularJS", "JavaScript", "Node.js", "HTML5", "Bootstrap", "CSS3", "Sass", "Git"],
     bullets: [
       "Involved in building parts of a highly scalable CI/CD platform with 100,000+ Docker containers spun up every month in production.",
       "Technologies used — JavaScript (Angular.js + Node.js), HTML5, Bootstrap, CSS, Sass, and Git.",
@@ -259,7 +331,7 @@ export const experience = [
     project: "E-Commerce, Instalink",
     location: "Bengaluru",
     period: "Mar 2016 — Feb 2018",
-    techStack: ["Java", "JavaScript", "Velocity", "AngularJS", "Bootstrap"],
+    techStack: ["AngularJS", "JavaScript", "Velocity", "Java", "Bootstrap", "CSS3", "Sass", "Git"],
     bullets: [
       "Working as a developer on the E-commerce team, which develops and maintains the CenturyLink e-commerce website.",
       "Part of the ECOM Agile team, delivering requirements on direct request of the business for the e-commerce shop using the Scrum process.",
@@ -327,7 +399,7 @@ export const education = [
     degree: "All India Secondary School Examination (AISSE)",
     institution: "Campion School, Bhopal",
     board: "CBSE",
-    period: "2019",
+    period: "2009",
     details: [],
   },
 ];
@@ -336,10 +408,10 @@ export const skills = {
   languages: [
     "JavaScript (ES6)",
     "TypeScript",
-    "Python",
-    "HTML5",
     "Java",
+    "Python",
     "Velocity",
+    "HTML5",
     "C++",
     "C#",
     "Swift",
@@ -458,6 +530,9 @@ type Project = {
   tags: string[];
   liveUrl: string;
   sourceUrl: string;
+  // True when the repo is private (visitors would hit a GitHub 404) — the
+  // card shows a "private repo" badge instead of a source link.
+  sourcePrivate?: boolean;
   architecture?: string[];
   ownership?: { mine: string[]; other: string[] };
 };
@@ -473,9 +548,9 @@ export const projects: Project[] = [
     id: "ask-ai-assistant",
     title: "Ask AI — portfolio assistant",
     description:
-      "A live, streaming chat assistant (this site's /ask page) that answers questions about my experience. Grounded using context stuffing — the entire knowledge base (experience, skills, public log entries) is assembled server-side and injected directly into the system prompt on every request, a deliberate choice over RAG since the corpus comfortably fits in the model's context window with no retrieval step needed. Built on the Gemini API, streams tokens to the client over a ReadableStream, enforces per-IP rate limiting, and strips private/draft content server-side before it ever reaches the model.",
+      "A live, streaming chat assistant (this site's /ask-ai page) that answers questions about my experience. Grounded using context stuffing — the entire knowledge base (experience, skills, public log entries) is assembled server-side and injected directly into the system prompt on every request, a deliberate choice over RAG since the corpus comfortably fits in the model's context window with no retrieval step needed. Built on the Gemini API, streams tokens to the client over a ReadableStream, enforces per-IP rate limiting, and strips private/draft content server-side before it ever reaches the model.",
     tags: ["Next.js", "Gemini API", "Context Stuffing", "Streaming (SSE)", "Rate limiting"],
-    liveUrl: "/ask",
+    liveUrl: "/ask-ai",
     sourceUrl: "https://github.com/kirtisahu05/portfolio",
   },
   {
@@ -486,6 +561,7 @@ export const projects: Project[] = [
     tags: ["Next.js", "Prisma", "PostgreSQL", "MinIO", "Keycloak", "RAG", "pgvector"],
     liveUrl: "",
     sourceUrl: "https://github.com/kirtisahu05/sift-rag-chatbot.git",
+    sourcePrivate: true,
     architecture: [
       "Tenant & auth — Keycloak, RBAC, JWT/JWKS",
       "Bot configuration — branding, persona, guardrails, retrieval settings",
@@ -515,6 +591,7 @@ export const projects: Project[] = [
     tags: ["React", "Angular-to-React Migration", "MUI", "react-admin", "React Router", "JWT Auth"],
     liveUrl: "",
     sourceUrl: "https://github.com/kirtisahu05/venue-pilot-console.git",
+    sourcePrivate: true,
   },
   {
     id: "finsync-finance-tracker",
@@ -524,6 +601,7 @@ export const projects: Project[] = [
     tags: ["Next.js", "Supabase", "PostgreSQL", "Row Level Security", "Server Actions", "PWA"],
     liveUrl: "",
     sourceUrl: "https://github.com/kirtisahu05/finSync.git",
+    sourcePrivate: true,
   },
 ];
 
@@ -533,6 +611,6 @@ export const navItems = [
   { href: "/#experience", label: "experience" },
   { href: "/#education", label: "education" },
   { href: "/#work", label: "projects" },
-  { href: "/#why", label: "why me" },
+  { href: "/#why-me", label: "why me" },
   { href: "/#contact", label: "contact" },
 ];

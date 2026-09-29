@@ -7,6 +7,7 @@ import { getLogEntries } from "@/lib/log-source";
 export const metadata: Metadata = {
   title: "Log",
   description: "Notes, writing, and things worth remembering.",
+  alternates: { canonical: "/log" },
 };
 
 export default async function LogPage() {

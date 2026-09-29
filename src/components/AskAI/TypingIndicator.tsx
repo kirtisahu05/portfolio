@@ -1,31 +1,17 @@
 "use client";
 
-import { useTheme } from "@/lib/theme-context";
+import Terminal from "@/components/Terminal";
 
+// Shown in the assistant's bubble until the first streamed token arrives —
+// the same Terminal loader used for page loads.
 export default function TypingIndicator() {
-  const { theme } = useTheme();
-  const isSignal = theme === "b";
-
   return (
     <div className="flex justify-start">
       <div
-        className="flex items-center gap-1.5 rounded-lg border px-4 py-3"
+        className="flex items-center rounded-lg border px-4 py-2.5"
         style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}
-        aria-label="Thinking"
       >
-        {isSignal ? (
-          <span className="font-[var(--font-mono)] text-xs" style={{ color: "var(--accent)" }}>
-            thinking...
-          </span>
-        ) : (
-          [0, 1, 2].map((i) => (
-            <span
-              key={i}
-              className="h-1.5 w-1.5 animate-bounce rounded-full"
-              style={{ background: "var(--text-muted)", animationDelay: `${i * 0.15}s` }}
-            />
-          ))
-        )}
+        <Terminal className="text-sm" style={{ color: "var(--accent)" }} />
       </div>
     </div>
   );

@@ -1,18 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import { consulting, profile } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
+import SchedulingDialog, { isEmbeddableSchedule } from "./SchedulingDialog";
+import SectionIntro from "@/components/SectionIntro";
 
 export default function Contact() {
   const { theme } = useTheme();
   const isSignal = theme === "b";
+  const [schedulingOpen, setSchedulingOpen] = useState(false);
+  const embeddable = isEmbeddableSchedule(consulting.ctaUrl);
 
   const links = [
-    { label: "GitHub", value: profile.links.github },
     { label: "LinkedIn", value: profile.links.linkedin },
-    { label: "LeetCode", value: profile.links.leetcode },
+    { label: "GitHub", value: profile.links.github },
     { label: "Medium", value: profile.links.medium },
-    { label: "YouTube", value: profile.links.youtube },
+    // { label: "LeetCode", value: profile.links.leetcode },
+    // { label: "YouTube", value: profile.links.youtube },
   ].filter((link) => link.value);
 
   return (
@@ -29,9 +34,7 @@ export default function Contact() {
       <h2 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
         {isSignal ? "connect --preferred-channel" : "Get in touch"}
       </h2>
-      <p className="mt-3 max-w-lg text-sm leading-relaxed text-[var(--text-secondary)]">
-        Open to senior/architect-level frontend and AI-adjacent full-stack roles.
-      </p>
+      <SectionIntro>Open to senior/architect-level frontend and AI-adjacent full-stack roles.</SectionIntro>
 
       <div
         className="mt-6 rounded-lg border p-5"
@@ -42,17 +45,33 @@ export default function Contact() {
             $ cat consulting.txt
           </p>
         )}
-        <p className="max-w-lg text-sm leading-relaxed text-[var(--text-secondary)]">
-          {consulting.blurb}
-        </p>
-        <a
-          href={consulting.ctaUrl || `mailto:${profile.email}?subject=Consulting%20inquiry`}
-          target={consulting.ctaUrl ? "_blank" : undefined}
-          rel={consulting.ctaUrl ? "noopener noreferrer" : undefined}
-          className="mt-4 inline-block rounded-md px-5 py-2.5 text-sm font-medium bg-[var(--text-primary)] text-[var(--bg)]"
-        >
-          {consulting.ctaLabel}
-        </a>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+          <p className="text-left text-sm leading-relaxed text-[var(--text-secondary)]">
+            {consulting.blurb}
+          </p>
+          <a
+            href={consulting.ctaUrl || `mailto:${profile.email}?subject=Consulting%20inquiry`}
+            target={consulting.ctaUrl ? "_blank" : undefined}
+            rel={consulting.ctaUrl ? "noopener noreferrer" : undefined}
+            onClick={(e) => {
+              // Plain clicks open the booking page in-page; modifier clicks and
+              // no-JS still get the new-tab link.
+              if (!embeddable || e.metaKey || e.ctrlKey || e.shiftKey) return;
+              e.preventDefault();
+              setSchedulingOpen(true);
+            }}
+            className="shrink-0 self-start whitespace-nowrap rounded-md px-5 py-2.5 text-sm font-medium bg-[var(--text-primary)] text-[var(--bg)] sm:self-auto"
+          >
+            {consulting.ctaLabel}
+          </a>
+        </div>
+        {embeddable && (
+          <SchedulingDialog
+            url={consulting.ctaUrl}
+            open={schedulingOpen}
+            onClose={() => setSchedulingOpen(false)}
+          />
+        )}
       </div>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -65,12 +84,11 @@ export default function Contact() {
               $ cat contact.txt
             </p>
           )}
-          {/* TODO: replace with your real email in src/lib/content.ts */}
           <a href={`mailto:${profile.email}`} className="block text-sm text-[var(--accent)]">
             {profile.email}
           </a>
           <p className="mt-1 text-sm text-[var(--text-secondary)]">{profile.location}</p>
-          <p className="mt-1 text-sm text-[var(--text-secondary)]">{profile.workPreference}</p>
+          {/* <p className="mt-1 text-sm text-[var(--text-secondary)]">{profile.workPreference}</p> */}
         </div>
 
         {links.map((link) => (

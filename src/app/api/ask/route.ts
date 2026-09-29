@@ -10,6 +10,7 @@ const MODEL = "gemini-flash-lite-latest";
 
 const MAX_MESSAGE_LENGTH = 500;
 const MAX_HISTORY_TURNS = 6;
+const MAX_HISTORY_REPLY_LENGTH = 3000;
 
 type ChatTurn = { role: "user" | "assistant"; content: string };
 
@@ -54,7 +55,15 @@ export async function POST(request: NextRequest) {
         (turn.role === "user" || turn.role === "assistant") &&
         typeof turn.content === "string"
     )
-    .slice(-MAX_HISTORY_TURNS);
+    .slice(-MAX_HISTORY_TURNS)
+    // History is client-supplied, so it gets a length cap too — otherwise a
+    // crafted request could pad six huge "previous turns" onto every call.
+    // Assistant replies run longer than questions (maxOutputTokens: 500 ≈
+    // 2,000+ chars), so they get a looser cap than user turns.
+    .map((turn) => ({
+      role: turn.role,
+      content: turn.content.slice(0, turn.role === "user" ? MAX_MESSAGE_LENGTH : MAX_HISTORY_REPLY_LENGTH),
+    }));
 
   const contents = [...history, { role: "user" as const, content: message }].map((turn) => ({
     role: turn.role === "assistant" ? ("model" as const) : ("user" as const),

@@ -12,6 +12,7 @@ import ViewSwitcher, { type LogViewMode } from "@/components/Log/ViewSwitcher";
 import AboutCard from "@/components/Log/LogSidebar/AboutCard";
 import StatsCard from "@/components/Log/LogSidebar/StatsCard";
 import CategoryFilter from "@/components/Log/LogSidebar/CategoryFilter";
+import SectionIntro from "@/components/SectionIntro";
 
 const PAGE_SIZE = 10;
 const VIEW_STORAGE_KEY = "log-view-mode";
@@ -33,7 +34,12 @@ export default function LogPageClient({ entries }: { entries: ListEntry[] }) {
   const [view, setView] = useState<LogViewMode>("list");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(VIEW_STORAGE_KEY);
+    let stored: string | null = null;
+    try {
+      stored = window.localStorage.getItem(VIEW_STORAGE_KEY);
+    } catch {
+      // Storage blocked — stay on the default view.
+    }
     if (stored === "list" || stored === "compact" || stored === "magazine" || stored === "grid") {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing from localStorage on mount is intentional
       setView(stored);
@@ -42,7 +48,11 @@ export default function LogPageClient({ entries }: { entries: ListEntry[] }) {
 
   function changeView(next: LogViewMode) {
     setView(next);
-    window.localStorage.setItem(VIEW_STORAGE_KEY, next);
+    try {
+      window.localStorage.setItem(VIEW_STORAGE_KEY, next);
+    } catch {
+      // Storage blocked — the view still changes, it just won't be remembered.
+    }
   }
 
   const publicEntries = useMemo(
@@ -99,9 +109,7 @@ export default function LogPageClient({ entries }: { entries: ListEntry[] }) {
           + add-log
         </Link>
       </div>
-      <p className="mt-2 max-w-lg text-sm text-[var(--text-secondary)]">
-        Notes, writing, and things worth remembering.
-      </p>
+      <SectionIntro>Notes, writing, and things worth remembering.</SectionIntro>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_280px]">
         <div className="min-w-0 space-y-4">

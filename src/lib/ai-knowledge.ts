@@ -7,6 +7,8 @@ import {
   projects,
   skills,
   whyHireMe,
+  whyHireMeV2,
+  whyHireMeV2Intro,
 } from "@/lib/content";
 import type { LogEntry } from "@/lib/log-source";
 
@@ -60,9 +62,20 @@ export function buildKnowledgeBase(logEntries: LogEntry[] = []): string {
     ].join("\n")
   );
 
+  // whyHireMeV2 is what the site shows now; the older whyHireMe cards are no
+  // longer rendered but stay in the knowledge base for the extra detail they
+  // carry (team-management specifics, breadth, roadmap notes).
   sections.push(
     [
-      "# Why hire him",
+      "# Why work with him",
+      `${whyHireMeV2Intro.lead} ${whyHireMeV2Intro.body}`,
+      ...whyHireMeV2.map((item) => `- ${item.title}: ${item.description}`),
+    ].join("\n")
+  );
+
+  sections.push(
+    [
+      "# Why hire him (additional detail)",
       ...whyHireMe.map((item) => `- ${item.title}: ${item.description}`),
     ].join("\n")
   );

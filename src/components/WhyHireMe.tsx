@@ -5,13 +5,18 @@ import { renderInline } from "@/lib/inline-markdown";
 import { useTheme } from "@/lib/theme-context";
 import BulletList from "./BulletList";
 
+/**
+ * @deprecated Replaced on the page by WhyHireMeV2. Kept, unrendered, for
+ * reference — its content (whyHireMe, professionalAbilities) still feeds the
+ * Ask AI knowledge base via src/lib/ai-knowledge.ts, so don't delete that data.
+ */
 export default function WhyHireMe() {
   const { theme } = useTheme();
   const isSignal = theme === "b";
 
   return (
     <section
-      id="why"
+      id="why-me"
       className="mx-auto max-w-5xl px-6 py-14"
       style={{ borderTop: "1px solid var(--border)" }}
     >

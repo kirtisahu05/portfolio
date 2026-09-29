@@ -5,6 +5,10 @@ import { useTheme } from "@/lib/theme-context";
 import { getSkillIcon } from "@/lib/skill-icons";
 import BulletList from "./BulletList";
 
+// Hidden for now — the before/after framing undersells the role. Content stays
+// in content.ts (coffeeWebCaseStudy); flip to true to bring it back.
+const SHOW_COFFEEWEB_CASE_STUDY = false;
+
 export default function Experience() {
   const { theme } = useTheme();
   const isSignal = theme === "b";
@@ -79,7 +83,7 @@ export default function Experience() {
 
             <BulletList items={item.bullets} sign="+" className="mt-4" />
 
-            {item.id === "coffeeweb" && (
+            {SHOW_COFFEEWEB_CASE_STUDY && item.id === "coffeeweb" && (
               <div
                 className="mt-5 rounded-lg border border-dashed p-4"
                 style={{ borderColor: "var(--border-strong)" }}

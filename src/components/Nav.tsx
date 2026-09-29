@@ -45,7 +45,7 @@ export default function Nav() {
             {isSignal ? "./log" : "log"}
           </Link>
           <Link
-            href="/ask"
+            href="/ask-ai"
             className="nav-link whitespace-nowrap hover:text-[var(--text-primary)]"
             style={{ color: "var(--accent)" }}
           >
@@ -116,7 +116,7 @@ export default function Nav() {
             {isSignal ? "./log" : "log"}
           </Link>
           <Link
-            href="/ask"
+            href="/ask-ai"
             onClick={() => setMenuOpen(false)}
             className="nav-link rounded-md px-2 py-2 hover:bg-[var(--bg-elevated)]"
             style={{ color: "var(--accent)" }}

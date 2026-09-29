@@ -17,7 +17,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!MULTI_UI_ENABLED) return;
-    const stored = window.localStorage.getItem("theme-mode") as ThemeMode | null;
+    let stored: string | null = null;
+    try {
+      stored = window.localStorage.getItem("theme-mode");
+    } catch {
+      // Storage blocked (privacy settings, some embedded browsers) — keep the default.
+    }
     if (stored === "a" || stored === "b") {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing from localStorage on mount is intentional
       setTheme(stored);
@@ -30,7 +35,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     setTheme((prev) => {
       const next: ThemeMode = prev === "a" ? "b" : "a";
       document.documentElement.setAttribute("data-theme", next);
-      window.localStorage.setItem("theme-mode", next);
+      try {
+        window.localStorage.setItem("theme-mode", next);
+      } catch {
+        // Storage blocked — the switch still applies for this visit.
+      }
       return next;
     });
   };

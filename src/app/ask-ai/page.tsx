@@ -35,7 +35,12 @@ export default function AskPage() {
   const inputDisabled = isStreaming || isRateLimited;
 
   async function sendMessage(text: string) {
-    const history = messages.map(({ role, content }) => ({ role, content })).slice(-MAX_HISTORY_TURNS);
+    // Drop failed exchanges — the error bubble and the question it answered —
+    // so client-side error text never reaches the model as if it had said it.
+    const history = messages
+      .filter((m, i) => !m.isError && !messages[i + 1]?.isError)
+      .map(({ role, content }) => ({ role, content }))
+      .slice(-MAX_HISTORY_TURNS);
     setMessages((prev) => [...prev, { role: "user", content: text }, { role: "assistant", content: "" }]);
     setIsStreaming(true);
     setAwaitingFirstToken(true);

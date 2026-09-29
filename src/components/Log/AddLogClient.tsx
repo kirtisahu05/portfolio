@@ -12,8 +12,13 @@ const inputStyle = {
 const inputClass = "w-full rounded-md border px-3 py-2 text-sm outline-none";
 const labelClass = "mb-1.5 block text-xs font-medium text-[var(--text-secondary)]";
 
+// Local date, not toISOString() — that's UTC, so in IST it pre-filled
+// yesterday's date until 5:30 AM.
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10);
+  const now = new Date();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+  return `${now.getFullYear()}-${m}-${d}`;
 }
 
 // A function rather than a static object so "date" is today's date at the

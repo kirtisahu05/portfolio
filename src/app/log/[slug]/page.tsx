@@ -33,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: entry.title,
     description: entry.summary,
+    alternates: { canonical: `/log/${entry.slug}` },
   };
 }
 

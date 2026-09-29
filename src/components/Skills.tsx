@@ -4,15 +4,16 @@ import { exploring, skills } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
 import { getSkillIcon } from "@/lib/skill-icons";
 import { HIDE_EXPLORING } from "@/lib/feature-flags";
+import SectionIntro from "@/components/SectionIntro";
 
 const groups: { key: keyof typeof skills; label: string; cmd: string }[] = [
   { key: "languages", label: "Languages", cmd: "cat stack/languages.txt" },
   { key: "frontend", label: "Frontend", cmd: "ls stack/frontend" },
   { key: "backend", label: "Backend", cmd: "ls stack/backend" },
+  { key: "tooling", label: "Testing & PM", cmd: "ls stack/tooling" },
   { key: "devops", label: "DevOps & Tools", cmd: "ls stack/tools" },
   { key: "ai", label: "AI & LLM", cmd: "ls stack/ai" },
   { key: "remote", label: "Remote & Async", cmd: "ls stack/remote" },
-  { key: "tooling", label: "Testing & PM", cmd: "ls stack/tooling" },
 ];
 
 export default function Skills() {
@@ -33,9 +34,7 @@ export default function Skills() {
       <h2 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
         {isSignal ? "tree ./stack -L 2" : "Skills"}
       </h2>
-      <p className="mt-2 max-w-lg text-sm text-[var(--text-secondary)]">
-        A compact view of the tools I use most often to ship products.
-      </p>
+      <SectionIntro>A compact view of the tools I use most often to ship products.</SectionIntro>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {groups.map((group) => (
