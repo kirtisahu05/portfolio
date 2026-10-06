@@ -435,6 +435,11 @@ html {
   animation-name: flow-drop;
 }
 
+/* The visitor's question, one chunk at a time (same timing as the reply). */
+.flow-token--chunk {
+  animation-name: flow-word;
+}
+
 .flow-token--join {
   animation-name: flow-join;
 }

@@ -55,22 +55,31 @@ const STEPS: { id: string; icon: IconType; title: string; body: string; facts: s
 
 // What travels along each connector (between step i and i+1). Static lists —
 // no Math.random() — so server and client render identically.
-type Token = { t: string; kind?: "drop" | "join" | "word" };
+// The lanes tell one story: a visitor asks for a quick intro, Guardrails
+// strips the junk, the context joins in, and the reply streams back.
+//   - "chunk"/"word": shown one at a time (flow-word in globals.css is timed
+//     for exactly three per lane); "chunk" is the mono question text, "word"
+//     the mint reply.
+//   - plain/"drop"/"join": continuous characters spread along the lane.
+type Token = { t: string; kind?: "drop" | "join" | "word" | "chunk" };
+const QUESTION = ["hi,", "give me a", "quick intro"];
 const LANES: { duration: number; tokens: Token[] }[] = [
-  // You ask → Guardrails: "hello, world" — every programmer's first program —
-  // with junk characters that get filtered out at the Guardrails tile.
+  // You ask → Guardrails: the question, with junk characters mixed in that
+  // turn red and fall out at the Guardrails tile.
   {
-    duration: 5,
+    duration: 6,
     tokens: [
-      { t: "h" }, { t: "e" }, { t: "<", kind: "drop" }, { t: "l" }, { t: "l" }, { t: "o" },
-      { t: "{", kind: "drop" }, { t: "," }, { t: "w" }, { t: "o" }, { t: "∅", kind: "drop" },
-      { t: "r" }, { t: "l" }, { t: "#", kind: "drop" }, { t: "d" },
+      ...QUESTION.map((t) => ({ t, kind: "chunk" as const })),
+      { t: "<", kind: "drop" },
+      { t: "{", kind: "drop" },
+      { t: "∅", kind: "drop" },
+      { t: "#", kind: "drop" },
     ],
   },
-  // Guardrails → Context: only the clean greeting makes it through.
+  // Guardrails → Context: the same question, clean — it passed Guardrails.
   {
-    duration: 5,
-    tokens: "hello,world".split("").map((t) => ({ t })),
+    duration: 6,
+    tokens: QUESTION.map((t) => ({ t, kind: "chunk" as const })),
   },
   // Context → Gemini: "hi" in ASCII binary (01101000 01101001), with a few
   // knowledge-base bits dropping in to join it.
@@ -78,34 +87,41 @@ const LANES: { duration: number; tokens: Token[] }[] = [
     duration: 5,
     tokens: "0110100001101001".split("").map((t, i) => ({ t, kind: i % 5 === 2 ? ("join" as const) : undefined })),
   },
-  // Gemini → Streams back: a short intro, one chunk at a time (flow-word in
-  // globals.css is timed for exactly three tokens).
+  // Gemini → Streams back: the reply to "give me a quick intro".
   {
     duration: 6,
-    tokens: ["Hi, I'm Kirti 👋", "I write code", "that ships."].map((t) => ({ t, kind: "word" as const })),
+    tokens: ["Hi! I'm Kirti 👋", "frontend architect,", "10+ yrs shipping."].map((t) => ({ t, kind: "word" as const })),
   },
 ];
 
+const isOneAtATime = (tok: Token) => tok.kind === "word" || tok.kind === "chunk";
+
 function FlowLane({ lane, active }: { lane: (typeof LANES)[number]; active: boolean }) {
-  const n = lane.tokens.length;
+  // One-at-a-time tokens and continuous tokens are staggered independently,
+  // each across its own count.
+  const sequenced = lane.tokens.filter(isOneAtATime);
+  const continuous = lane.tokens.filter((tok) => !isOneAtATime(tok));
   return (
     <div className={`flow-lane h-12 ${active ? "flow-lane--active" : ""}`} aria-hidden="true">
-      {lane.tokens.map((tok, i) => (
-        <span
-          key={i}
-          className={`flow-token ${tok.kind ? `flow-token--${tok.kind}` : ""}`}
-          // Negative delays spread the tokens along the lane from the first
-          // frame instead of all starting at the left edge together. Character
-          // tokens read left→right as a ticker; word tokens appear one at a
-          // time, so they're staggered the other way to arrive in order.
-          style={{
-            animationDuration: `${lane.duration}s`,
-            animationDelay: `${-(((tok.kind === "word" ? (n - i) % n : i) * lane.duration) / n)}s`,
-          }}
-        >
-          {tok.t}
-        </span>
-      ))}
+      {lane.tokens.map((tok, i) => {
+        const group = isOneAtATime(tok) ? sequenced : continuous;
+        const n = group.length;
+        const k = group.indexOf(tok);
+        // Negative delays spread tokens out from the first frame instead of
+        // all starting at the left edge together. Continuous characters read
+        // left→right as a ticker; one-at-a-time chunks are staggered the other
+        // way so they arrive in reading order.
+        const slot = isOneAtATime(tok) ? (n - k) % n : k;
+        return (
+          <span
+            key={i}
+            className={`flow-token ${tok.kind ? `flow-token--${tok.kind}` : ""}`}
+            style={{ animationDuration: `${lane.duration}s`, animationDelay: `${-((slot * lane.duration) / n)}s` }}
+          >
+            {tok.t}
+          </span>
+        );
+      })}
     </div>
   );
 }
