@@ -13,12 +13,12 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-[var(--bg)]/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-[var(--nav-border)] bg-[var(--nav-bg)] backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4">
         <div className="flex items-center gap-3">
           <Link
             href="/#top"
-            className="font-[var(--font-display)] text-sm font-semibold tracking-wide text-[var(--accent)]"
+            className="font-[var(--font-display)] text-sm font-semibold tracking-wide text-[var(--nav-accent)]"
           >
             {profile.handle}
           </Link>
@@ -31,23 +31,23 @@ export default function Nav() {
             </span>
           )}
         </div>
-        <nav className="hidden flex-wrap items-center justify-end gap-x-4 gap-y-1 font-[var(--font-mono)] text-[13px] text-[var(--text-secondary)] lg:flex">
+        <nav className="hidden flex-wrap items-center justify-end gap-x-4 gap-y-1 font-[var(--font-mono)] text-[13px] text-[var(--nav-text)] lg:flex">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="nav-link whitespace-nowrap hover:text-[var(--text-primary)]"
+              className="nav-link whitespace-nowrap hover:text-[var(--nav-text-hover)]"
             >
               {item.label}
             </a>
           ))}
-          <Link href="/log" className="nav-link whitespace-nowrap hover:text-[var(--text-primary)]">
+          <Link href="/log" className="nav-link whitespace-nowrap hover:text-[var(--nav-text-hover)]">
             {isSignal ? "./log" : "log"}
           </Link>
           <Link
             href="/ask-ai"
-            className="nav-link whitespace-nowrap hover:text-[var(--text-primary)]"
-            style={{ color: "var(--accent)" }}
+            className="nav-link whitespace-nowrap hover:text-[var(--nav-text-hover)]"
+            style={{ color: "var(--nav-accent)" }}
           >
             {isSignal ? "./ask-ai" : "ask ai"}
           </Link>
@@ -56,7 +56,7 @@ export default function Nav() {
           {isSignal && (
             <a
               href="/resume.pdf" target="_blank" rel="noopener noreferrer"
-              className="hidden rounded-md border px-3 py-1.5 font-[var(--font-mono)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] sm:inline-block"
+              className="hidden rounded-md border px-3 py-1.5 font-[var(--font-mono)] text-xs text-[var(--text-secondary)] hover:text-[var(--nav-text-hover)] sm:inline-block"
               style={{ borderColor: "var(--border-strong)" }}
             >
               resume.exe
@@ -69,8 +69,8 @@ export default function Nav() {
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-            className="flex h-8 w-8 items-center justify-center rounded-md border text-[var(--text-secondary)] lg:hidden"
-            style={{ borderColor: "var(--border-strong)" }}
+            className="flex h-8 w-8 items-center justify-center rounded-md border text-[var(--nav-text)] lg:hidden"
+            style={{ borderColor: "var(--nav-border)" }}
           >
             <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" aria-hidden="true">
               {menuOpen ? (
@@ -95,15 +95,15 @@ export default function Nav() {
       {menuOpen && (
         <nav
           id="mobile-nav"
-          className="flex flex-col gap-1 border-t px-6 py-4 font-[var(--font-mono)] text-sm text-[var(--text-secondary)] lg:hidden"
-          style={{ borderColor: "var(--border)" }}
+          className="flex flex-col gap-1 border-t px-6 py-4 font-[var(--font-mono)] text-sm text-[var(--nav-text)] lg:hidden"
+          style={{ borderColor: "var(--nav-border)" }}
         >
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className="nav-link rounded-md px-2 py-2 hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]"
+              className="nav-link rounded-md px-2 py-2 hover:bg-[var(--nav-border)] hover:text-[var(--nav-text-hover)]"
             >
               {item.label}
             </a>
@@ -111,15 +111,15 @@ export default function Nav() {
           <Link
             href="/log"
             onClick={() => setMenuOpen(false)}
-            className="nav-link rounded-md px-2 py-2 hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]"
+            className="nav-link rounded-md px-2 py-2 hover:bg-[var(--nav-border)] hover:text-[var(--nav-text-hover)]"
           >
             {isSignal ? "./log" : "log"}
           </Link>
           <Link
             href="/ask-ai"
             onClick={() => setMenuOpen(false)}
-            className="nav-link rounded-md px-2 py-2 hover:bg-[var(--bg-elevated)]"
-            style={{ color: "var(--accent)" }}
+            className="nav-link rounded-md px-2 py-2 hover:bg-[var(--nav-border)]"
+            style={{ color: "var(--nav-accent)" }}
           >
             {isSignal ? "./ask-ai" : "ask ai"}
           </Link>
@@ -129,7 +129,7 @@ export default function Nav() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="rounded-md px-2 py-2 hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]"
+              className="rounded-md px-2 py-2 hover:bg-[var(--nav-border)] hover:text-[var(--nav-text-hover)]"
             >
               resume.exe
             </a>

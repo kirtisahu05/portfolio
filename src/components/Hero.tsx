@@ -65,13 +65,13 @@ export default function Hero() {
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#work"
-              className="rounded-md px-5 py-2.5 text-sm font-medium bg-[var(--text-primary)] text-[var(--bg)] transition hover:opacity-90 active:scale-[0.98]"
+              className="rounded-[var(--btn-radius)] px-5 py-2.5 text-sm font-medium bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] transition hover:opacity-90 active:scale-[0.98]"
             >
               {isSignal ? "./view-projects" : "View work"}
             </a>
             <a
               href="/resume.pdf" target="_blank" rel="noopener noreferrer"
-              className="rounded-md border px-5 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-elevated)] active:scale-[0.98]"
+              className="rounded-[var(--btn-radius)] border px-5 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-elevated)] active:scale-[0.98]"
               style={{ borderColor: "var(--border-strong)" }}
             >
               Resume

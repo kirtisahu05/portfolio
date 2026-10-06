@@ -60,7 +60,7 @@ export default function Contact() {
               e.preventDefault();
               setSchedulingOpen(true);
             }}
-            className="shrink-0 self-start whitespace-nowrap rounded-md px-5 py-2.5 text-sm font-medium bg-[var(--text-primary)] text-[var(--bg)] sm:self-auto"
+            className="shrink-0 self-start whitespace-nowrap rounded-[var(--btn-radius)] px-5 py-2.5 text-sm font-medium bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] transition hover:opacity-90 active:scale-[0.98] sm:self-auto"
           >
             {consulting.ctaLabel}
           </a>

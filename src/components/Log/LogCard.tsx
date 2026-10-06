@@ -130,7 +130,7 @@ export default function LogCard({
   const latestPill = isLatest && (
     <span
       className="rounded-full px-2 py-0.5 font-semibold"
-      style={{ background: "var(--accent)", color: "var(--accent-contrast)" }}
+      style={{ background: "var(--badge-bg)", color: "var(--badge-text)" }}
     >
       LATEST
     </span>

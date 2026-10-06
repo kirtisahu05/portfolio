@@ -8,11 +8,11 @@ export const contentType = "image/png";
 // globals.css (the palette visitors see), so link previews match the site.
 // Keep them in sync if that palette changes.
 const colors = {
-  bg: "#fef7e5",
-  textPrimary: "#00311e",
-  textSecondary: "#2d4c3c",
-  textMuted: "#547061",
-  border: "#5f7d6a",
+  bg: "#fbf6eb",
+  textPrimary: "#0a221f",
+  textSecondary: "#3f524d",
+  textMuted: "#5e6e67",
+  border: "#9afba4",
 };
 
 export default function Image() {
@@ -45,7 +45,7 @@ export default function Image() {
             display: "flex",
             marginTop: 40,
             paddingTop: 24,
-            borderTop: `2px solid ${colors.border}`,
+            borderTop: `4px solid ${colors.border}`,
             fontSize: 24,
             color: colors.textMuted,
           }}
