@@ -1,11 +1,12 @@
 import { workedWith } from "@/lib/content";
 import Band from "@/components/Band";
 
-// Credibility strip right under the hero — BotFriday's "Trusted by teams at"
-// row, as muted text wordmarks.
-export default function WorkedWith() {
-  return (
-    <Band tone="cream" innerClassName="py-10">
+// Credibility strip — BotFriday's "Trusted by teams at" row, as muted text
+// wordmarks. Rendered `embedded` at the bottom of the hero (about) band; the
+// standalone cream band is kept for use elsewhere.
+export default function WorkedWith({ embedded = false }: { embedded?: boolean }) {
+  const content = (
+    <>
       <p className="text-center font-[var(--font-mono)] text-[11px] uppercase tracking-[0.18em] text-[var(--text-muted)]">
         {workedWith.label}
       </p>
@@ -19,6 +20,20 @@ export default function WorkedWith() {
           </li>
         ))}
       </ul>
+    </>
+  );
+
+  if (embedded) {
+    return (
+      <div className="border-t" style={{ borderColor: "var(--border)" }}>
+        <div className="page-container py-8">{content}</div>
+      </div>
+    );
+  }
+
+  return (
+    <Band tone="cream" innerClassName="py-10">
+      {content}
     </Band>
   );
 }

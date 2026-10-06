@@ -107,6 +107,12 @@ body {
   outline-offset: 2px;
 }
 
+/* A borderless input sitting inside a styled wrapper (e.g. the Ask AI pill)
+   — the wrapper shows the focus ring via focus-within instead. */
+.input-bare:focus-visible {
+  outline: none;
+}
+
 /* Title Case headings — the previous systems-theme style (Sep 2026), kept
    with the cream palette for rollback. The BotFriday-style default uses
    sentence case instead (see "Default theme layout" below). Excludes the
@@ -537,4 +543,114 @@ html {
   .flow-token {
     display: none;
   }
+}
+
+/* Career pipeline banner (CareerPipelineBanner.tsx): a CI-run strip above the
+   nav. Dotted texture, stages that tick in one by one, a pulsing "running"
+   dot, and a light that travels along each passed edge. */
+.pipeline-banner {
+  background-color: var(--nav-bg);
+  background-image: radial-gradient(var(--nav-border) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+.pipeline-check {
+  color: var(--nav-accent);
+  font-weight: 700;
+}
+
+.pipeline-running {
+  position: relative;
+  display: inline-block;
+  height: 7px;
+  width: 7px;
+  border-radius: 9999px;
+  background: var(--nav-accent);
+}
+
+.pipeline-queued {
+  display: inline-block;
+  height: 7px;
+  width: 7px;
+  border-radius: 9999px;
+  border: 1px dashed var(--nav-text);
+  opacity: 0.7;
+}
+
+.pipeline-edge {
+  position: relative;
+  display: inline-block;
+  height: 1px;
+  width: clamp(12px, 2.4vw, 36px);
+  overflow: hidden;
+  background: var(--nav-accent);
+  opacity: 0.45;
+}
+
+.pipeline-edge--idle {
+  background: none;
+  border-top: 1px dashed var(--nav-text);
+  opacity: 0.4;
+}
+
+@keyframes pipeline-stage-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pipeline-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(154 251 164 / 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 7px rgb(154 251 164 / 0);
+  }
+}
+
+@keyframes pipeline-travel {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pipeline-stage {
+    animation: pipeline-stage-in 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .pipeline-running {
+    animation: pipeline-pulse 1.6s ease-out infinite;
+  }
+  .pipeline-edge:not(.pipeline-edge--idle)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 35%;
+    background: var(--nav-brand);
+    animation: pipeline-travel 2.4s linear infinite;
+  }
+}
+
+/* Small card label on the /log sidebar (about · stats · categories). Default
+   theme: muted uppercase mono, like the hero aside's QUICK FACTS. Signal
+   theme: the original lowercase accent label. */
+.log-label {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-theme="b"] .log-label {
+  letter-spacing: 0.025em;
+  text-transform: none;
+  color: var(--accent);
 }

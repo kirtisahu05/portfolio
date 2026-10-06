@@ -11,7 +11,7 @@ export default function StatsCard({
 }) {
   return (
     <div className="rounded-lg border p-5" style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}>
-      <p className="mb-3 font-[var(--font-mono)] text-[11px] tracking-wide" style={{ color: "var(--accent)" }}>
+      <p className="log-label mb-3">
         stats
       </p>
       <div className="grid grid-cols-2 gap-3">

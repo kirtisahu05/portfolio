@@ -11,8 +11,10 @@ import {
   TbShieldCheck,
   TbSparkles,
 } from "react-icons/tb";
+import FlowLane, { type FlowLaneData } from "@/components/FlowLane";
 
-// Interactive explainer for the Ask AI empty state. Every step describes what
+// Interactive explainer for the Ask AI empty state, also embedded in the Ask AI
+// project card under Selected work (`embedded`). Every step describes what
 // the code actually does — keep it in sync with src/app/api/ask/route.ts,
 // src/lib/ai-knowledge.ts, and src/lib/ai-system-prompt.ts.
 const STEPS: { id: string; icon: IconType; title: string; body: string; facts: string[] }[] = [
@@ -61,9 +63,8 @@ const STEPS: { id: string; icon: IconType; title: string; body: string; facts: s
 //     for exactly three per lane); "chunk" is the mono question text, "word"
 //     the mint reply.
 //   - plain/"drop"/"join": continuous characters spread along the lane.
-type Token = { t: string; kind?: "drop" | "join" | "word" | "chunk" };
 const QUESTION = ["hi,", "give me a", "quick intro"];
-const LANES: { duration: number; tokens: Token[] }[] = [
+const LANES: FlowLaneData[] = [
   // You ask → Guardrails: the question, with junk characters mixed in that
   // turn red and fall out at the Guardrails tile.
   {
@@ -94,41 +95,13 @@ const LANES: { duration: number; tokens: Token[] }[] = [
   },
 ];
 
-const isOneAtATime = (tok: Token) => tok.kind === "word" || tok.kind === "chunk";
-
-function FlowLane({ lane, active }: { lane: (typeof LANES)[number]; active: boolean }) {
-  // One-at-a-time tokens and continuous tokens are staggered independently,
-  // each across its own count.
-  const sequenced = lane.tokens.filter(isOneAtATime);
-  const continuous = lane.tokens.filter((tok) => !isOneAtATime(tok));
-  return (
-    <div className={`flow-lane h-12 ${active ? "flow-lane--active" : ""}`} aria-hidden="true">
-      {lane.tokens.map((tok, i) => {
-        const group = isOneAtATime(tok) ? sequenced : continuous;
-        const n = group.length;
-        const k = group.indexOf(tok);
-        // Negative delays spread tokens out from the first frame instead of
-        // all starting at the left edge together. Continuous characters read
-        // left→right as a ticker; one-at-a-time chunks are staggered the other
-        // way so they arrive in reading order.
-        const slot = isOneAtATime(tok) ? (n - k) % n : k;
-        return (
-          <span
-            key={i}
-            className={`flow-token ${tok.kind ? `flow-token--${tok.kind}` : ""}`}
-            style={{ animationDuration: `${lane.duration}s`, animationDelay: `${-((slot * lane.duration) / n)}s` }}
-          >
-            {tok.t}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
-
 const ADVANCE_MS = 5000;
 
-export default function HowAskAIWorks() {
+export default function HowAskAIWorks({ embedded = false }: { embedded?: boolean }) {
+  // Embedded in a project card: a sub-heading inside the card, with its own ids
+  // so it never collides with the /ask-ai page's copy.
+  const idPrefix = embedded ? "card-" : "";
+  const Heading = embedded ? "h4" : "h2";
   const [active, setActive] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [hovered, setHovered] = useState(false);
@@ -151,8 +124,8 @@ export default function HowAskAIWorks() {
 
   return (
     <section
-      aria-labelledby="how-ask-ai-works"
-      className="card-dark relative overflow-hidden rounded-[var(--radius-lg)] border p-6 sm:p-8"
+      aria-labelledby={`${idPrefix}how-ask-ai-works`}
+      className={`card-dark relative overflow-hidden ${embedded ? "mt-5" : ""} rounded-[var(--radius-lg)] border p-6 sm:p-8`}
       style={{ borderColor: "var(--border)" }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -161,13 +134,13 @@ export default function HowAskAIWorks() {
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <span className="section-label">How it works</span>
-          <h2
-            id="how-ask-ai-works"
-            className="mt-3 font-[var(--font-display)] text-xl font-bold tracking-tight text-[var(--text-primary)] sm:text-2xl"
+          <span className="section-label">{embedded ? "Architecture" : "How it works"}</span>
+          <Heading
+            id={`${idPrefix}how-ask-ai-works`}
+            className={`mt-3 font-[var(--font-display)] font-bold tracking-tight text-[var(--text-primary)] ${embedded ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"}`}
           >
             From your question to a grounded answer
-          </h2>
+          </Heading>
         </div>
         <button
           type="button"
@@ -206,9 +179,9 @@ export default function HowAskAIWorks() {
                 key={s.id}
                 type="button"
                 role="tab"
-                id={`ask-step-${s.id}`}
+                id={`${idPrefix}ask-step-${s.id}`}
                 aria-selected={isActive}
-                aria-controls="ask-step-panel"
+                aria-controls={`${idPrefix}ask-step-panel`}
                 onClick={() => setActive(i)}
                 className="group flex flex-col items-center gap-2 text-center"
               >
@@ -236,9 +209,9 @@ export default function HowAskAIWorks() {
       </div>
 
       <div
-        id="ask-step-panel"
+        id={`${idPrefix}ask-step-panel`}
         role="tabpanel"
-        aria-labelledby={`ask-step-${step.id}`}
+        aria-labelledby={`${idPrefix}ask-step-${step.id}`}
         aria-live="polite"
         className="mt-8 rounded-[calc(var(--radius-lg)-0.25rem)] border p-5 sm:p-6"
         style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}

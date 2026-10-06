@@ -64,7 +64,7 @@ export default function ViewSwitcher({
 }) {
   return (
     <div
-      className="inline-flex items-center gap-1 rounded-md border p-1"
+      className="inline-flex items-center gap-1 rounded-[var(--btn-radius)] border p-1"
       style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}
       role="group"
       aria-label="Log view mode"
@@ -80,7 +80,7 @@ export default function ViewSwitcher({
             aria-label={label}
             aria-pressed={active}
             title={label}
-            className="flex h-7 w-7 items-center justify-center rounded transition-colors"
+            className="flex h-7 w-7 items-center justify-center rounded-[var(--btn-radius)] transition-colors"
             style={
               active
                 ? { background: "var(--text-primary)", color: "var(--bg)" }

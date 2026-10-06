@@ -1,4 +1,5 @@
 import Papa from "papaparse";
+import { isHttpUrl, parseDateParts, parseTimeParts, slugify } from "@/lib/log-validation";
 
 export type LogEntry = {
   slug: string;
@@ -74,37 +75,6 @@ let lastGoodEntries: ListEntry[] = [];
 // that exact shape and treats anything else as unparseable.
 // Exported so the contribute-form API route can validate against the exact
 // same format contract this reader enforces.
-export const DATE_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
-export const TIME_RE = /^(\d{2}):(\d{2})$/;
-
-function parseDateParts(dateStr: string): { y: number; m: number; d: number } | null {
-  const match = DATE_RE.exec(dateStr.trim());
-  if (!match) return null;
-  const y = Number(match[1]);
-  const m = Number(match[2]);
-  const d = Number(match[3]);
-  const date = new Date(y, m - 1, d);
-  if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) return null;
-  return { y, m, d };
-}
-
-function parseTimeParts(timeStr: string): { h: number; min: number } | null {
-  const match = TIME_RE.exec(timeStr.trim());
-  if (!match) return null;
-  const h = Number(match[1]);
-  const min = Number(match[2]);
-  if (h > 23 || min > 59) return null;
-  return { h, min };
-}
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 function splitTags(raw: string): string[] {
   return raw
     .split(",")
@@ -125,7 +95,14 @@ function parseRow(row: RawRow, rowIndex: number): ParsedRow | null {
   const category = (row.Category ?? "").trim();
   const summary = (row.Summary ?? "").trim();
   const content = (row.Content ?? "").trim();
-  const externalUrl = (row.ExternalUrl ?? "").trim();
+  // Rows can be edited straight in the sheet, so links are re-checked here:
+  // anything that isn't http(s) is dropped rather than rendered as an href.
+  const externalUrlRaw = (row.ExternalUrl ?? "").trim();
+  const externalUrl = externalUrlRaw && isHttpUrl(externalUrlRaw) ? externalUrlRaw : "";
+  if (externalUrlRaw && !externalUrl) {
+    console.warn(`[log-source] Row ${rowIndex}: ignoring ExternalUrl "${externalUrlRaw}" — must be http(s).`);
+  }
+  const imageUrlRaw = (row.ImageUrl ?? "").trim();
   const statusRaw = (row.Status ?? "").trim();
   // Defaults to Public if the column is blank or missing entirely — keeps
   // existing sheets working unchanged until a Visibility column is added.
@@ -184,7 +161,7 @@ function parseRow(row: RawRow, rowIndex: number): ParsedRow | null {
     summary,
     content: content || null,
     externalUrl: externalUrl || null,
-    imageUrl: (row.ImageUrl ?? "").trim() || null,
+    imageUrl: imageUrlRaw && isHttpUrl(imageUrlRaw) ? imageUrlRaw : null,
     tags: splitTags(row.Tags ?? ""),
     status,
     visibility,
@@ -228,7 +205,9 @@ async function fetchAndParse(): Promise<ListEntry[]> {
 
     const { sortTime, visibility, ...rest } = row;
     void sortTime;
-    const base = slugify(rest.title);
+    // A title with no English letters/digits (e.g. all Hindi or emoji)
+    // slugifies to "" — fall back to the log number so the link still works.
+    const base = slugify(rest.title) || `entry-${logNumber}`;
     const count = slugCounts.get(base) ?? 0;
     slugCounts.set(base, count + 1);
     const slug = count === 0 ? base : `${base}-${count + 1}`;

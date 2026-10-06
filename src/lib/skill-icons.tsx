@@ -15,6 +15,9 @@ import {
   SiFlutter,
   SiGraphql,
   SiBootstrap,
+  SiClaude,
+  SiCursor,
+  SiGithubcopilot,
   SiTailwindcss,
   SiPrimereact,
   SiMui,
@@ -61,9 +64,36 @@ import {
   SiSocketdotio,
   SiD3,
   SiKeycloak,
+  SiAntdesign,
+  SiVuetify,
+  SiReduxsaga,
+  SiTanstack,
+  SiWebpack,
+  SiModelcontextprotocol,
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa6";
-import { TbBrandCSharp, TbBrandAzure, TbBrandAws, TbBrandOpenai, TbBraces } from "react-icons/tb";
+import {
+  TbApi,
+  TbBolt,
+  TbBooks,
+  TbBraces,
+  TbBrandAws,
+  TbBrandAzure,
+  TbBrandCSharp,
+  TbBrandOpenai,
+  TbClockHour4,
+  TbDatabaseSearch,
+  TbGauge,
+  TbKey,
+  TbLayoutDashboard,
+  TbPaw,
+  TbPlugConnected,
+  TbPrompt,
+  TbUserShield,
+  TbUsersGroup,
+  TbWorld,
+  TbWorldLatitude,
+} from "react-icons/tb";
 
 // Exact-string map from the skill labels in content.ts to a brand icon.
 // Compound labels ("Node.js / Express") map to their primary technology.
@@ -84,13 +114,18 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   Swift: SiSwift,
   Dart: SiDart,
 
-  "React.js (Redux, Hooks)": SiReact,
+  "React (Redux, Hooks)": SiReact,
   "Next.js": SiNextdotjs,
-  "Vue.js (Vuex)": SiVuedotjs,
+  "Vue.js (Vuex, Pinia)": SiVuedotjs,
+  "Redux Saga": SiReduxsaga,
+  Zustand: TbPaw, // no brand logo in the icon sets; Zustand's mascot is a bear
+  "TanStack Query": SiTanstack,
+  "Micro-frontends (Module Federation)": SiWebpack,
+  "Ant Design": SiAntdesign,
+  Vuetify: SiVuetify,
   AngularJS: SiAngular,
   Flutter: SiFlutter,
   GraphQL: SiGraphql,
-  "Bootstrap 4": SiBootstrap,
   "Tailwind CSS": SiTailwindcss,
   PrimeReact: SiPrimereact,
   "Material UI": SiMui,
@@ -107,6 +142,11 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   "Firebase / Firestore": SiFirebase,
   Redis: SiRedis,
   Keycloak: SiKeycloak,
+  "REST APIs": TbApi,
+  "WebSocket / Realtime APIs": TbPlugConnected,
+  "OAuth 2.0": TbKey,
+  RBAC: TbUserShield,
+  JWT: SiJsonwebtokens,
 
   Docker: SiDocker,
   Jenkins: SiJenkins,
@@ -124,6 +164,13 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   "OpenAI API": TbBrandOpenai,
   "Anthropic Claude API": SiAnthropic,
   "pgvector (Postgres)": SiPostgresql,
+  "LLM Streaming (SSE)": TbBolt,
+  "Prompt / Context Engineering": TbPrompt,
+  "RAG (Retrieval-Augmented Generation)": TbDatabaseSearch,
+  Claude: SiClaude,
+  "GitHub Copilot": SiGithubcopilot,
+  Cursor: SiCursor,
+  "MCP integrations": SiModelcontextprotocol,
 
   Jest: SiJest,
   "React Testing Library": SiTestinglibrary,
@@ -136,13 +183,18 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   Asana: SiAsana,
   ClickUp: SiClickup,
   Notion: SiNotion,
+  CloudWatch: TbBrandAws,
+
+  "Remote Collaboration": TbWorld,
+  "Async Communication": TbClockHour4,
+  "Distributed Teams": TbUsersGroup,
+  "Cross-Timezone Coordination": TbWorldLatitude,
 
   // Plain-name aliases — used by experience[].techStack, which names
   // per-role tech as it's actually written in that role's bullets, rather
-  // than reusing the aggregate compound labels above (e.g. "React.js (Redux,
+  // than reusing the aggregate compound labels above (e.g. "React (Redux,
   // Hooks)" implies Redux was used at that specific job, which not every
   // role's bullets support).
-  "React.js": SiReact,
   "Vue.js": SiVuedotjs,
   Vuex: SiVuedotjs,
   "Socket.IO (WebSockets)": SiSocketdotio,
@@ -157,17 +209,20 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   PayPal: SiPaypal,
   Stripe: SiStripe,
 
-  // Project tags (projects[].tags) — conceptual tags with no product logo
-  // (RAG, Rate limiting, Context Stuffing, Streaming) fall back to TbBraces.
+  // Project tags (projects[].tags). Conceptual tags with no product logo get
+  // a matching Tabler icon below; anything unmapped falls back to TbBraces.
   React: SiReact,
-  MUI: SiMui,
   "React Router": SiReactrouter,
-  "JWT Auth": SiJsonwebtokens,
   MinIO: SiMinio,
   pgvector: SiPostgresql,
   "Row Level Security": SiPostgresql,
   "Server Actions": SiNextdotjs,
   "Angular-to-React Migration": SiReact,
+  "react-admin": TbLayoutDashboard,
+  "Context Stuffing": TbBooks,
+  "Streaming (SSE)": TbBolt,
+  "Rate limiting": TbGauge,
+  RAG: TbDatabaseSearch,
 };
 
 export function getSkillIcon(skill: string): IconType {

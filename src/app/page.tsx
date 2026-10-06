@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import WhyHireMeV2 from "@/components/WhyHireMeV2";
-import WorkedWith from "@/components/WorkedWith";
 import AskAIPromo from "@/components/AskAIPromo";
 import Projects from "@/components/Projects";
 import Experience from "@/components/Experience";
@@ -21,10 +20,11 @@ export default function Home() {
       <a href="#about" className="skip-link">
         Skip to content
       </a>
+      {/* CareerPipelineBanner (career.yml strip above the nav) is hidden —
+          kept in src/components; re-import and render it here to restore. */}
       <Nav />
       <main id="about" className="min-w-0 flex-1">
         <Hero />
-        <WorkedWith />
         <Skills />
         <Experience />
         <Education />

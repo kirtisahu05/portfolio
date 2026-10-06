@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { profile } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
+import WorkedWith from "@/components/WorkedWith";
 
 export default function Hero() {
   const { theme } = useTheme();
@@ -87,9 +88,13 @@ export default function Hero() {
             </a>
           </div>
           {!isSignal && (
-            <p className="mt-5 flex items-center gap-2 text-left text-sm text-[var(--text-secondary)]">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" aria-hidden="true" />
-              {profile.heroProofLine}
+            // Ask AI nudge under the buttons. (profile.heroProofLine — the
+            // CoffeeWeb team/users line — used to sit here; hidden, kept in content.ts.)
+            <p className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 text-left text-sm text-[var(--text-muted)]">
+              {profile.heroStrip.text}
+              <a href={profile.heroStrip.href} className="inline-flex items-center gap-1 text-[var(--accent)] hover:underline">
+                {profile.heroStrip.linkLabel} <span aria-hidden="true">→</span>
+              </a>
             </p>
           )}
         </div>
@@ -139,16 +144,7 @@ export default function Hero() {
         </aside>
       </div>
 
-      {!isSignal && (
-        <div className="border-t" style={{ borderColor: "var(--border)" }}>
-          <p className="page-container flex flex-wrap items-center gap-x-4 gap-y-1 py-4 text-left text-sm text-[var(--text-muted)]">
-            {profile.heroStrip.text}
-            <a href={profile.heroStrip.href} className="inline-flex items-center gap-1 text-[var(--accent)] hover:underline">
-              {profile.heroStrip.linkLabel} <span aria-hidden="true">→</span>
-            </a>
-          </p>
-        </div>
-      )}
+      <WorkedWith embedded />
     </section>
   );
 }

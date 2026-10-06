@@ -46,14 +46,16 @@ export default async function LogEntryPage({ params }: Props) {
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-8">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-8 [[data-theme=a]_&]:pt-14">
         <Link href="/log" className="text-sm hover:text-[var(--text-primary)]" style={{ color: "var(--accent)" }}>
           ← Back to Log
         </Link>
 
         <div className="mt-4 flex flex-wrap items-center gap-2 font-[var(--font-mono)] text-[11px]">
+          {/* Default theme shows the type as the site's label pill; signal keeps the outline chip. */}
+          <span className="hidden [[data-theme=a]_&]:inline-flex section-label">{entry.type}</span>
           <span
-            className="rounded-full px-2 py-0.5"
+            className="rounded-full px-2 py-0.5 [[data-theme=a]_&]:hidden"
             style={{ border: "1px solid var(--border)", color: "var(--text-secondary)" }}
           >
             {entry.type}
@@ -71,7 +73,7 @@ export default async function LogEntryPage({ params }: Props) {
           ))}
         </div>
 
-        <h1 className="mt-3 font-[var(--font-display)] text-2xl font-semibold text-[var(--text-primary)] sm:text-3xl">
+        <h1 className="mt-3 font-[var(--font-display)] text-2xl font-semibold text-[var(--text-primary)] sm:text-3xl [[data-theme=a]_&]:mt-4 [[data-theme=a]_&]:text-3xl [[data-theme=a]_&]:font-bold [[data-theme=a]_&]:tracking-[-0.03em] [[data-theme=a]_&]:sm:text-4xl">
           {entry.title}
         </h1>
 

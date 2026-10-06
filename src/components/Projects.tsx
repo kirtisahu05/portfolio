@@ -8,8 +8,13 @@ import { getSkillIcon } from "@/lib/skill-icons";
 import SectionIntro from "@/components/SectionIntro";
 import Band from "@/components/Band";
 import SectionHeading from "@/components/SectionHeading";
+import YourBotArchitecture from "@/components/YourBotArchitecture";
+import HowAskAIWorks from "@/components/AskAI/HowAskAIWorks";
 
 type Project = (typeof projects)[number];
+
+// Projects whose architecture renders as an interactive diagram in the default theme.
+const INTERACTIVE_DIAGRAMS = new Set(["yourbot-rag-platform", "ask-ai-assistant"]);
 
 // Links sit in a footer row, read after the content (title → description →
 // stack → architecture → links). Only links that actually work are shown: no
@@ -107,7 +112,13 @@ export default function Projects() {
                 })}
               </div>
 
-              {project.architecture && (
+              {/* YourBot and Ask AI get interactive diagrams in the default
+                  theme; the signal theme (and every other project) keeps the
+                  chip list. */}
+              {!isSignal && project.id === "yourbot-rag-platform" && <YourBotArchitecture />}
+              {!isSignal && project.id === "ask-ai-assistant" && <HowAskAIWorks embedded />}
+
+              {project.architecture && (isSignal || !INTERACTIVE_DIAGRAMS.has(project.id)) && (
                 <div className="mt-5 border-t pt-4" style={{ borderColor: "var(--border)" }}>
                   <p className="font-[var(--font-mono)] text-[11px] uppercase tracking-wide text-[var(--text-muted)]">
                     Architecture

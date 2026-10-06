@@ -8,7 +8,7 @@ import SectionIntro from "@/components/SectionIntro";
 import Band from "@/components/Band";
 import SectionHeading from "@/components/SectionHeading";
 
-const groups: { key: keyof typeof skills; label: string; cmd: string }[] = [
+export const skillGroups: { key: keyof typeof skills; label: string; cmd: string }[] = [
   { key: "languages", label: "Languages", cmd: "cat stack/languages.txt" },
   { key: "frontend", label: "Frontend", cmd: "ls stack/frontend" },
   { key: "backend", label: "Backend", cmd: "ls stack/backend" },
@@ -16,6 +16,19 @@ const groups: { key: keyof typeof skills; label: string; cmd: string }[] = [
   { key: "devops", label: "DevOps & Tools", cmd: "ls stack/tools" },
   { key: "ai", label: "AI & LLM", cmd: "ls stack/ai" },
   { key: "remote", label: "Remote & Async", cmd: "ls stack/remote" },
+];
+
+// Default theme: bento layout (Draft A). Tile size follows how much is in each
+// group, AI & LLM gets the dark highlight tile, and the 7 groups fill a 4×4
+// grid with no orphan card. Order matters — it drives grid auto-placement.
+const BENTO: { key: keyof typeof skills; span: string; dark?: boolean }[] = [
+  { key: "frontend", span: "lg:col-span-2 lg:row-span-2" },
+  { key: "ai", span: "lg:col-span-2", dark: true },
+  { key: "languages", span: "lg:col-span-1" },
+  { key: "remote", span: "lg:col-span-1" },
+  { key: "backend", span: "lg:col-span-2 lg:row-span-2" },
+  { key: "devops", span: "lg:col-span-2" },
+  { key: "tooling", span: "lg:col-span-2" },
 ];
 
 export default function Skills() {
@@ -32,12 +45,16 @@ export default function Skills() {
       />
       <SectionIntro>A compact view of the tools I use most often to ship products.</SectionIntro>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {groups.map((group) => (
+      {/* Signal theme keeps the original 3-column grid with its shell commands. */}
+      <div className={`mt-8 grid gap-4 sm:grid-cols-2 ${isSignal ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
+        {(isSignal
+          ? skillGroups.map((group) => ({ group, span: "", dark: false }))
+          : BENTO.map(({ key, span, dark = false }) => ({ group: skillGroups.find((g) => g.key === key)!, span, dark }))
+        ).map(({ group, span, dark }) => (
           <div
             key={group.key}
-            className="rounded-lg border p-5"
-            style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}
+            className={`rounded-lg border p-5 ${span} ${dark ? "card-dark" : ""}`}
+            style={{ borderColor: "var(--border)", background: dark ? undefined : "var(--bg-elevated)" }}
           >
             {isSignal && (
               <p className="mb-2 font-[var(--font-mono)] text-[11px] text-[var(--accent)]">
@@ -62,6 +79,28 @@ export default function Skills() {
                 );
               })}
             </div>
+            {group.key === "ai" && (
+              <>
+                <p className="mb-2 mt-4 font-[var(--font-mono)] text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
+                  {isSignal ? "// ai coding tools" : "AI coding tools"}
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {skills.aiCoding.map((tool) => {
+                    const Icon = getSkillIcon(tool);
+                    return (
+                      <span
+                        key={tool}
+                        className="inline-flex items-center gap-1.5 rounded px-2 py-1 font-[var(--font-mono)] text-[11px] text-[var(--text-secondary)]"
+                        style={{ border: "1px solid var(--border)" }}
+                      >
+                        <Icon className="h-3 w-3 shrink-0" aria-hidden="true" />
+                        {tool}
+                      </span>
+                    );
+                  })}
+                </div>
+              </>
+            )}
           </div>
         ))}
       </div>

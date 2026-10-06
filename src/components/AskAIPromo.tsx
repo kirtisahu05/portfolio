@@ -41,7 +41,13 @@ export default function AskAIPromo() {
           </div>
 
           <div>
-            <form onSubmit={onSubmit} className="flex items-center gap-2 rounded-full border p-1.5 pl-5" style={{ borderColor: "var(--border-strong)", background: "var(--bg)" }}>
+            {/* The pill carries the focus ring (focus-within); the bare input inside
+                opts out of the global :focus-visible outline via .input-bare. */}
+            <form
+              onSubmit={onSubmit}
+              className="flex items-center gap-2 rounded-full border border-[var(--border-strong)] p-1.5 pl-5 transition focus-within:border-[var(--accent)] focus-within:ring-2 focus-within:ring-[var(--accent)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--bg-elevated)]"
+              style={{ background: "var(--bg)" }}
+            >
               <input
                 type="text"
                 value={value}
@@ -49,7 +55,7 @@ export default function AskAIPromo() {
                 maxLength={MAX_LENGTH}
                 placeholder={askAiPromo.placeholder}
                 aria-label="Ask a question about Kirti"
-                className="min-w-0 flex-1 bg-transparent text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)]"
+                className="input-bare min-w-0 flex-1 bg-transparent text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
               />
               <button
                 type="submit"

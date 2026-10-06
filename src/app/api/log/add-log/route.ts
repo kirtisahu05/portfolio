@@ -3,7 +3,8 @@ import type { NextRequest } from "next/server";
 import { logContributePinFailures } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request-ip";
 import { pinMatches } from "@/lib/pin-auth";
-import { DATE_RE, TIME_RE, LOG_CACHE_TAG, getLogSheetId } from "@/lib/log-source";
+import { LOG_CACHE_TAG, getLogSheetId } from "@/lib/log-source";
+import { validateLogInput } from "@/lib/log-validation";
 import { appendSheetRow } from "@/lib/google-sheets";
 
 type Body = {
@@ -63,31 +64,13 @@ export async function POST(request: NextRequest) {
   const status = str(body.status);
   const visibility = str(body.visibility) || "Public";
 
-  // Same required-field contract log-source.ts enforces on read, checked
-  // here too so a bad submission never reaches the sheet in the first place.
-  if (!title || !date || !type || !category || !summary || !status) {
-    return Response.json(
-      { error: "bad_request", message: "Title, Date, Type, Category, Summary, and Status are required." },
-      { status: 400 }
-    );
-  }
-  if (status !== "Published" && status !== "Draft") {
-    return Response.json({ error: "bad_request", message: 'Status must be "Published" or "Draft".' }, { status: 400 });
-  }
-  if (visibility !== "Public" && visibility !== "Private") {
-    return Response.json({ error: "bad_request", message: 'Visibility must be "Public" or "Private".' }, { status: 400 });
-  }
-  if (!DATE_RE.test(date)) {
-    return Response.json({ error: "bad_request", message: "Date must be plain text in YYYY-MM-DD format." }, { status: 400 });
-  }
-  if (time && !TIME_RE.test(time)) {
-    return Response.json({ error: "bad_request", message: "Time must be plain text in 24-hour HH:MM format." }, { status: 400 });
-  }
-  if (!content && !externalUrl) {
-    return Response.json(
-      { error: "bad_request", message: "Provide either Content or an External URL." },
-      { status: 400 }
-    );
+  // Same rules the form runs and log-source.ts applies on read, so a bad
+  // submission never reaches the sheet in the first place.
+  const invalid = validateLogInput({
+    title, date, time, type, category, summary, content, externalUrl, imageUrl, tags, status, visibility,
+  });
+  if (invalid) {
+    return Response.json({ error: "bad_request", message: invalid }, { status: 400 });
   }
 
   const spreadsheetId = getLogSheetId();

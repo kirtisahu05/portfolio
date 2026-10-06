@@ -8,6 +8,10 @@ import { MULTI_UI_ENABLED } from "@/lib/feature-flags";
 import ThemeToggle from "./ThemeToggle";
 import SchedulingDialog, { isEmbeddableSchedule } from "./SchedulingDialog";
 
+// "Schedule a call" CTA (desktop button + mobile menu link + its dialog).
+// Hidden for now, not deleted — flip back to true to restore it.
+const SHOW_SCHEDULE_CALL = false;
+
 export default function Nav() {
   const { theme } = useTheme();
   const isSignal = theme === "b";
@@ -83,7 +87,7 @@ export default function Nav() {
             </a>
           )}
           {MULTI_UI_ENABLED && <ThemeToggle />}
-          {!isSignal && (
+          {SHOW_SCHEDULE_CALL && !isSignal && (
             <>
               <span className="hidden h-6 w-px bg-[var(--nav-border)] sm:block" aria-hidden="true" />
               <a
@@ -169,7 +173,7 @@ export default function Nav() {
               resume.exe
             </a>
           )}
-          {!isSignal && (
+          {SHOW_SCHEDULE_CALL && !isSignal && (
             <a
               href={schedulingHref}
               onClick={openScheduling}
@@ -181,7 +185,7 @@ export default function Nav() {
           )}
         </nav>
       )}
-      {!isSignal && embeddable && (
+      {SHOW_SCHEDULE_CALL && !isSignal && embeddable && (
         <SchedulingDialog url={consulting.ctaUrl} open={schedulingOpen} onClose={() => setSchedulingOpen(false)} />
       )}
     </header>

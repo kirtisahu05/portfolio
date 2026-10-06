@@ -3,7 +3,7 @@ import { profile } from "@/lib/content";
 export default function AboutCard() {
   return (
     <div className="rounded-lg border p-5" style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}>
-      <p className="mb-2 font-[var(--font-mono)] text-[11px] tracking-wide" style={{ color: "var(--accent)" }}>
+      <p className="log-label mb-2">
         about
       </p>
       <h3
