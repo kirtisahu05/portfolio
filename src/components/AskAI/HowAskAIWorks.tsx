@@ -57,33 +57,32 @@ const STEPS: { id: string; icon: IconType; title: string; body: string; facts: s
 // no Math.random() — so server and client render identically.
 type Token = { t: string; kind?: "drop" | "join" | "word" };
 const LANES: { duration: number; tokens: Token[] }[] = [
-  // You ask → Guardrails: the question's characters, plus junk that gets
-  // filtered out at the Guardrails tile.
+  // You ask → Guardrails: "hello, world" — every programmer's first program —
+  // with junk characters that get filtered out at the Guardrails tile.
   {
     duration: 5,
     tokens: [
-      { t: "h" }, { t: "<", kind: "drop" }, { t: "a" }, { t: "s" }, { t: "{", kind: "drop" }, { t: "l" },
-      { t: "e" }, { t: "∅", kind: "drop" }, { t: "d" }, { t: "t" }, { t: "#", kind: "drop" }, { t: "?" },
+      { t: "h" }, { t: "e" }, { t: "<", kind: "drop" }, { t: "l" }, { t: "l" }, { t: "o" },
+      { t: "{", kind: "drop" }, { t: "," }, { t: "w" }, { t: "o" }, { t: "∅", kind: "drop" },
+      { t: "r" }, { t: "l" }, { t: "#", kind: "drop" }, { t: "d" },
     ],
   },
-  // Guardrails → Context: only clean characters make it through.
+  // Guardrails → Context: only the clean greeting makes it through.
   {
     duration: 5,
-    tokens: "led teams?".split("").filter((c) => c !== " ").map((t) => ({ t })),
+    tokens: "hello,world".split("").map((t) => ({ t })),
   },
-  // Context → Gemini: the question as bits, with knowledge-base bits joining.
+  // Context → Gemini: "hi" in ASCII binary (01101000 01101001), with a few
+  // knowledge-base bits dropping in to join it.
   {
-    duration: 4.5,
-    tokens: [
-      { t: "1" }, { t: "0" }, { t: "1", kind: "join" }, { t: "1" }, { t: "0", kind: "join" }, { t: "0" },
-      { t: "1" }, { t: "1", kind: "join" }, { t: "0" }, { t: "1" }, { t: "0", kind: "join" }, { t: "1" },
-    ],
+    duration: 5,
+    tokens: "0110100001101001".split("").map((t, i) => ({ t, kind: i % 5 === 2 ? ("join" as const) : undefined })),
   },
-  // Gemini → Streams back: the answer, one chunk at a time (flow-word in
+  // Gemini → Streams back: a short intro, one chunk at a time (flow-word in
   // globals.css is timed for exactly three tokens).
   {
     duration: 6,
-    tokens: ["Yes,", "leads 9", "engineers"].map((t) => ({ t, kind: "word" as const })),
+    tokens: ["Hi, I'm Kirti 👋", "I write code", "that ships."].map((t) => ({ t, kind: "word" as const })),
   },
 ];
 
