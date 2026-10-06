@@ -8,6 +8,7 @@ import ChatMessage from "@/components/AskAI/ChatMessage";
 import ChatInput from "@/components/AskAI/ChatInput";
 import SuggestedQuestions from "@/components/AskAI/SuggestedQuestions";
 import TypingIndicator from "@/components/AskAI/TypingIndicator";
+import HowAskAIWorks from "@/components/AskAI/HowAskAIWorks";
 
 type Message = { role: "user" | "assistant"; content: string; isError?: boolean };
 
@@ -117,18 +118,36 @@ export default function AskPage() {
     <>
       <Nav />
       <main className="page-container flex w-full flex-1 flex-col py-8">
-        <p className="mb-1 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">ask ai</p>
-        <h1 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
-          {isSignal ? "./ask-about-kirti" : "Ask AI about Kirti"}
-        </h1>
+        {isSignal ? (
+          <>
+            <p className="mb-1 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">ask ai</p>
+            <h1 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
+              ./ask-about-kirti
+            </h1>
+          </>
+        ) : (
+          <div className="pt-6">
+            <span className="section-label">Ask AI</span>
+            <h1 className="mt-4 font-[var(--font-display)] text-3xl font-bold tracking-[-0.03em] text-[var(--text-primary)] sm:text-4xl">
+              Ask anything about my work.
+            </h1>
+            <p className="mt-3 max-w-2xl text-left text-base leading-relaxed text-[var(--text-secondary)]">
+              An AI assistant grounded in my experience, projects, and writing — it says so when something isn&apos;t
+              covered instead of guessing.
+            </p>
+          </div>
+        )}
 
         <div aria-live="polite" className="mt-6 flex-1 space-y-3">
           {messages.length === 0 ? (
-            <div className="space-y-4">
-              <p className="text-sm text-[var(--text-secondary)]">
-                Ask me anything about Kirti&apos;s background, skills, or experience.
-              </p>
-              <SuggestedQuestions onSelect={sendMessage} />
+            <div className="space-y-6">
+              <HowAskAIWorks />
+              <div>
+                <p className="mb-3 text-sm text-[var(--text-secondary)]">
+                  Try one of these, or type your own below:
+                </p>
+                <SuggestedQuestions onSelect={sendMessage} />
+              </div>
             </div>
           ) : (
             <>

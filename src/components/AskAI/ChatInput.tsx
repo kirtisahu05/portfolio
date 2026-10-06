@@ -42,7 +42,7 @@ export default function ChatInput({
         placeholder={isSignal ? "$ ask anything" : "Ask about Kirti's background..."}
         maxLength={MAX_LENGTH}
         aria-label="Ask a question about Kirti"
-        className="flex-1 rounded-md border px-4 py-2.5 text-sm outline-none disabled:opacity-50"
+        className="flex-1 rounded-[var(--btn-radius)] border px-4 py-2.5 text-sm outline-none disabled:opacity-50"
         style={{
           borderColor: "var(--border-strong)",
           background: "var(--bg-elevated)",
@@ -52,7 +52,7 @@ export default function ChatInput({
       <button
         type="submit"
         disabled={disabled || !value.trim()}
-        className="shrink-0 rounded-md px-5 py-2.5 text-sm font-medium disabled:opacity-50"
+        className="shrink-0 rounded-[var(--btn-radius)] px-5 py-2.5 text-sm font-medium disabled:opacity-50"
         style={{ background: "var(--text-primary)", color: "var(--bg)" }}
       >
         {isSignal ? "run" : "Send"}

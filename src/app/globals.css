@@ -323,8 +323,9 @@ body {
   padding: 0.25rem 0.75rem;
   font-family: var(--font-mono), monospace;
   font-size: 12px;
-  background: var(--label-bg);
-  color: var(--label-text);
+  /* Fallbacks for the signal theme, which doesn't define label colors. */
+  background: var(--label-bg, var(--bg-elevated));
+  color: var(--label-text, var(--accent));
 }
 
 /* Second heading line in green, BotFriday's emphasis treatment. */
