@@ -102,7 +102,7 @@ function DefaultWhyMe() {
           signalLabel="why me"
           signalTitle="cat ./value-proposition.md"
         />
-        <p className="mt-5 text-left text-base leading-relaxed text-[var(--text-secondary)]">
+        <p className="mt-5 text-base leading-relaxed text-[var(--text-secondary)]">
           I turn product requirements into technical direction, build systems that scale, help teams execute, and stay
           accountable for what happens in production.
         </p>

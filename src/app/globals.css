@@ -250,6 +250,17 @@ body {
   text-align: left;
 }
 
+/* Long-form text (paragraphs and bullet points) is justified. In the base
+   layer so any explicit alignment utility (text-center on centered intros,
+   text-left on one-line rows) still wins. One-line labels are unaffected:
+   the last line of justified text always stays left-aligned. */
+@layer base {
+  [data-theme="a"] p,
+  [data-theme="a"] li {
+    text-align: justify;
+  }
+}
+
 /* Section headings: big, bold, tight, sentence case. */
 [data-theme="a"] .band h2 {
   font-size: clamp(1.875rem, 3.6vw, 2.75rem);

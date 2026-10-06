@@ -246,7 +246,7 @@ export default function HowAskAIWorks() {
         <p className="font-[var(--font-mono)] text-[11px] uppercase tracking-[0.14em] text-[var(--accent)]">
           Step 0{active + 1} · {step.title}
         </p>
-        <p className="mt-2 text-left text-[15px] leading-relaxed text-[var(--text-secondary)]">{step.body}</p>
+        <p className="mt-2 text-[15px] leading-relaxed text-[var(--text-secondary)]">{step.body}</p>
         <ul className="mt-4 flex flex-wrap gap-2">
           {step.facts.map((fact) => (
             <li

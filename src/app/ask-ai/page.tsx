@@ -131,7 +131,7 @@ export default function AskPage() {
             <h1 className="mt-4 font-[var(--font-display)] text-3xl font-bold tracking-[-0.03em] text-[var(--text-primary)] sm:text-4xl">
               Ask anything about my work.
             </h1>
-            <p className="mt-3 max-w-2xl text-left text-base leading-relaxed text-[var(--text-secondary)]">
+            <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--text-secondary)]">
               An AI assistant grounded in my experience, projects, and writing — it says so when something isn&apos;t
               covered instead of guessing.
             </p>

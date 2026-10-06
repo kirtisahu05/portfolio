@@ -208,7 +208,7 @@ function DefaultContact() {
               <p className="font-[var(--font-mono)] text-[11px] uppercase tracking-[0.14em] text-[var(--accent)]">
                 {col.label}
               </p>
-              <p className="mt-2 text-left text-sm leading-relaxed text-[var(--text-secondary)]">{col.text}</p>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{col.text}</p>
             </div>
           ))}
         </div>

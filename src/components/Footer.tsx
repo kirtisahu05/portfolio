@@ -78,7 +78,7 @@ function DefaultFooter() {
             <span className="text-[var(--accent)]">{profile.handle.slice(0, 1)}</span>
             {profile.handle.slice(1)}
           </Link>
-          <p className="mt-3 max-w-sm text-left text-sm leading-relaxed text-[var(--text-secondary)]">{TAGLINE}</p>
+          <p className="mt-3 max-w-sm text-sm leading-relaxed text-[var(--text-secondary)]">{TAGLINE}</p>
           <a
             href={profile.links.linkedin}
             target="_blank"

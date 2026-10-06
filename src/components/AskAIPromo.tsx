@@ -37,7 +37,7 @@ export default function AskAIPromo() {
               <br />
               {askAiPromo.emphasis}
             </h2>
-            <p className="mt-4 max-w-xl text-left text-base leading-relaxed text-[var(--text-secondary)]">{askAiPromo.text}</p>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--text-secondary)]">{askAiPromo.text}</p>
           </div>
 
           <div>
