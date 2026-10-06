@@ -428,6 +428,7 @@ html {
   font-family: var(--font-body), sans-serif;
   font-size: 12px;
   font-weight: 600;
+  animation-name: flow-word;
 }
 
 .flow-token--drop {
@@ -482,6 +483,32 @@ html {
   100% {
     transform: translate(100cqw, -50%);
     opacity: 1;
+  }
+}
+
+/* Answer words stream one at a time: each crosses the whole lane within the
+   first ~30% of the cycle, then stays hidden, so a wide word can never
+   overlap the next — the lane can be narrower than the words themselves.
+   Built for three word tokens per lane (each delayed by a third of the
+   cycle); change the 30%/33% stops if the word count changes. */
+@keyframes flow-word {
+  0% {
+    transform: translate(-100%, -50%);
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  28% {
+    opacity: 1;
+  }
+  30% {
+    transform: translate(100cqw, -50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(100cqw, -50%);
+    opacity: 0;
   }
 }
 

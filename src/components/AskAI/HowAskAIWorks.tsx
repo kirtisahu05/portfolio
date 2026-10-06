@@ -79,8 +79,8 @@ const LANES: { duration: number; tokens: Token[] }[] = [
       { t: "1" }, { t: "1", kind: "join" }, { t: "0" }, { t: "1" }, { t: "0", kind: "join" }, { t: "1" },
     ],
   },
-  // Gemini → Streams back: the answer, streamed in chunks. Kept to three so
-  // the wider word tokens don't crowd each other in a short lane.
+  // Gemini → Streams back: the answer, one chunk at a time (flow-word in
+  // globals.css is timed for exactly three tokens).
   {
     duration: 6,
     tokens: ["Yes,", "leads 9", "engineers"].map((t) => ({ t, kind: "word" as const })),
@@ -96,8 +96,13 @@ function FlowLane({ lane, active }: { lane: (typeof LANES)[number]; active: bool
           key={i}
           className={`flow-token ${tok.kind ? `flow-token--${tok.kind}` : ""}`}
           // Negative delays spread the tokens along the lane from the first
-          // frame instead of all starting at the left edge together.
-          style={{ animationDuration: `${lane.duration}s`, animationDelay: `${-((i * lane.duration) / n)}s` }}
+          // frame instead of all starting at the left edge together. Character
+          // tokens read left→right as a ticker; word tokens appear one at a
+          // time, so they're staggered the other way to arrive in order.
+          style={{
+            animationDuration: `${lane.duration}s`,
+            animationDelay: `${-(((tok.kind === "word" ? (n - i) % n : i) * lane.duration) / n)}s`,
+          }}
         >
           {tok.t}
         </span>
