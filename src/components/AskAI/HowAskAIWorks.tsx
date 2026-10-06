@@ -67,7 +67,7 @@ const LANES: { duration: number; tokens: Token[] }[] = [
   // You ask → Guardrails: the question, with junk characters mixed in that
   // turn red and fall out at the Guardrails tile.
   {
-    duration: 6,
+    duration: 8,
     tokens: [
       ...QUESTION.map((t) => ({ t, kind: "chunk" as const })),
       { t: "<", kind: "drop" },
@@ -78,18 +78,18 @@ const LANES: { duration: number; tokens: Token[] }[] = [
   },
   // Guardrails → Context: the same question, clean — it passed Guardrails.
   {
-    duration: 6,
+    duration: 8,
     tokens: QUESTION.map((t) => ({ t, kind: "chunk" as const })),
   },
   // Context → Gemini: "hi" in ASCII binary (01101000 01101001), with a few
   // knowledge-base bits dropping in to join it.
   {
-    duration: 5,
+    duration: 6.5,
     tokens: "0110100001101001".split("").map((t, i) => ({ t, kind: i % 5 === 2 ? ("join" as const) : undefined })),
   },
   // Gemini → Streams back: the reply to "give me a quick intro".
   {
-    duration: 6,
+    duration: 8,
     tokens: ["Hi! I'm Kirti 👋", "frontend architect,", "10+ yrs shipping."].map((t) => ({ t, kind: "word" as const })),
   },
 ];
@@ -126,7 +126,7 @@ function FlowLane({ lane, active }: { lane: (typeof LANES)[number]; active: bool
   );
 }
 
-const ADVANCE_MS = 4000;
+const ADVANCE_MS = 5000;
 
 export default function HowAskAIWorks() {
   const [active, setActive] = useState(0);
