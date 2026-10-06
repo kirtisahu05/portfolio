@@ -126,7 +126,7 @@ const ELSEWHERE: { label: string; href: string; icon: IconType }[] = [
   { label: "Medium", href: profile.links.medium, icon: SiMedium },
 ].filter((link) => link.href);
 
-// Default theme: a dark, centered closing call to action (BotFriday's "Tell
+// Default theme: a centered closing call to action on a sand band (BotFriday's "Tell
 // us about the role."). Email leads — with a copy button, since mailto links
 // do nothing for visitors without a mail app set up.
 function DefaultContact() {
@@ -146,7 +146,7 @@ function DefaultContact() {
   }
 
   return (
-    <Band id="contact" tone="dark">
+    <Band id="contact" tone="sand">
       <div className="text-center">
         <SectionHeading
           label={contactCta.label}

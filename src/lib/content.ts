@@ -241,7 +241,7 @@ export const askAiPromo = {
 // (BotFriday's "Questions"): notice period, relocation, remote / time-zone
 // overlap, contract vs full-time. Needs answers from Kirti. Undecided — parked.
 
-// Default-theme Contact section — the dark closing call to action
+// Default-theme Contact section — the closing call to action on a sand band
 // (BotFriday's "Tell us about the role."). The signal theme keeps the older
 // consulting card + link grid.
 export const contactCta = {
