@@ -62,8 +62,10 @@ export default function Nav() {
           <Link href="/log" className="nav-link whitespace-nowrap hover:text-[var(--nav-text-hover)]">
             {isSignal ? "./log" : "log"}
           </Link>
+          {/* Jumps to the homepage Ask AI section (AskAIPromo), which hands
+              questions off to the full /ask-ai page. */}
           <Link
-            href="/ask-ai"
+            href="/#ask-ai"
             className="nav-link whitespace-nowrap hover:text-[var(--nav-text-hover)]"
             style={{ color: "var(--nav-accent)" }}
           >
@@ -149,7 +151,7 @@ export default function Nav() {
             {isSignal ? "./log" : "log"}
           </Link>
           <Link
-            href="/ask-ai"
+            href="/#ask-ai"
             onClick={() => setMenuOpen(false)}
             className="nav-link rounded-md px-2 py-2 hover:bg-[var(--nav-border)]"
             style={{ color: "var(--nav-accent)" }}

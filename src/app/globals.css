@@ -372,3 +372,9 @@ button:hover > .btn-dot {
   background: radial-gradient(60% 80% at 100% 100%, rgb(154 251 164 / 0.35), transparent 70%);
   pointer-events: none;
 }
+
+/* Section links (/#experience, /#ask-ai, …) land below the sticky nav
+   instead of under it. */
+html {
+  scroll-padding-top: 4.5rem;
+}
