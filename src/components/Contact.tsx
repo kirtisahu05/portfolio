@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FaLinkedin } from "react-icons/fa6";
 import { SiGithub, SiMedium } from "react-icons/si";
-import { TbCheck, TbCopy } from "react-icons/tb";
+import { TbCalendarUser, TbCheck, TbCopy } from "react-icons/tb";
 import type { IconType } from "react-icons";
 import { consulting, contactCta, profile } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
@@ -23,6 +23,7 @@ function SignalContact() {
     { label: "LinkedIn", value: profile.links.linkedin },
     { label: "GitHub", value: profile.links.github },
     { label: "Medium", value: profile.links.medium },
+    { label: "Topmate", value: profile.links.topmate },
     // { label: "LeetCode", value: profile.links.leetcode },
     // { label: "YouTube", value: profile.links.youtube },
   ].filter((link) => link.value);
@@ -124,6 +125,8 @@ const ELSEWHERE: { label: string; href: string; icon: IconType }[] = [
   { label: "LinkedIn", href: profile.links.linkedin, icon: FaLinkedin },
   { label: "GitHub", href: profile.links.github, icon: SiGithub },
   { label: "Medium", href: profile.links.medium, icon: SiMedium },
+  // No Topmate brand icon in react-icons — a calendar-with-person stands in.
+  { label: "Topmate", href: profile.links.topmate, icon: TbCalendarUser },
 ].filter((link) => link.href);
 
 // Default theme: a centered closing call to action on a sand band (BotFriday's "Tell

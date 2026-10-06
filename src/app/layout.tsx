@@ -89,6 +89,7 @@ const personJsonLd = {
     profile.links.github,
     profile.links.linkedin,
     profile.links.medium,
+    profile.links.topmate,
     profile.links.youtube,
   ].filter(Boolean),
 };

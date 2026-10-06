@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { FaLinkedin } from "react-icons/fa6";
 import { SiGithub, SiMedium } from "react-icons/si";
-import { TbMail } from "react-icons/tb";
+import { TbCalendarUser, TbMail } from "react-icons/tb";
 import type { IconType } from "react-icons";
 import { navItems, profile } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
@@ -43,6 +43,7 @@ const SOCIALS: { label: string; href: string; icon: IconType }[] = [
   { label: "LinkedIn", href: profile.links.linkedin, icon: FaLinkedin },
   { label: "GitHub", href: profile.links.github, icon: SiGithub },
   { label: "Medium", href: profile.links.medium, icon: SiMedium },
+  { label: "Topmate", href: profile.links.topmate, icon: TbCalendarUser },
   { label: "Email", href: `mailto:${profile.email}`, icon: TbMail },
 ].filter((s) => s.href);
 

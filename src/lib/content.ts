@@ -61,6 +61,7 @@ export const profile = {
     // again, add it back to the links list in Contact.tsx and sameAs in layout.tsx.
     leetcode: "https://leetcode.com/u/kirtisahu05/",
     medium: "https://medium.com/@kirtisahu05",
+    topmate: "https://topmate.io/kirtisahu05",
     youtube: "", // TODO: add or leave blank to hide
   },
 };
