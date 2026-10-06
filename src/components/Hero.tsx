@@ -12,7 +12,7 @@ export default function Hero() {
     // Dark full-width band in the default theme (BotFriday's hero); the
     // signal theme renders it on its usual page background.
     <section id="top" className="band band-dark">
-      <div className="mx-auto grid max-w-5xl gap-10 px-6 pb-16 pt-14 sm:pt-20 lg:grid-cols-[1.3fr_1fr] lg:items-start">
+      <div className="page-container grid gap-10 pb-16 pt-14 sm:pt-20 lg:grid-cols-[1.3fr_1fr] lg:items-start">
         <div className="hero-in min-w-0">
           {isSignal ? (
             <p className="mb-4 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">
@@ -141,7 +141,7 @@ export default function Hero() {
 
       {!isSignal && (
         <div className="border-t" style={{ borderColor: "var(--border)" }}>
-          <p className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-1 px-6 py-4 text-left text-sm text-[var(--text-muted)]">
+          <p className="page-container flex flex-wrap items-center gap-x-4 gap-y-1 py-4 text-left text-sm text-[var(--text-muted)]">
             {profile.heroStrip.text}
             <a href={profile.heroStrip.href} className="inline-flex items-center gap-1 text-[var(--accent)] hover:underline">
               {profile.heroStrip.linkLabel} <span aria-hidden="true">→</span>

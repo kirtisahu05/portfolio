@@ -2,7 +2,8 @@
 
 import { useTheme } from "@/lib/theme-context";
 
-const QUESTIONS = [
+// Shared with the homepage Ask AI card (AskAIPromo).
+export const SUGGESTED_QUESTIONS = [
   "What's his AI/RAG experience?",
   "What has he built at CoffeeWeb?",
   "Has he led engineering teams before?",
@@ -15,7 +16,7 @@ export default function SuggestedQuestions({ onSelect }: { onSelect: (question: 
 
   return (
     <div className="flex flex-wrap gap-2">
-      {QUESTIONS.map((q) => (
+      {SUGGESTED_QUESTIONS.map((q) => (
         <button
           key={q}
           type="button"

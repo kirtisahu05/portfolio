@@ -30,7 +30,7 @@ function SignalContact() {
   return (
     <section
       id="contact"
-      className="mx-auto max-w-5xl px-6 py-14"
+      className="page-container py-14"
       style={{ borderTop: "1px solid var(--border)" }}
     >
       {isSignal && (
@@ -147,7 +147,7 @@ function DefaultContact() {
 
   return (
     <Band id="contact" tone="dark">
-      <div className="mx-auto max-w-3xl text-center">
+      <div className="text-center">
         <SectionHeading
           label={contactCta.label}
           title={contactCta.title}
@@ -199,7 +199,7 @@ function DefaultContact() {
           </button>
         </p>
 
-        <div className="mt-12 grid gap-6 text-left sm:grid-cols-3">
+        <div className="mt-14 grid gap-8 border-t pt-10 text-left sm:grid-cols-3" style={{ borderColor: "var(--border)" }}>
           {contactCta.columns.map((col) => (
             <div key={col.label}>
               <p className="font-[var(--font-mono)] text-[11px] uppercase tracking-[0.14em] text-[var(--accent)]">

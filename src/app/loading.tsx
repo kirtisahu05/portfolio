@@ -10,7 +10,7 @@ export default function Loading() {
   return (
     <>
       <Nav />
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center px-6 py-24">
+      <main className="page-container flex w-full flex-1 flex-col items-center justify-center py-24">
         <Terminal className="text-3xl" style={{ color: "var(--accent)" }} />
       </main>
       <Footer />

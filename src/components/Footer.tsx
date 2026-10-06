@@ -15,7 +15,7 @@ const TAGLINE =
 function SignalFooter() {
   return (
     <footer style={{ borderTop: "1px solid var(--border)" }}>
-      <div className="mx-auto grid max-w-5xl gap-8 px-6 py-10 sm:grid-cols-[1.3fr_1fr]">
+      <div className="page-container grid gap-8 py-10 sm:grid-cols-[1.3fr_1fr]">
         <div>
           <p className="font-[var(--font-display)] text-sm font-semibold text-[var(--accent)]">
             {profile.handle}
@@ -32,7 +32,7 @@ function SignalFooter() {
           ))}
         </nav>
       </div>
-      <div className="mx-auto max-w-5xl px-6 pb-8 text-xs text-[var(--text-muted)]">
+      <div className="page-container pb-8 text-xs text-[var(--text-muted)]">
         © {new Date().getFullYear()} {profile.name}
       </div>
     </footer>
@@ -71,7 +71,7 @@ const COLUMNS: { title: string; links: { label: string; href: string; external?:
 function DefaultFooter() {
   return (
     <footer className="band-dark">
-      <div className="mx-auto grid max-w-5xl gap-10 px-6 py-14 lg:grid-cols-[1.2fr_2fr]">
+      <div className="page-container grid gap-10 py-14 lg:grid-cols-[1.2fr_2fr]">
         <div>
           <Link href="/#top" className="font-[var(--font-display)] text-lg font-semibold tracking-wide text-[var(--text-primary)]">
             <span className="text-[var(--accent)]">{profile.handle.slice(0, 1)}</span>
@@ -131,7 +131,7 @@ function DefaultFooter() {
       </div>
 
       <div className="border-t" style={{ borderColor: "var(--border)" }}>
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-5 text-xs text-[var(--text-muted)]">
+        <div className="page-container flex flex-wrap items-center justify-between gap-2 py-5 text-xs text-[var(--text-muted)]">
           <span>
             © {new Date().getFullYear()} {profile.name}. All rights reserved.
           </span>

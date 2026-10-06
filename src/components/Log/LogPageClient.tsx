@@ -95,7 +95,7 @@ export default function LogPageClient({ entries }: { entries: ListEntry[] }) {
   }
 
   return (
-    <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-8">
+    <main className="page-container w-full flex-1 py-8">
       {/* <p className="mb-1 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">log</p> */}
       <div className="flex items-start justify-between gap-3">
         <h1 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">

@@ -31,6 +31,9 @@ export const profile = {
   },
   logTagline:
     "I’m Kirti. This is my corner of the internet—a place where I share thoughts on tech, life, things I’m learning, and the occasional rabbit hole I find myself exploring. Glad you’re here.",
+  // TODO(redesign): consider trimming the bio to ~60 words for the dark hero
+  // (it's ~230 now and pushes the buttons far down); the full detail already
+  // lives in Experience and the Ask AI knowledge base. Undecided — parked.
   bio: "Lead Software Engineer and Frontend Architect with 10+ years of experience designing, building, and scaling high-performance web platforms across consumer, B2B SaaS, e-commerce, food tech, and market intelligence products. I currently lead a 9-person frontend engineering team at CoffeeWeb, owning frontend architecture for a mobile-first PWA serving 200,000+ users across 175+ countries — including re-architecting an immature, hard-to-maintain codebase into a structured system with clear component boundaries, consistent state/data patterns, and production observability. Before that, I led frontend engineering at Peppo across BookMyShow Deals and a suite of B2B consoles, helped build JFrog Pipelines from inception as part of the JFrog platform — its Vue.js UI and the Node.js client behind it — helped scale Shippable's CI/CD platform to 100,000+ Docker containers a month, and built CenturyLink's e-commerce and mobile ordering platforms. Across every team, I've owned tech stack decisions, hiring, and production reliability — and I'm now extending that decade of frontend architecture into AI-native engineering: I've shipped a streaming LLM assistant (Ask AI) and built the application layer for YourBot, a multi-tenant RAG chatbot platform. This entire site — architecture, the live streaming Ask AI assistant, and deployment — was designed, built, and shipped by me alone, working remotely, with no team in the room.",
   // Replaces the old percentage-based skill meters — those implied a false
   // precision. This groups strengths by category instead.
@@ -142,6 +145,18 @@ export const whyHireMeV2Intro = {
   body: "I turn product requirements into technical direction, build systems that scale, help teams execute, and stay accountable for what happens in production — shaped by work across consumer, B2B SaaS, e-commerce, food tech, DevOps, and market intelligence products.",
 };
 
+// Default-theme "Why me" layout, modeled on BotFriday's "The problem"
+// section: the intro lead becomes the big heading, one card is featured in
+// mint, the rest sit in rows, and a thin strip closes it out.
+export const whyMeLayout = {
+  featuredId: "individual-contributor",
+  rows: [["architecture", "leadership", "delivery"], ["remote", "ai"]],
+  strip: {
+    lead: "Broad perspective.",
+    text: "Shaped by work across consumer, B2B SaaS, e-commerce, food tech, DevOps, and market intelligence products — so I weigh frontend decisions against the larger system and the business.",
+  },
+};
+
 export const whyHireMeV2 = [
   {
     id: "architecture",
@@ -201,6 +216,30 @@ export const consulting = {
   ctaUrl:
     "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2uOfNOPZeuA1-XHHmnfd-kGbk6PHlHnar_nvxLDnU3I43zWtvU6Z0EgMesDhoosh1urBo_s_zu",
 };
+
+// "Worked with" strip under the hero (BotFriday's "Trusted by teams at").
+// Plain text wordmarks — no third-party logo files. BookMyShow was a client
+// product built at Peppo (BookMyShow Deals), hence "worked with", not
+// "worked at".
+export const workedWith = {
+  label: "Worked with teams at",
+  names: ["CoffeeWeb", "BookMyShow", "Peppo", "JFrog", "Shippable", "CenturyLink"],
+};
+
+// Homepage Ask AI card (BotFriday's "Hiring for other roles?" card). A
+// question typed here opens the full /ask-ai page with it already sent.
+export const askAiPromo = {
+  label: "Ask AI · Trained on my experience",
+  title: "Have a question about my work?",
+  emphasis: "Ask my AI assistant.",
+  text: "It answers from my experience, projects, and writing — the same knowledge base this site is built from — and streams the answer in seconds.",
+  placeholder: "Ask about my experience, stack, or projects…",
+  button: "Ask",
+};
+
+// TODO(redesign): consider a short recruiter FAQ section before Contact
+// (BotFriday's "Questions"): notice period, relocation, remote / time-zone
+// overlap, contract vs full-time. Needs answers from Kirti. Undecided — parked.
 
 // Default-theme Contact section — the dark closing call to action
 // (BotFriday's "Tell us about the role."). The signal theme keeps the older

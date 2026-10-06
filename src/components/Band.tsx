@@ -20,7 +20,7 @@ export default function Band({
 }) {
   return (
     <section id={id} className={`band band-${tone}`}>
-      <div className={`mx-auto max-w-5xl px-6 ${innerClassName}`}>{children}</div>
+      <div className={`page-container ${innerClassName}`}>{children}</div>
     </section>
   );
 }

@@ -17,7 +17,7 @@ export default function WhyHireMe() {
   return (
     <section
       id="why-me"
-      className="mx-auto max-w-5xl px-6 py-14"
+      className="page-container py-14"
       style={{ borderTop: "1px solid var(--border)" }}
     >
       {isSignal && (

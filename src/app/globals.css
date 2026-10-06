@@ -350,3 +350,25 @@ button:hover > .btn-dot {
 [data-theme="b"] .btn-dot {
   display: none;
 }
+
+/* One page container for every full-width row (nav, hero, sections, footer,
+   Log, Ask AI) so left/right edges line up everywhere. The default theme
+   matches BotFriday's ~1088px content column; signal keeps 64rem. */
+.page-container {
+  margin-inline: auto;
+  max-width: var(--container-w, 64rem);
+  padding-inline: 1.5rem;
+}
+:root[data-theme="a"] {
+  --container-w: 68rem;
+}
+
+/* Ask AI homepage card: BotFriday's soft mint glow in the bottom-right
+   corner. Default theme only. */
+[data-theme="a"] .ask-promo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 80% at 100% 100%, rgb(154 251 164 / 0.35), transparent 70%);
+  pointer-events: none;
+}

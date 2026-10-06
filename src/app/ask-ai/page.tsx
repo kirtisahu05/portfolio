@@ -97,10 +97,26 @@ export default function AskPage() {
     }
   }
 
+  // A question handed over from the homepage Ask AI card arrives as ?q=…
+  // Send it once, then drop it from the URL so a refresh doesn't re-ask.
+  // Read from window.location rather than useSearchParams, which would force
+  // this statically rendered page into a Suspense boundary.
+  const handedOffRef = useRef(false);
+  useEffect(() => {
+    if (handedOffRef.current) return;
+    handedOffRef.current = true; // guards React's dev double-invoke too
+    const q = new URLSearchParams(window.location.search).get("q")?.trim();
+    if (!q) return;
+    window.history.replaceState(null, "", window.location.pathname);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time sync from the URL on mount is intentional
+    void sendMessage(q.slice(0, 500));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run once on mount
+  }, []);
+
   return (
     <>
       <Nav />
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-6 py-8">
+      <main className="page-container flex w-full flex-1 flex-col py-8">
         <p className="mb-1 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">ask ai</p>
         <h1 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
           {isSignal ? "./ask-about-kirti" : "Ask AI about Kirti"}

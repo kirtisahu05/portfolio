@@ -26,7 +26,7 @@ export default function Nav() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--nav-border)] bg-[var(--nav-bg)] backdrop-blur">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4">
+      <div className="page-container flex items-center justify-between gap-4 py-4">
         <div className="flex items-center gap-3">
           <Link
             href="/#top"
