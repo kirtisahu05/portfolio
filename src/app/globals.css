@@ -379,3 +379,119 @@ button:hover > .btn-dot {
 html {
   scroll-padding-top: 4.5rem;
 }
+
+/* ---------------------------------------------------------------------------
+   Ask AI "How it works" data-flow lanes (HowAskAIWorks). Each connector
+   between two step tiles is a lane of characters flowing left → right:
+   junk characters drop out at Guardrails, knowledge bits join at Context, and
+   answer words stream out after Gemini. Sized with container query units so
+   tokens travel the lane's own width.
+   --------------------------------------------------------------------------- */
+.flow-lane {
+  container-type: inline-size;
+  position: relative;
+  overflow: hidden;
+  /* Fade tokens in/out at the tile edges. */
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Faint dotted track just under the characters (not through them). */
+.flow-lane::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% + 10px);
+  border-top: 1px dashed var(--border-strong);
+  opacity: 0.6;
+}
+
+.flow-token {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--text-muted);
+  animation: flow-move linear infinite;
+  will-change: transform, opacity;
+}
+
+.flow-lane--active .flow-token {
+  color: var(--accent);
+}
+
+.flow-token--word {
+  color: var(--accent);
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.flow-token--drop {
+  animation-name: flow-drop;
+}
+
+.flow-token--join {
+  animation-name: flow-join;
+}
+
+@keyframes flow-move {
+  from {
+    transform: translate(-2em, -50%);
+  }
+  to {
+    transform: translate(100cqw, -50%);
+  }
+}
+
+/* Junk characters reach the Guardrails tile, turn red, and fall out. */
+@keyframes flow-drop {
+  0% {
+    transform: translate(-2em, -50%);
+    opacity: 1;
+  }
+  74% {
+    transform: translate(74cqw, -50%);
+    opacity: 1;
+    color: var(--text-muted);
+  }
+  82% {
+    transform: translate(80cqw, -50%);
+    color: #ff8a8a;
+  }
+  100% {
+    transform: translate(86cqw, 90%);
+    opacity: 0;
+    color: #ff8a8a;
+  }
+}
+
+/* Knowledge bits drop in from above and merge into the stream. */
+@keyframes flow-join {
+  0% {
+    transform: translate(18cqw, -220%);
+    opacity: 0;
+  }
+  22% {
+    transform: translate(30cqw, -50%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100cqw, -50%);
+    opacity: 1;
+  }
+}
+
+.flow-paused .flow-token {
+  animation-play-state: paused;
+}
+
+/* Reduced motion: no moving characters, just the dotted connector. */
+@media (prefers-reduced-motion: reduce) {
+  .flow-token {
+    display: none;
+  }
+}

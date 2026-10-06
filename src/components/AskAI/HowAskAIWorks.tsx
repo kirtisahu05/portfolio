@@ -53,6 +53,59 @@ const STEPS: { id: string; icon: IconType; title: string; body: string; facts: s
   },
 ];
 
+// What travels along each connector (between step i and i+1). Static lists —
+// no Math.random() — so server and client render identically.
+type Token = { t: string; kind?: "drop" | "join" | "word" };
+const LANES: { duration: number; tokens: Token[] }[] = [
+  // You ask → Guardrails: the question's characters, plus junk that gets
+  // filtered out at the Guardrails tile.
+  {
+    duration: 5,
+    tokens: [
+      { t: "h" }, { t: "<", kind: "drop" }, { t: "a" }, { t: "s" }, { t: "{", kind: "drop" }, { t: "l" },
+      { t: "e" }, { t: "∅", kind: "drop" }, { t: "d" }, { t: "t" }, { t: "#", kind: "drop" }, { t: "?" },
+    ],
+  },
+  // Guardrails → Context: only clean characters make it through.
+  {
+    duration: 5,
+    tokens: "led teams?".split("").filter((c) => c !== " ").map((t) => ({ t })),
+  },
+  // Context → Gemini: the question as bits, with knowledge-base bits joining.
+  {
+    duration: 4.5,
+    tokens: [
+      { t: "1" }, { t: "0" }, { t: "1", kind: "join" }, { t: "1" }, { t: "0", kind: "join" }, { t: "0" },
+      { t: "1" }, { t: "1", kind: "join" }, { t: "0" }, { t: "1" }, { t: "0", kind: "join" }, { t: "1" },
+    ],
+  },
+  // Gemini → Streams back: the answer, streamed in chunks. Kept to three so
+  // the wider word tokens don't crowd each other in a short lane.
+  {
+    duration: 6,
+    tokens: ["Yes,", "leads 9", "engineers"].map((t) => ({ t, kind: "word" as const })),
+  },
+];
+
+function FlowLane({ lane, active }: { lane: (typeof LANES)[number]; active: boolean }) {
+  const n = lane.tokens.length;
+  return (
+    <div className={`flow-lane h-12 ${active ? "flow-lane--active" : ""}`} aria-hidden="true">
+      {lane.tokens.map((tok, i) => (
+        <span
+          key={i}
+          className={`flow-token ${tok.kind ? `flow-token--${tok.kind}` : ""}`}
+          // Negative delays spread the tokens along the lane from the first
+          // frame instead of all starting at the left edge together.
+          style={{ animationDuration: `${lane.duration}s`, animationDelay: `${-((i * lane.duration) / n)}s` }}
+        >
+          {tok.t}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 const ADVANCE_MS = 4000;
 
 export default function HowAskAIWorks() {
@@ -75,7 +128,6 @@ export default function HowAskAIWorks() {
   }, [active, playing, hovered]);
 
   const step = STEPS[active];
-  const progress = (active / (STEPS.length - 1)) * 100;
 
   return (
     <section
@@ -108,17 +160,23 @@ export default function HowAskAIWorks() {
         </button>
       </div>
 
-      {/* Step rail: a track with a mint fill up to the active step. */}
-      <div className="relative mt-8">
-        <div
-          className="absolute left-[10%] right-[10%] top-6 hidden h-px md:block"
-          style={{ background: "var(--border-strong)" }}
-          aria-hidden="true"
-        >
-          <div className="h-full bg-[var(--accent)] transition-[width] duration-500 ease-out" style={{ width: `${progress}%` }} />
-        </div>
+      {/* Step rail. Connectors run only between tiles (never behind them) and
+          carry the animated data flow; the lane leading into the active step
+          is highlighted. Desktop only — on narrow screens tiles sit too close. */}
+      <div className={`relative mt-8 ${playing ? "" : "flow-paused"}`}>
+        {LANES.map((lane, i) => (
+          <div
+            key={i}
+            className="absolute top-0 hidden md:block"
+            // Tile centers sit at 10%, 30%, 50%, 70%, 90%; each lane spans the
+            // gap between two 48px tiles with a 10px breather on each side.
+            style={{ left: `calc(${10 + 20 * i}% + 34px)`, width: "calc(20% - 68px)" }}
+          >
+            <FlowLane lane={lane} active={i === active - 1} />
+          </div>
+        ))}
 
-        <div role="tablist" aria-label="Ask AI steps" className="relative grid grid-cols-5 gap-2">
+        <div role="tablist" aria-label="Ask AI steps" className="relative grid grid-cols-5">
           {STEPS.map((s, i) => {
             const Icon = s.icon;
             const isActive = i === active;
