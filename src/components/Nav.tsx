@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { consulting, navItems, primaryNavHrefs, profile } from "@/lib/content";
+import { consulting, navItems, profile } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
 import { MULTI_UI_ENABLED } from "@/lib/feature-flags";
 import ThemeToggle from "./ThemeToggle";
@@ -18,7 +18,9 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [schedulingOpen, setSchedulingOpen] = useState(false);
   const embeddable = isEmbeddableSchedule(consulting.ctaUrl);
-  const desktopItems = isSignal ? navItems : navItems.filter((item) => primaryNavHrefs.includes(item.href));
+  // Both themes show every section link (the default theme briefly showed only
+  // primaryNavHrefs; that list is kept in content.ts for rollback).
+  const desktopItems = navItems;
   // Opens the in-page booking dialog; modifier clicks fall through to the link.
   const openScheduling = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!embeddable || e.metaKey || e.ctrlKey || e.shiftKey) return;
@@ -51,7 +53,7 @@ export default function Nav() {
         </div>
         <nav
           className={`hidden flex-wrap items-center justify-end gap-x-4 gap-y-1 text-[var(--nav-text)] lg:flex ${
-            isSignal ? "font-[var(--font-mono)] text-[13px]" : "gap-x-7 text-[15px]"
+            isSignal ? "font-[var(--font-mono)] text-[13px]" : "gap-x-5 text-[15px] xl:gap-x-7"
           }`}
         >
           {desktopItems.map((item) => (

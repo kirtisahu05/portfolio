@@ -688,9 +688,9 @@ export const projects: Project[] = [
   },
 ];
 
-// The default theme's desktop nav shows only these (BotFriday keeps its nav
-// to ~5 links plus a CTA); the rest stay in the footer and mobile menu. The
-// signal theme shows every navItems entry.
+// Not used right now — both themes show every navItems entry. This was the
+// trimmed default-theme desktop nav (BotFriday-style ~5 links); kept so it can
+// be restored by filtering desktopItems in Nav.tsx again.
 export const primaryNavHrefs = ["/#experience", "/#work", "/#why-me"];
 
 export const navItems = [
