@@ -34,10 +34,10 @@ export default function Hero() {
               {profile.name}
             </h1>
           </div>
-          <p className="mt-6 max-w-lg text-[17px] leading-relaxed text-[var(--text-primary)]">
+          <p className="mt-6 max-w-lg text-[17px] text-justify leading-relaxed text-[var(--text-primary)]">
             {profile.tagline}
           </p>
-          <p className="mt-3 max-w-lg text-sm leading-relaxed text-[var(--text-secondary)]">
+          <p className="mt-3 max-w-lg text-sm text-justify leading-relaxed text-[var(--text-secondary)]">
             {profile.aiTagline}
           </p>
 
@@ -46,7 +46,7 @@ export default function Hero() {
               $ cat about.md
             </p>
           )}
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
+          <p className="mt-4 max-w-xl text-sm text-justify leading-relaxed text-[var(--text-secondary)]">
             {profile.bio}
           </p>
 
