@@ -22,6 +22,7 @@
   --nav-text: #e9efe9;
   --nav-text-hover: #9afba4;
   --nav-accent: #9afba4;
+  --nav-brand: #fbf6eb;
   --nav-border: #24413b;
   --btn-primary-bg: #9afba4;
   --btn-primary-text: #0a221f;
@@ -65,6 +66,7 @@
   --nav-text: #8b9a8f;
   --nav-text-hover: #e6ede6;
   --nav-accent: #7ee787;
+  --nav-brand: #7ee787;
   --nav-border: #1f2a22;
   --btn-primary-bg: #e6ede6;
   --btn-primary-text: #0a0e14;
@@ -105,23 +107,24 @@ body {
   outline-offset: 2px;
 }
 
-/* Systems theme: titles read in caps — section headings, nav links, and card
-   titles (project names, job titles, log entry titles). Excludes the profile
-   name (opted out inline) and in-article Markdown headings inside a log post
-   body, which are the author's own prose, not site UI. */
-[data-theme="a"] h1,
-[data-theme="a"] h2,
-[data-theme="a"] h3,
-[data-theme="a"] h4,
-[data-theme="a"] .nav-link,
-[data-theme="a"] .entry-title-compact {
+/* Title Case headings — the previous systems-theme style (Sep 2026), kept
+   with the cream palette for rollback. The BotFriday-style default uses
+   sentence case instead (see "Default theme layout" below). Excludes the
+   profile name (opted out inline) and in-article Markdown headings inside a
+   log post body, which are the author's own prose, not site UI. */
+[data-theme="cream"] h1,
+[data-theme="cream"] h2,
+[data-theme="cream"] h3,
+[data-theme="cream"] h4,
+[data-theme="cream"] .nav-link,
+[data-theme="cream"] .entry-title-compact {
   text-transform: capitalize;
 }
 
-[data-theme="a"] .log-content h1,
-[data-theme="a"] .log-content h2,
-[data-theme="a"] .log-content h3,
-[data-theme="a"] .log-content h4 {
+[data-theme="cream"] .log-content h1,
+[data-theme="cream"] .log-content h2,
+[data-theme="cream"] .log-content h3,
+[data-theme="cream"] .log-content h4 {
   text-transform: none;
 }
 
@@ -220,4 +223,130 @@ body {
   .terminal-cursor {
     animation: none;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Default theme layout (botfriday.ai style). Everything here is scoped to
+   [data-theme="a"], so the signal theme ("b") keeps its original layout.
+   --------------------------------------------------------------------------- */
+
+/* Inter for headings too (BotFriday sets everything in Inter). :root plus the
+   attribute outranks next/font's class that defines --font-display. */
+:root[data-theme="a"] {
+  --font-display: var(--font-body);
+  --section-py: 5.5rem;
+  --label-bg: #0a221f;
+  --label-text: #fbf6eb;
+  --emphasis: #2f8a57;
+}
+
+:root[data-theme="b"] {
+  --section-py: 3.5rem;
+}
+
+/* BotFriday sets all text ragged-left. The site-wide justify (kept for the
+   signal theme) opens wide gaps in short lines and wrapped headings here. */
+[data-theme="a"] body {
+  text-align: left;
+}
+
+/* Section headings: big, bold, tight, sentence case. */
+[data-theme="a"] .band h2 {
+  font-size: clamp(1.875rem, 3.6vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+[data-theme="a"] h3 {
+  letter-spacing: -0.01em;
+}
+
+/* Nav labels are lowercase in content.ts (the signal theme shows them that
+   way); the default theme shows them in sentence case. */
+[data-theme="a"] .nav-link {
+  display: inline-block;
+}
+[data-theme="a"] .nav-link::first-letter {
+  text-transform: uppercase;
+}
+
+/* Full-width section bands. Signal separates sections with a hairline
+   instead. */
+[data-theme="b"] .band + .band {
+  border-top: 1px solid var(--border);
+}
+
+/* Sand band: cards flip to cream so they still read as cards. */
+[data-theme="a"] .band-sand {
+  background: #f4e8d3;
+  --bg-elevated: #fbf6eb;
+  --border: #e2d2b2;
+}
+
+/* Dark band (and dark highlight cards): re-points the color tokens, so every
+   component inside renders light-on-dark with no per-component changes. */
+[data-theme="a"] .band-dark,
+[data-theme="a"] .card-dark {
+  background: #0a221f;
+  --bg-elevated: rgb(251 246 235 / 0.06);
+  --text-primary: #fbf6eb;
+  --text-secondary: #c9d3cc;
+  --text-muted: #9fb0a7;
+  --accent: #9afba4;
+  --accent-contrast: #0a221f;
+  --border: rgb(251 246 235 / 0.12);
+  --border-strong: rgb(251 246 235 / 0.35);
+  --label-bg: #9afba4;
+  --label-text: #0a221f;
+  --emphasis: #9afba4;
+  color: var(--text-primary);
+}
+
+/* Mint highlight card — the one card per section that carries the key point. */
+[data-theme="a"] .card-mint {
+  background: #9afba4;
+  --bg-elevated: #9afba4;
+  --text-primary: #0a221f;
+  --text-secondary: #1d3a33;
+  --text-muted: #2c4a42;
+  --accent: #0a221f;
+  --border: rgb(10 34 31 / 0.15);
+  border-color: transparent !important;
+}
+
+/* Small monospace pill above a section heading ("The problem" style). */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  background: var(--label-bg);
+  color: var(--label-text);
+}
+
+/* Second heading line in green, BotFriday's emphasis treatment. */
+.heading-emphasis {
+  color: var(--emphasis);
+}
+
+/* BotFriday's signature button: a pill with a solid dot at its right end. */
+.btn-dot {
+  display: inline-block;
+  height: 1.75rem;
+  width: 1.75rem;
+  margin: -0.375rem -0.875rem -0.375rem 0.75rem;
+  border-radius: 9999px;
+  background: var(--btn-primary-text);
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+a:hover > .btn-dot,
+button:hover > .btn-dot {
+  transform: translateX(2px);
+}
+[data-theme="b"] .btn-dot {
+  display: none;
 }

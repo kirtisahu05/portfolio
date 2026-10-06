@@ -4,6 +4,8 @@ import { coffeeWebCaseStudy, experience } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
 import { getSkillIcon } from "@/lib/skill-icons";
 import BulletList from "./BulletList";
+import Band from "@/components/Band";
+import SectionHeading from "@/components/SectionHeading";
 
 // Hidden for now — the before/after framing undersells the role. Content stays
 // in content.ts (coffeeWebCaseStudy); flip to true to bring it back.
@@ -14,19 +16,14 @@ export default function Experience() {
   const isSignal = theme === "b";
 
   return (
-    <section
-      id="experience"
-      className="mx-auto max-w-5xl px-6 py-14"
-      style={{ borderTop: "1px solid var(--border)" }}
-    >
-      {isSignal && (
-        <p className="mb-2 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">
-          experience
-        </p>
-      )}
-      <h2 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
-        {isSignal ? "git log --career --oneline" : "Experience"}
-      </h2>
+    <Band id="experience" tone="sand">
+      <SectionHeading
+        label="Experience"
+        title={"10+ years of shipping"}
+        emphasis={"production platforms."}
+        signalLabel="experience"
+        signalTitle="git log --career --oneline"
+      />
 
       <div className="mt-8 space-y-4">
         {experience.map((item, i) => (
@@ -114,6 +111,6 @@ export default function Experience() {
           </div>
         ))}
       </div>
-    </section>
+    </Band>
   );
 }

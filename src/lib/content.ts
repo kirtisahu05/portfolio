@@ -19,6 +19,16 @@ export const profile = {
   // honest about what's actually shipped (see `projects`), not "exploring".
   aiTagline:
     "Recently extended into AI-native engineering — shipping a streaming LLM assistant and the application layer for a multi-tenant RAG platform.",
+  // Default-theme hero extras (BotFriday style): the mint badge above the
+  // name, the small "•" proof line under the buttons, and the thin strip
+  // along the bottom of the hero.
+  heroBadge: "Open to senior frontend & architect roles · Remote",
+  heroProofLine: "Leading a 9-person frontend team at CoffeeWeb · 200,000+ users in 175+ countries",
+  heroStrip: {
+    text: "Want the short version? Ask the AI assistant trained on my experience.",
+    linkLabel: "Ask AI",
+    href: "/ask-ai",
+  },
   logTagline:
     "I’m Kirti. This is my corner of the internet—a place where I share thoughts on tech, life, things I’m learning, and the occasional rabbit hole I find myself exploring. Glad you’re here.",
   bio: "Lead Software Engineer and Frontend Architect with 10+ years of experience designing, building, and scaling high-performance web platforms across consumer, B2B SaaS, e-commerce, food tech, and market intelligence products. I currently lead a 9-person frontend engineering team at CoffeeWeb, owning frontend architecture for a mobile-first PWA serving 200,000+ users across 175+ countries — including re-architecting an immature, hard-to-maintain codebase into a structured system with clear component boundaries, consistent state/data patterns, and production observability. Before that, I led frontend engineering at Peppo across BookMyShow Deals and a suite of B2B consoles, helped build JFrog Pipelines from inception as part of the JFrog platform — its Vue.js UI and the Node.js client behind it — helped scale Shippable's CI/CD platform to 100,000+ Docker containers a month, and built CenturyLink's e-commerce and mobile ordering platforms. Across every team, I've owned tech stack decisions, hiring, and production reliability — and I'm now extending that decade of frontend architecture into AI-native engineering: I've shipped a streaming LLM assistant (Ask AI) and built the application layer for YourBot, a multi-tenant RAG chatbot platform. This entire site — architecture, the live streaming Ask AI assistant, and deployment — was designed, built, and shipped by me alone, working remotely, with no team in the room.",
@@ -192,6 +202,24 @@ export const consulting = {
     "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2uOfNOPZeuA1-XHHmnfd-kGbk6PHlHnar_nvxLDnU3I43zWtvU6Z0EgMesDhoosh1urBo_s_zu",
 };
 
+// Default-theme Contact section — the dark closing call to action
+// (BotFriday's "Tell us about the role."). The signal theme keeps the older
+// consulting card + link grid.
+export const contactCta = {
+  label: "Get in touch",
+  title: "Let's build something",
+  emphasis: "worth shipping.",
+  intro:
+    "Open to senior and architect-level frontend roles, AI-adjacent full-stack work, and consulting in platform engineering, technical leadership, and system architecture.",
+  emailLabel: "Email me",
+  columns: [
+    { label: "Roles", text: "Senior / architect-level frontend, and AI-adjacent full-stack." },
+    { label: "Consulting", text: "Advisory, audits, or hands-on — architecture, platforms, and team leadership." },
+    { label: "Based in", text: "Bhopal, India · IST (UTC+5:30) · fully remote since 2020." },
+  ],
+  elsewhereLabel: "Not ready to talk yet? Find me on",
+};
+
 // Kept in sync with the "Professional Abilities" section of public/resume.pdf.
 // Supports inline **bold** and *italic* markup — rendered by BulletList.
 export const professionalAbilities = [
@@ -245,7 +273,7 @@ export const experience = [
       "Leading a 9-person frontend engineering team, owning technical direction, architecture, sprint planning, OKRs, task allocation, performance reviews, hiring, and mentoring — while staying roughly 60% hands-on with engineering.",
       "Architected and evolved two React applications from the ground up — the customer-facing CoffeeWeb platform and the CoffeeWeb Admin Console for managing platform content, news, market information, and operational data.",
       "Led frontend architecture for a mobile-first PWA spanning 16 product domains — real-time market data, pricing differentials, industry reports, weather, news, community, AI assistance, trade & exchange, and subscriptions — serving 200,000+ users across 175+ countries in English, Hindi, and Kannada via i18next.",
-      "Re-architected an immature frontend codebase — oversized components, duplicated logic, direct API calls from UI, inconsistent state/props patterns, uncontrolled re-renders, and no consistent error handling — into a structured system with clear component boundaries, reusable patterns, state/data-management conventions, defined API boundaries, and production observability. See the case study below.",
+      "Re-architected an immature frontend codebase — oversized components, duplicated logic, direct API calls from UI, inconsistent state/props patterns, uncontrolled re-renders, and no consistent error handling — into a structured system with clear component boundaries, reusable patterns, state/data-management conventions, defined API boundaries, and production observability.",
       "Built and maintain the Node.js market-data service behind CoffeeWeb's live-data pipeline — authenticated external-data collection, market-data processing, persistence, currency processing, and downstream event publishing.",
       "Designed the frontend integration for real-time market experiences, consuming continuously updated data over WebSocket/realtime APIs to power live quotes, market indicators, and charting.",
       "Built tiered Regular/Gold/Platinum subscription flows with Razorpay, PayPal, and Stripe integrations, trial management, subscription-gated feature access, and Google OAuth login.",
@@ -604,6 +632,11 @@ export const projects: Project[] = [
     sourcePrivate: true,
   },
 ];
+
+// The default theme's desktop nav shows only these (BotFriday keeps its nav
+// to ~5 links plus a CTA); the rest stay in the footer and mobile menu. The
+// signal theme shows every navItems entry.
+export const primaryNavHrefs = ["/#experience", "/#work", "/#why-me"];
 
 export const navItems = [
   { href: "/#about", label: "about" },

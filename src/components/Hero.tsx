@@ -9,18 +9,26 @@ export default function Hero() {
   const isSignal = theme === "b";
 
   return (
-    <section id="top" className="mx-auto max-w-5xl px-6 pb-16 pt-14 sm:pt-20">
-      <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-start">
+    // Dark full-width band in the default theme (BotFriday's hero); the
+    // signal theme renders it on its usual page background.
+    <section id="top" className="band band-dark">
+      <div className="mx-auto grid max-w-5xl gap-10 px-6 pb-16 pt-14 sm:pt-20 lg:grid-cols-[1.3fr_1fr] lg:items-start">
         <div className="hero-in min-w-0">
-          {isSignal && (
+          {isSignal ? (
             <p className="mb-4 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">
               {"// portfolio boot sequence"}
             </p>
+          ) : (
+            <span className="section-label mb-6">{profile.heroBadge}</span>
           )}
           <div className="flex items-center gap-4">
             <Avatar name={profile.name} src={profile.photo} />
             <h1
-              className="max-w-xl font-[var(--font-display)] text-3xl font-semibold leading-[1.05] tracking-tight text-[var(--text-primary)] sm:text-4xl lg:text-5xl"
+              className={`max-w-xl font-[var(--font-display)] leading-[1.05] text-[var(--text-primary)] ${
+                isSignal
+                  ? "text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
+                  : "text-4xl font-bold tracking-[-0.035em] sm:text-5xl lg:text-[3.25rem]"
+              }`}
               style={{ textTransform: "none" }}
             >
               {profile.name}
@@ -68,6 +76,7 @@ export default function Hero() {
               className="rounded-[var(--btn-radius)] px-5 py-2.5 text-sm font-medium bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] transition hover:opacity-90 active:scale-[0.98]"
             >
               {isSignal ? "./view-projects" : "View work"}
+              <span className="btn-dot" aria-hidden="true" />
             </a>
             <a
               href="/resume.pdf" target="_blank" rel="noopener noreferrer"
@@ -77,6 +86,12 @@ export default function Hero() {
               Resume
             </a>
           </div>
+          {!isSignal && (
+            <p className="mt-5 flex items-center gap-2 text-left text-sm text-[var(--text-secondary)]">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" aria-hidden="true" />
+              {profile.heroProofLine}
+            </p>
+          )}
         </div>
 
         <aside
@@ -123,6 +138,17 @@ export default function Hero() {
           </div>
         </aside>
       </div>
+
+      {!isSignal && (
+        <div className="border-t" style={{ borderColor: "var(--border)" }}>
+          <p className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-1 px-6 py-4 text-left text-sm text-[var(--text-muted)]">
+            {profile.heroStrip.text}
+            <a href={profile.heroStrip.href} className="inline-flex items-center gap-1 text-[var(--accent)] hover:underline">
+              {profile.heroStrip.linkLabel} <span aria-hidden="true">→</span>
+            </a>
+          </p>
+        </div>
+      )}
     </section>
   );
 }

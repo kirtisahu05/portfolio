@@ -5,6 +5,8 @@ import { useTheme } from "@/lib/theme-context";
 import { getSkillIcon } from "@/lib/skill-icons";
 import { HIDE_EXPLORING } from "@/lib/feature-flags";
 import SectionIntro from "@/components/SectionIntro";
+import Band from "@/components/Band";
+import SectionHeading from "@/components/SectionHeading";
 
 const groups: { key: keyof typeof skills; label: string; cmd: string }[] = [
   { key: "languages", label: "Languages", cmd: "cat stack/languages.txt" },
@@ -21,19 +23,13 @@ export default function Skills() {
   const isSignal = theme === "b";
 
   return (
-    <section
-      id="skills"
-      className="mx-auto max-w-5xl px-6 py-14"
-      style={{ borderTop: "1px solid var(--border)" }}
-    >
-      {isSignal && (
-        <p className="mb-2 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">
-          skills
-        </p>
-      )}
-      <h2 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
-        {isSignal ? "tree ./stack -L 2" : "Skills"}
-      </h2>
+    <Band id="skills" tone="cream">
+      <SectionHeading
+        label="Skills"
+        title={"The tools I ship with."}
+        signalLabel="skills"
+        signalTitle="tree ./stack -L 2"
+      />
       <SectionIntro>A compact view of the tools I use most often to ship products.</SectionIntro>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -104,6 +100,6 @@ export default function Skills() {
           </div>
         </div>
       )}
-    </section>
+    </Band>
   );
 }

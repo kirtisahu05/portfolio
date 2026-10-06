@@ -6,6 +6,8 @@ import { projects, projectsIntro } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
 import { getSkillIcon } from "@/lib/skill-icons";
 import SectionIntro from "@/components/SectionIntro";
+import Band from "@/components/Band";
+import SectionHeading from "@/components/SectionHeading";
 
 type Project = (typeof projects)[number];
 
@@ -51,19 +53,14 @@ export default function Projects() {
   const isSignal = theme === "b";
 
   return (
-    <section
-      id="work"
-      className="mx-auto max-w-5xl px-6 py-14"
-      style={{ borderTop: "1px solid var(--border)" }}
-    >
-      {isSignal && (
-        <p className="mb-2 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">
-          projects
-        </p>
-      )}
-      <h2 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
-        {isSignal ? "ls ./featured-projects" : "Selected work"}
-      </h2>
+    <Band id="work" tone="sand">
+      <SectionHeading
+        label="Selected work"
+        title={"Things I've built,"}
+        emphasis={"end to end."}
+        signalLabel="projects"
+        signalTitle="ls ./featured-projects"
+      />
       <SectionIntro>{projectsIntro}</SectionIntro>
 
       <div className="mt-8 space-y-4">
@@ -165,6 +162,6 @@ export default function Projects() {
           );
         })}
       </div>
-    </section>
+    </Band>
   );
 }

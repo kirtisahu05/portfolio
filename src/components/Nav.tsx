@@ -2,15 +2,27 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { navItems, profile } from "@/lib/content";
+import { consulting, navItems, primaryNavHrefs, profile } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
 import { MULTI_UI_ENABLED } from "@/lib/feature-flags";
 import ThemeToggle from "./ThemeToggle";
+import SchedulingDialog, { isEmbeddableSchedule } from "./SchedulingDialog";
 
 export default function Nav() {
   const { theme } = useTheme();
   const isSignal = theme === "b";
   const [menuOpen, setMenuOpen] = useState(false);
+  const [schedulingOpen, setSchedulingOpen] = useState(false);
+  const embeddable = isEmbeddableSchedule(consulting.ctaUrl);
+  const desktopItems = isSignal ? navItems : navItems.filter((item) => primaryNavHrefs.includes(item.href));
+  // Opens the in-page booking dialog; modifier clicks fall through to the link.
+  const openScheduling = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!embeddable || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    setMenuOpen(false);
+    setSchedulingOpen(true);
+  };
+  const schedulingHref = consulting.ctaUrl || `mailto:${profile.email}?subject=Let%27s%20talk`;
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--nav-border)] bg-[var(--nav-bg)] backdrop-blur">
@@ -18,9 +30,11 @@ export default function Nav() {
         <div className="flex items-center gap-3">
           <Link
             href="/#top"
-            className="font-[var(--font-display)] text-sm font-semibold tracking-wide text-[var(--nav-accent)]"
+            className="font-[var(--font-display)] text-sm font-semibold tracking-wide text-[var(--nav-brand)]"
           >
-            {profile.handle}
+            {/* Wordmark: mint slash, cream name (BotFriday's "AI" accent). */}
+            <span className="text-[var(--nav-accent)]">{profile.handle.slice(0, 1)}</span>
+            {profile.handle.slice(1)}
           </Link>
           {theme === "b" && (
             <span className="hidden items-center gap-1.5 sm:flex" aria-hidden="true">
@@ -31,8 +45,12 @@ export default function Nav() {
             </span>
           )}
         </div>
-        <nav className="hidden flex-wrap items-center justify-end gap-x-4 gap-y-1 font-[var(--font-mono)] text-[13px] text-[var(--nav-text)] lg:flex">
-          {navItems.map((item) => (
+        <nav
+          className={`hidden flex-wrap items-center justify-end gap-x-4 gap-y-1 text-[var(--nav-text)] lg:flex ${
+            isSignal ? "font-[var(--font-mono)] text-[13px]" : "gap-x-7 text-[15px]"
+          }`}
+        >
+          {desktopItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -63,6 +81,21 @@ export default function Nav() {
             </a>
           )}
           {MULTI_UI_ENABLED && <ThemeToggle />}
+          {!isSignal && (
+            <>
+              <span className="hidden h-6 w-px bg-[var(--nav-border)] sm:block" aria-hidden="true" />
+              <a
+                href={schedulingHref}
+                target={consulting.ctaUrl ? "_blank" : undefined}
+                rel={consulting.ctaUrl ? "noopener noreferrer" : undefined}
+                onClick={openScheduling}
+                className="hidden items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-sm text-[var(--nav-accent)] transition hover:bg-[var(--nav-border)] sm:inline-flex"
+                style={{ borderColor: "var(--nav-accent)" }}
+              >
+                Schedule a call <span aria-hidden="true">→</span>
+              </a>
+            </>
+          )}
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
@@ -95,7 +128,7 @@ export default function Nav() {
       {menuOpen && (
         <nav
           id="mobile-nav"
-          className="flex flex-col gap-1 border-t px-6 py-4 font-[var(--font-mono)] text-sm text-[var(--nav-text)] lg:hidden"
+          className={`flex flex-col gap-1 border-t px-6 py-4 text-[var(--nav-text)] lg:hidden ${isSignal ? "font-[var(--font-mono)] text-sm" : "text-[15px]"}`}
           style={{ borderColor: "var(--nav-border)" }}
         >
           {navItems.map((item) => (
@@ -134,7 +167,20 @@ export default function Nav() {
               resume.exe
             </a>
           )}
+          {!isSignal && (
+            <a
+              href={schedulingHref}
+              onClick={openScheduling}
+              className="mt-2 inline-flex w-fit items-center gap-2 rounded-full border px-4 py-2 text-[var(--nav-accent)]"
+              style={{ borderColor: "var(--nav-accent)" }}
+            >
+              Schedule a call <span aria-hidden="true">→</span>
+            </a>
+          )}
         </nav>
+      )}
+      {!isSignal && embeddable && (
+        <SchedulingDialog url={consulting.ctaUrl} open={schedulingOpen} onClose={() => setSchedulingOpen(false)} />
       )}
     </header>
   );

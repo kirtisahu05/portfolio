@@ -1,14 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { consulting, profile } from "@/lib/content";
+import { FaLinkedin } from "react-icons/fa6";
+import { SiGithub, SiMedium } from "react-icons/si";
+import { TbCheck, TbCopy } from "react-icons/tb";
+import type { IconType } from "react-icons";
+import { consulting, contactCta, profile } from "@/lib/content";
 import { useTheme } from "@/lib/theme-context";
 import SchedulingDialog, { isEmbeddableSchedule } from "./SchedulingDialog";
 import SectionIntro from "@/components/SectionIntro";
+import Band from "@/components/Band";
+import SectionHeading from "@/components/SectionHeading";
 
-export default function Contact() {
-  const { theme } = useTheme();
-  const isSignal = theme === "b";
+// Previous Contact layout (consulting card + link grid) — kept as the signal
+// theme's version. The default theme renders DefaultContact below.
+function SignalContact() {
+  const isSignal = true;
   const [schedulingOpen, setSchedulingOpen] = useState(false);
   const embeddable = isEmbeddableSchedule(consulting.ctaUrl);
 
@@ -111,4 +118,125 @@ export default function Contact() {
       </div>
     </section>
   );
+}
+
+const ELSEWHERE: { label: string; href: string; icon: IconType }[] = [
+  { label: "LinkedIn", href: profile.links.linkedin, icon: FaLinkedin },
+  { label: "GitHub", href: profile.links.github, icon: SiGithub },
+  { label: "Medium", href: profile.links.medium, icon: SiMedium },
+].filter((link) => link.href);
+
+// Default theme: a dark, centered closing call to action (BotFriday's "Tell
+// us about the role."). Email leads — with a copy button, since mailto links
+// do nothing for visitors without a mail app set up.
+function DefaultContact() {
+  const [schedulingOpen, setSchedulingOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const embeddable = isEmbeddableSchedule(consulting.ctaUrl);
+
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard blocked (permissions/insecure context) — the address is
+      // visible right next to the button, so nothing else to do.
+    }
+  }
+
+  return (
+    <Band id="contact" tone="dark">
+      <div className="mx-auto max-w-3xl text-center">
+        <SectionHeading
+          label={contactCta.label}
+          title={contactCta.title}
+          emphasis={contactCta.emphasis}
+          signalLabel="contact"
+          signalTitle="connect --preferred-channel"
+          align="center"
+        />
+        <p className="mx-auto mt-5 max-w-2xl text-center text-base leading-relaxed text-[var(--text-secondary)]">
+          {contactCta.intro}
+        </p>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href={consulting.ctaUrl || `mailto:${profile.email}?subject=Let%27s%20talk`}
+            target={consulting.ctaUrl ? "_blank" : undefined}
+            rel={consulting.ctaUrl ? "noopener noreferrer" : undefined}
+            onClick={(e) => {
+              // Plain clicks open the booking page in-page; modifier clicks
+              // still get the new-tab link.
+              if (!embeddable || e.metaKey || e.ctrlKey || e.shiftKey) return;
+              e.preventDefault();
+              setSchedulingOpen(true);
+            }}
+            className="inline-flex items-center rounded-[var(--btn-radius)] px-6 py-3 text-sm font-medium bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] transition hover:opacity-90 active:scale-[0.98]"
+          >
+            {consulting.ctaLabel}
+            <span className="btn-dot" aria-hidden="true" />
+          </a>
+          <a
+            href={`mailto:${profile.email}`}
+            className="rounded-[var(--btn-radius)] border px-6 py-3 text-sm font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-elevated)] active:scale-[0.98]"
+            style={{ borderColor: "var(--border-strong)" }}
+          >
+            {contactCta.emailLabel}
+          </a>
+        </div>
+
+        <p className="mt-4 flex items-center justify-center gap-2 text-sm text-[var(--text-muted)]">
+          {profile.email}
+          <button
+            type="button"
+            onClick={copyEmail}
+            aria-label={copied ? "Email copied" : "Copy email address"}
+            className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs text-[var(--accent)] hover:bg-[var(--bg-elevated)]"
+          >
+            {copied ? <TbCheck className="h-3.5 w-3.5" aria-hidden="true" /> : <TbCopy className="h-3.5 w-3.5" aria-hidden="true" />}
+            <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
+          </button>
+        </p>
+
+        <div className="mt-12 grid gap-6 text-left sm:grid-cols-3">
+          {contactCta.columns.map((col) => (
+            <div key={col.label}>
+              <p className="font-[var(--font-mono)] text-[11px] uppercase tracking-[0.14em] text-[var(--accent)]">
+                {col.label}
+              </p>
+              <p className="mt-2 text-left text-sm leading-relaxed text-[var(--text-secondary)]">{col.text}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-3 text-sm text-[var(--text-muted)]">
+          <span>{contactCta.elsewhereLabel}</span>
+          {ELSEWHERE.map(({ label, href, icon: Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[var(--text-primary)] transition hover:border-[var(--accent)]"
+              style={{ borderColor: "var(--border)" }}
+            >
+              <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+              {label}
+              <span aria-hidden="true" className="text-[var(--text-muted)]">↗</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {embeddable && (
+        <SchedulingDialog url={consulting.ctaUrl} open={schedulingOpen} onClose={() => setSchedulingOpen(false)} />
+      )}
+    </Band>
+  );
+}
+
+export default function Contact() {
+  const { theme } = useTheme();
+  return theme === "b" ? <SignalContact /> : <DefaultContact />;
 }

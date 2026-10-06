@@ -1,27 +1,19 @@
 "use client";
 
 import { education } from "@/lib/content";
-import { useTheme } from "@/lib/theme-context";
 import BulletList from "./BulletList";
+import Band from "@/components/Band";
+import SectionHeading from "@/components/SectionHeading";
 
 export default function Education() {
-  const { theme } = useTheme();
-  const isSignal = theme === "b";
-
   return (
-    <section
-      id="education"
-      className="mx-auto max-w-5xl px-6 py-14"
-      style={{ borderTop: "1px solid var(--border)" }}
-    >
-      {isSignal && (
-        <p className="mb-2 font-[var(--font-mono)] text-xs tracking-wide text-[var(--accent)]">
-          education
-        </p>
-      )}
-      <h2 className="font-[var(--font-display)] text-xl font-semibold text-[var(--text-primary)]">
-        {isSignal ? "cat ./education.md" : "Education"}
-      </h2>
+    <Band id="education" tone="cream">
+      <SectionHeading
+        label="Education"
+        title={"Where it started."}
+        signalLabel="education"
+        signalTitle="cat ./education.md"
+      />
       <div className="mt-8 space-y-4">
         {education.map((item) => (
           <div
@@ -50,6 +42,6 @@ export default function Education() {
           </div>
         ))}
       </div>
-    </section>
+    </Band>
   );
 }
