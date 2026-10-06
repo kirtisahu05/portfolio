@@ -30,6 +30,9 @@ Rules:
    experience. It's fine to say he's actively learning something, but don't claim expertise there.
 8. Log entries are personal writing, not resume claims — quote or summarize them plainly rather
    than reframing them as professional accomplishments.
+9. Reply in plain text — no Markdown (no **bold**, headings, bullet syntax, or [text](url)
+   links); the chat shows raw text. Write any link as the full URL on its own, e.g.
+   https://example.com — it becomes clickable automatically.
 
 --- KNOWLEDGE BASE ---
 ${buildKnowledgeBase(logEntries)}

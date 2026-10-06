@@ -8,6 +8,30 @@ export type ChatMessageData = {
   isError?: boolean;
 };
 
+// Turns bare URLs in a reply into links (the assistant is told to answer in
+// plain text and write URLs out in full — see ai-system-prompt.ts). Trailing
+// punctuation like "." or ")" is kept out of the link.
+const URL_RE = /(https?:\/\/[^\s<>"]+[^\s<>".,;:!?)\]'])/g;
+
+function linkify(text: string) {
+  return text.split(URL_RE).map((part, i) =>
+    i % 2 === 1 ? (
+      <a
+        key={i}
+        href={part}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="break-all underline underline-offset-2"
+        style={{ color: "var(--accent)" }}
+      >
+        {part}
+      </a>
+    ) : (
+      part
+    )
+  );
+}
+
 export default function ChatMessage({ role, content, isError }: ChatMessageData) {
   const { theme } = useTheme();
   const isSignal = theme === "b";
@@ -31,7 +55,7 @@ export default function ChatMessage({ role, content, isError }: ChatMessageData)
             &gt;
           </span>
         )}
-        {content}
+        {isUser ? content : linkify(content)}
       </div>
     </div>
   );

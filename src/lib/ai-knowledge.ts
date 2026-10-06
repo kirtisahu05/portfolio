@@ -9,6 +9,9 @@ import {
   whyHireMe,
   whyHireMeV2,
   whyHireMeV2Intro,
+  consulting,
+  contactCta,
+  workedWith,
 } from "@/lib/content";
 import type { LogEntry } from "@/lib/log-source";
 
@@ -58,8 +61,40 @@ export function buildKnowledgeBase(logEntries: LogEntry[] = []): string {
       `Role: ${profile.role}`,
       `Location: ${profile.location}`,
       `Email: ${profile.email}`,
+      `Tagline: ${profile.tagline}`,
+      `AI focus: ${profile.aiTagline}`,
       `Bio: ${profile.bio}`,
+      "Quick facts:",
+      ...profile.quickFacts.map((fact) => `- ${fact}`),
+      "Core strengths:",
+      ...profile.coreStrengths.map((strength) => `- ${strength.title}: ${strength.items}`),
     ].join("\n")
+  );
+
+  // Everything the site says about availability, in one place, so questions
+  // like "is he open to new roles?" or "can I book a call?" get answered from
+  // the same statements visitors see (hero badge, Contact section, booking).
+  sections.push(
+    [
+      "# Availability, work preferences, and how to reach him",
+      `Current status (shown on the site): ${profile.heroBadge}`,
+      `Work preference: ${profile.workPreference}`,
+      `Time zone: ${profile.timezone}`,
+      `Open to: ${contactCta.intro}`,
+      ...contactCta.columns.map((col) => `${col.label}: ${col.text}`),
+      `Consulting: ${consulting.blurb}`,
+      consulting.ctaUrl
+        ? `Booking a call: visitors can book a call through the "${consulting.ctaLabel}" button on the site (Google Calendar booking page: ${consulting.ctaUrl}).`
+        : "",
+      `Email: ${profile.email}`,
+      `Profiles: ${Object.entries(profile.links)
+        .filter(([, url]) => url && !url.includes("leetcode"))
+        .map(([name, url]) => `${name} ${url}`)
+        .join(", ")}`,
+      `Has worked with teams at: ${workedWith.names.join(", ")}`,
+    ]
+      .filter(Boolean)
+      .join("\n")
   );
 
   // whyHireMeV2 is what the site shows now; the older whyHireMe cards are no
