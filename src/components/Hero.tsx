@@ -189,7 +189,7 @@ function Avatar({ name, src }: { name: string; src?: string }) {
       src={src}
       alt={name}
       className="h-20 w-20 shrink-0 rounded-full border object-cover transition-transform duration-300 ease-out hover:rotate-0"
-      style={{ borderColor: "var(--border-strong)", transform: "rotate(-38deg)" }}
+      style={{ borderColor: "var(--border-strong)" }}
     />
   );
 }

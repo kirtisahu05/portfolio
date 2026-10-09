@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, useTransition, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { askAiPromo } from "@/lib/content";
 import Band from "@/components/Band";
+import Terminal from "@/components/Terminal";
 import { SUGGESTED_QUESTIONS } from "@/components/AskAI/SuggestedQuestions";
 
 const MAX_LENGTH = 500; // same cap as the Ask AI page and /api/ask
@@ -14,11 +15,20 @@ const MAX_LENGTH = 500; // same cap as the Ask AI page and /api/ask
 export default function AskAIPromo() {
   const router = useRouter();
   const [value, setValue] = useState("");
+  // The route switch can take a moment (cold compile in dev, fetching the
+  // payload in prod) — isPending drives the Terminal loader so the click
+  // never looks dead.
+  const [isPending, startTransition] = useTransition();
+
+  // Warm the /ask-ai route up front so the hand-off is usually instant.
+  useEffect(() => {
+    router.prefetch("/ask-ai");
+  }, [router]);
 
   function ask(question: string) {
     const q = question.trim().slice(0, MAX_LENGTH);
-    if (!q) return;
-    router.push(`/ask-ai?q=${encodeURIComponent(q)}`);
+    if (!q || isPending) return;
+    startTransition(() => router.push(`/ask-ai?q=${encodeURIComponent(q)}`));
   }
 
   function onSubmit(e: FormEvent) {
@@ -28,6 +38,14 @@ export default function AskAIPromo() {
 
   return (
     <Band id="ask-ai" tone="cream">
+      {isPending && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          style={{ background: "color-mix(in srgb, var(--bg) 85%, transparent)" }}
+        >
+          <Terminal className="text-3xl" style={{ color: "var(--accent)" }} />
+        </div>
+      )}
       <div className="ask-promo relative overflow-hidden rounded-[var(--radius-lg)] border p-8 sm:p-12" style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}>
         <div className="relative grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
           <div>
@@ -59,7 +77,7 @@ export default function AskAIPromo() {
               />
               <button
                 type="submit"
-                disabled={!value.trim()}
+                disabled={!value.trim() || isPending}
                 className="inline-flex shrink-0 items-center rounded-full bg-[var(--text-primary)] py-2.5 pl-5 pr-2.5 text-sm font-medium text-[var(--bg)] transition hover:opacity-90 disabled:opacity-50"
               >
                 {askAiPromo.button}
@@ -73,6 +91,7 @@ export default function AskAIPromo() {
                   key={q}
                   type="button"
                   onClick={() => ask(q)}
+                  disabled={isPending}
                   className="rounded-full border px-3 py-1.5 text-left text-xs text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
                   style={{ borderColor: "var(--border)", background: "var(--bg)" }}
                 >

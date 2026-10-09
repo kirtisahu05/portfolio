@@ -138,16 +138,21 @@ export default function AskPage() {
           </div>
         )}
 
-        <div aria-live="polite" className="mt-6 flex-1 space-y-3">
+        {/* Stays above the conversation too — a question handed over from the
+            homepage starts the chat on arrival, and the explainer shouldn't
+            vanish with the empty state. Kept outside the aria-live region so
+            its auto-advancing steps aren't re-announced during a chat. */}
+        <div className="mt-6">
+          <HowAskAIWorks />
+        </div>
+
+        <div aria-live="polite" className="mt-3 flex-1 space-y-3">
           {messages.length === 0 ? (
-            <div className="space-y-6">
-              <HowAskAIWorks />
-              <div>
-                <p className="mb-3 text-sm text-[var(--text-secondary)]">
-                  Try one of these, or type your own below:
-                </p>
-                <SuggestedQuestions onSelect={sendMessage} />
-              </div>
+            <div className="pt-3">
+              <p className="mb-3 text-sm text-[var(--text-secondary)]">
+                Try one of these, or type your own below:
+              </p>
+              <SuggestedQuestions onSelect={sendMessage} />
             </div>
           ) : (
             <>
