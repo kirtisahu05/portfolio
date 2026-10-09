@@ -328,19 +328,56 @@ export const experience = [
     company: "Peppo Technologies",
     companyProfile:
       "MarTech company helping brands with customer acquisition and retention — products include the headless loyalty infrastructure RewardX, an online ordering system for restaurants and cloud kitchens, and a WhatsApp-delivered e-invoicing solution.",
-    project: "BookMyShow Deals, Peppo PWA, Merchant/DMS/RewardX Consoles, Event Ordering",
+    project:
+      "BookMyShow Deals, Peppo PWA (white-label online ordering), Business Console (Merchant/DMS/RewardX), Event food ordering (Lollapalooza India, Backstreet Boys DNA World Tour)",
     location: "Remote",
     period: "Aug 2020 — May 2023",
-    techStack: ["Next.js", "TypeScript", "JavaScript", "Node.js", "REST APIs", "PWA", "Sentry"],
+    techStack: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "JavaScript",
+      "Node.js",
+      "GraphQL",
+      "Apollo Client",
+      "REST APIs",
+      "Material UI",
+      "Ant Design",
+      "styled-components",
+      "Sass",
+      "Express",
+      "EJS",
+      "PWA",
+      "Razorpay",
+      "Firebase Cloud Messaging",
+      "Google Maps Platform",
+      "Heap",
+      "Facebook Pixel",
+      "Sentry",
+      "Docker",
+      "Jenkins",
+      "GitLab",
+      "Digital Ocean",
+      "AWS ECS / Fargate",
+      "Netlify",
+      "ESLint",
+      "Prettier",
+      "Husky",
+    ],
     bullets: [
-      "Working as a Frontend Lead in the Peppo team, which develops and maintains the frontend for all Peppo products.",
+      "Frontend Lead for Peppo, owning the frontend for all Peppo products, and Project Owner for three of them — the Peppo PWA, the Business Console, and Arrow (the BookMyShow Deals channel) — owning delivery end to end with QA, and reviewing and merging 500+ merge requests across the PWA and the console.",
       "Led the frontend engineering team from the ground up to architect, build, and deploy multiple high-traffic consumer web apps and B2B SaaS portals.",
-      "Mostly worked on implementing UI utilizing Next.js, TypeScript, JavaScript, ES6, and Node.js technologies.",
-      "Engineered the mobile-first Peppo PWA food-ordering application and the Event Ordering reservation flow, ensuring rapid load times, smooth transitions, and reliable transactional steps.",
-      "Developed the consumer-facing BookMyShow (BMS) Deals interface, integrating secure checkouts and seamless payment workflows to handle real-time merchant dynamic discounts.",
-      "Architected the core suite of control panels including the Merchant Console for live order processing, the geographically-mapped DMS Console for partner onboarding, and the modular RewardX Console loyalty engine infrastructure.",
+      "Engineered the mobile-first Peppo PWA food-ordering application — a white-label, multi-brand app where every restaurant brand runs on its own subdomain — ensuring rapid load times, smooth transitions, and reliable transactional steps across menu, cart, saved addresses, Razorpay payments, live order status, and order cancellation, on Next.js with Material UI and styled-components.",
+      "Built location features for ordering: Google Places address autocomplete ranked by distance, map-pin selection that works on Safari, and a GeoIP fallback when the browser denies location access.",
+      "Added background token refresh, Firebase Cloud Messaging push notifications, Heap analytics and Facebook Pixel tracking, and Sentry logging around payment flows.",
+      "Engineered the Event Ordering reservation flow — food-ordering sites for Lollapalooza India 2023 and the Backstreet Boys DNA World Tour (Mumbai and Delhi) that let attendees reserve meals from venue restaurants.",
+      "Developed the consumer-facing BookMyShow (BMS) Deals interface (Arrow) inside the BMS app, integrating secure checkouts and seamless Razorpay payment workflows to handle real-time merchant dynamic discounts — users pick a listed restaurant, pay the bill, and get the discount — with Express and EJS server-rendered screens for paying the bill, payment confirmation and failure, and redemption, made responsive down to 280px-wide screens.",
+      "Architected the core suite of control panels — the Merchant Console for live order processing, the geographically-mapped DMS Console for partner onboarding, and the modular RewardX Console loyalty engine infrastructure.",
+      "Owned the Business Console — a React, TypeScript, GraphQL (Apollo Client), and Ant Design app restaurant owners use to onboard, set up stores, manage catalog and pricing, and accept or reject live orders — and migrated it from react-apollo to Apollo Client.",
+      "Shipped through Docker and Jenkins from GitLab — DigitalOcean for dev and stage, AWS ECS/Fargate for production — with the Business Console deployed on Netlify.",
+      "Introduced ESLint, Prettier, TypeScript linting, and Husky/lint-staged pre-commit hooks to the PWA and the partner (PMS) console.",
       "Collaborated cross-team with product managers, backend developers, and UI/UX designers to translate complex product logic and specifications into clean, interactive user interfaces.",
-      "Participated in implementing features, fixing bugs, peer code reviews, holding responsibility over various product boundaries, documenting implemented features, and supporting merchants and customers in various technical forums.",
+      "Implemented features and UI with Next.js, TypeScript, JavaScript (ES6), and Node.js, fixed bugs, ran peer code reviews, held responsibility over various product boundaries, documented implemented features (including the engineering-handbook page for Arrow), and supported merchants and customers in various technical forums.",
     ],
   },
   {
@@ -380,14 +417,38 @@ export const experience = [
     company: "Shippable India",
     companyProfile:
       "Automates CI/CD and DevOps activities with streamlined workflows across teams and tools — available as an on-premises server product, hosted SaaS, and a hybrid offering called Custom Nodes.",
-    project: "Shippable Platform",
+    project: "Shippable Platform — web app: job dashboards, node pools, subscriptions & billing, admin console",
     location: "Bengaluru",
     period: "Mar 2018 — Mar 2019",
-    techStack: ["AngularJS", "JavaScript", "Node.js", "HTML5", "Bootstrap", "CSS3", "Sass", "Git"],
+    techStack: [
+      "AngularJS",
+      "JavaScript",
+      "Node.js",
+      "Express",
+      "HTML5",
+      "Bootstrap",
+      "CSS3",
+      "Sass",
+      "Socket.IO (WebSockets)",
+      "Moment.js",
+      "Grunt",
+      "JSHint",
+      "Docker",
+      "Git",
+      "GitHub",
+    ],
     bullets: [
       "Involved in building parts of a highly scalable CI/CD platform with 100,000+ Docker containers spun up every month in production.",
-      "Technologies used — JavaScript (AngularJS + Node.js), HTML5, Bootstrap, CSS3, Sass, and Git.",
-      "Participated in implementing features, fixing bugs, peer code reviews, holding responsibility over various product boundaries, documenting implemented features, and supporting customers in various forums.",
+      "Built features across Shippable's main web app — the AngularJS single-page app, served by a Node.js/Express server, that customers use to run and manage their CI/CD — with 320+ commits in a year across job dashboards, node pools, subscriptions and billing, admin tooling, and search.",
+      "Extended the jobs grid view, the live dashboard of CI jobs: a running console timer, per-job environment variables, smarter wrapping of long job names, Ctrl/⌘/Shift-click to open jobs in new tabs, global next/previous search across the single-pane-of-glass (SPOG) view, and custom filters for the jobs, resources, and deletions tables.",
+      "Built a reusable search-bar directive and rolled it out across the subscription, admin, and grid-view pages, replacing several one-off search bars.",
+      "Built node-pool management: add and edit node pools with runtime versions sorted by semantic version, a Workload column linking each node to the job it's running, Re-Initialize for bring-your-own (BYON) nodes, on-demand node status, and live updates over WebSockets in place of a manual refresh button.",
+      "Reworked the subscription pages: a new searchable subscription page with filter criteria, expandable license lists, parallel-job and private-job counts (shown as Unlimited above 5,000), billing-invoice downloads, and a consistent contact form on the billing page.",
+      "Built guided form sections in the dry-run config builder for creating gitRepo resources, deploy jobs, and cluster resources.",
+      "Improved admin tooling — job-status monitoring and run-duration fixes, shared node-pool forms with validation, business analytics, and the accounts admin page — and aggregated job insights (jobs run and queued, durations) for the project dashboard.",
+      "Added a release-notes changelog page, edit and delete actions for assembly lines, and Gerrit support in project and job views, including names that contain “/”.",
+      "Cleaned up JSHint errors across the app's controllers (admin, dashboards, jobs, projects, search, billing), upgraded core server packages (Express, Request, Moment, Grunt), and removed legacy SaaS-login assets.",
+      "Held responsibility over various product boundaries — fixing bugs, documenting implemented features, and supporting customers in various forums — and ran peer code reviews, merging teammates' pull requests; every merge shipped through Shippable's own Assembly Lines, which built the app's Docker image and deployed it to the release-candidate environment.",
     ],
   },
   {
@@ -413,6 +474,55 @@ export const experience = [
 // Referenced inline by Experience.tsx, directly under the CoffeeWeb entry —
 // kept as its own export rather than a field on `experience` since it's a
 // one-off structured block, not a shape every entry shares.
+// ARCHIVED — the previous Peppo entry, replaced on 2026-10-09 by the rewrite
+// in `experience` above (built from the Peppo codebases and engineering
+// handbook; every point of this one was carried over, checked phrase by
+// phrase). Not rendered anywhere and not used by Ask AI. Kept for reference
+// until the new entry is verified — then it can be deleted.
+export const peppoExperienceArchived: (typeof experience)[number] = {
+  id: "peppo-archived",
+  role: "Lead Frontend Engineer",
+  company: "Peppo Technologies",
+  companyProfile:
+    "MarTech company helping brands with customer acquisition and retention — products include the headless loyalty infrastructure RewardX, an online ordering system for restaurants and cloud kitchens, and a WhatsApp-delivered e-invoicing solution.",
+  project: "BookMyShow Deals, Peppo PWA, Merchant/DMS/RewardX Consoles, Event Ordering",
+  location: "Remote",
+  period: "Aug 2020 — May 2023",
+  techStack: ["Next.js", "TypeScript", "JavaScript", "Node.js", "REST APIs", "PWA", "Sentry"],
+  bullets: [
+    "Working as a Frontend Lead in the Peppo team, which develops and maintains the frontend for all Peppo products.",
+    "Led the frontend engineering team from the ground up to architect, build, and deploy multiple high-traffic consumer web apps and B2B SaaS portals.",
+    "Mostly worked on implementing UI utilizing Next.js, TypeScript, JavaScript, ES6, and Node.js technologies.",
+    "Engineered the mobile-first Peppo PWA food-ordering application and the Event Ordering reservation flow, ensuring rapid load times, smooth transitions, and reliable transactional steps.",
+    "Developed the consumer-facing BookMyShow (BMS) Deals interface, integrating secure checkouts and seamless payment workflows to handle real-time merchant dynamic discounts.",
+    "Architected the core suite of control panels including the Merchant Console for live order processing, the geographically-mapped DMS Console for partner onboarding, and the modular RewardX Console loyalty engine infrastructure.",
+    "Collaborated cross-team with product managers, backend developers, and UI/UX designers to translate complex product logic and specifications into clean, interactive user interfaces.",
+    "Participated in implementing features, fixing bugs, peer code reviews, holding responsibility over various product boundaries, documenting implemented features, and supporting merchants and customers in various technical forums.",
+  ],
+};
+
+// ARCHIVED — the previous Shippable entry, replaced on 2026-10-09 by the
+// rewrite in `experience` above (built from the Shippable web app codebase and
+// its commit history; every point of this one was carried over). Not rendered
+// anywhere and not used by Ask AI. Kept for reference until the new entry is
+// verified — then it can be deleted.
+export const shippableExperienceArchived: (typeof experience)[number] = {
+  id: "shippable-archived",
+  role: "Software Development Engineer",
+  company: "Shippable India",
+  companyProfile:
+    "Automates CI/CD and DevOps activities with streamlined workflows across teams and tools — available as an on-premises server product, hosted SaaS, and a hybrid offering called Custom Nodes.",
+  project: "Shippable Platform",
+  location: "Bengaluru",
+  period: "Mar 2018 — Mar 2019",
+  techStack: ["AngularJS", "JavaScript", "Node.js", "HTML5", "Bootstrap", "CSS3", "Sass", "Git"],
+  bullets: [
+    "Involved in building parts of a highly scalable CI/CD platform with 100,000+ Docker containers spun up every month in production.",
+    "Technologies used — JavaScript (AngularJS + Node.js), HTML5, Bootstrap, CSS3, Sass, and Git.",
+    "Participated in implementing features, fixing bugs, peer code reviews, holding responsibility over various product boundaries, documenting implemented features, and supporting customers in various forums.",
+  ],
+};
+
 export const coffeeWebCaseStudy = {
   title: "Re-architecting CoffeeWeb",
   before: [
@@ -472,69 +582,80 @@ export const education = [
   },
 ];
 
+// Within each group: current core stack first, then supporting tools, so the
+// first items in a tile are the ones that matter most.
+//
+// Dropped from Skills on 2026-10-09 as dated (still listed in the experience
+// entries where they were used, except Vagrant): Bootstrap, Velocity,
+// Moment.js, EJS, Grunt, JSHint, Vagrant. (AngularJS was dropped too, then
+// restored next to the other frameworks.)
 export const skills = {
-  languages: [
-    "JavaScript (ES6)",
-    "TypeScript",
-    "Java",
-    "Python",
-    "Velocity",
-    "HTML5",
-    "C++",
-    "C#",
-    "Swift",
-    "Dart",
-  ],
+  languages: ["TypeScript", "JavaScript (ES6)", "HTML5", "CSS3", "Java", "Python", "C++", "C#", "Swift", "Dart"],
   frontend: [
     "React (Redux)",
     "Next.js",
-    "Redux Saga",
-    "Zustand",
-    "TanStack Query",
-    "Micro-frontends (Module Federation)",
     "Vue.js (Vuex, Pinia)",
+    "Vuetify",
     "AngularJS",
-    "Flutter",
-    "GraphQL",
-    "Bootstrap",
-    "Tailwind CSS",
-    "PrimeReact",
+    "TanStack Query",
+    "Zustand",
+    "Redux Saga",
+    "Micro-frontends (Module Federation)",
     "Material UI",
     "Ant Design",
-    "Vuetify",
+    "PrimeReact",
+    "Tailwind CSS",
+    "styled-components",
     "Sass / Less",
+    "GraphQL",
+    "Apollo Client",
+    "Flutter",
+    "PWA (Workbox)",
     "i18next",
+    "D3.js",
   ],
+  // Core server, data, and auth first; third-party integrations last.
   backend: [
     "Node.js / Express",
-    "Spring",
     "REST APIs",
-    "WebSocket / Realtime APIs",
-    "OAuth 2.0",
-    "Prisma",
-    "MongoDB",
+    "WebSockets / Realtime APIs (Socket.IO)",
     "PostgreSQL",
-    "MySQL",
+    "Prisma",
     "Supabase",
-    "Firebase / Firestore",
+    "Firebase (Auth, Firestore, Cloud Messaging)",
     "Redis",
-    "Keycloak",
-    "JWT",
-    "RBAC",
+    "MongoDB",
+    "MySQL",
     "MinIO",
+    "OAuth 2.0",
+    "JWT",
+    "Keycloak",
+    "RBAC",
+    "Spring",
+    "Razorpay",
+    "Stripe",
+    "PayPal",
+    "Google Maps Platform",
   ],
+  // Build/deploy and hosting, then source control, then monitoring, then code quality.
   devops: [
     "Docker",
-    "Jenkins",
-    "Azure DevOps Pipelines",
     "AWS",
+    "Azure DevOps Pipelines",
+    "Jenkins",
     "Digital Ocean",
+    "Netlify",
     "Git",
+    "GitHub",
     "GitLab",
     "Bitbucket",
-    "Vagrant",
     "Artifactory",
     "Sentry",
+    "Splunk",
+    "CloudWatch",
+    "ESLint",
+    "Prettier",
+    "Husky",
   ],
   // AI/LLM stack — keep this in sync with what you've actually used as you build out RAG/agent projects.
   ai: [
@@ -547,16 +668,39 @@ export const skills = {
   // AI tools used day to day for writing code (not LLM features I've built) —
   // shown as a sub-list inside the AI & LLM tile.
   aiCoding: ["Claude", "GitHub Copilot", "Cursor", "MCP integrations"],
-  remote: ["Remote Collaboration", "Async Communication", "Distributed Teams", "Cross-Timezone Coordination"],
+  // Leadership and Remote & Async tiles (added 2026-10-09 — undo by deleting `leadership`
+  // and restoring the previous remote list:
+  // ["Remote Collaboration", "Async Communication", "Distributed Teams", "Cross-Timezone Coordination"]).
+  // Every item is backed by the experience entries, profile, or Why-me copy.
+  leadership: [
+    "Team Leadership",
+    "Hiring & Interviewing",
+    "Mentoring",
+    "Performance Reviews",
+    "Sprint Planning",
+    "OKRs",
+    "Technical Direction",
+    "Engineering Standards",
+    "Code Reviews",
+    "Project Ownership & Delivery",
+    "Stakeholder Communication",
+    "Technical Documentation",
+  ],
+  remote: [
+    "Fully Remote since 2020",
+    "Leading Distributed Teams",
+    "Async Communication",
+    "Cross-Timezone Collaboration (IST ↔ US/EU)",
+  ],
+  // Testing, then analytics, then project management.
   tooling: [
     "Jest",
     "React Testing Library",
     "Cypress",
-    "PWA (Workbox)",
     "Postman",
-    "Splunk",
-    "CloudWatch",
     "Google Tag Manager",
+    "Heap",
+    "Facebook Pixel",
     "Jira",
     "Asana",
     "ClickUp",

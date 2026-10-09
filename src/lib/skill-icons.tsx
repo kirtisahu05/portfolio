@@ -70,6 +70,17 @@ import {
   SiTanstack,
   SiWebpack,
   SiModelcontextprotocol,
+  SiApollographql,
+  SiStyledcomponents,
+  SiExpress,
+  SiEjs,
+  SiGooglemaps,
+  SiFacebook,
+  SiNetlify,
+  SiEslint,
+  SiPrettier,
+  SiGrunt,
+  SiGithub,
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa6";
 import {
@@ -77,6 +88,20 @@ import {
   TbBolt,
   TbBooks,
   TbBraces,
+  TbCalendarEvent,
+  TbClipboardCheck,
+  TbCompass,
+  TbFileText,
+  TbGitPullRequest,
+  TbMessages,
+  TbRocket,
+  TbRuler2,
+  TbSchool,
+  TbTarget,
+  TbUserPlus,
+  TbChartDots,
+  TbChecks,
+  TbClock,
   TbBrandAws,
   TbBrandAzure,
   TbBrandCSharp,
@@ -95,6 +120,19 @@ import {
   TbWorldLatitude,
 } from "react-icons/tb";
 
+// Tabler's C# icon is just the "C#" characters, so beside the "C#" label it
+// read as "C# C#". Drawn knocked out of a solid badge instead, so it reads as
+// a logo (like the solid C++ hexagon next to it). Takes the same className
+// (size) as the other icons; the badge uses the chip's text color.
+const CSharpBadge: IconType = ({ className }) => (
+  <span
+    className={`inline-flex items-center justify-center rounded-[3px] bg-current ${className ?? ""}`}
+    aria-hidden="true"
+  >
+    <TbBrandCSharp style={{ width: "85%", height: "85%", color: "var(--bg-elevated)", strokeWidth: 2.5 }} />
+  </span>
+);
+
 // Exact-string map from the skill labels in content.ts to a brand icon.
 // Compound labels ("Node.js / Express") map to their primary technology.
 // A few well-known brands (AWS, Azure, OpenAI, C#) aren't in Simple Icons —
@@ -110,11 +148,11 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   Java: FaJava,
   Velocity: SiVelocity,
   "C++": SiCplusplus,
-  "C#": TbBrandCSharp,
+  "C#": CSharpBadge,
   Swift: SiSwift,
   Dart: SiDart,
 
-  "React (Redux, Hooks)": SiReact,
+  "React (Redux)": SiReact,
   "Next.js": SiNextdotjs,
   "Vue.js (Vuex, Pinia)": SiVuedotjs,
   "Redux Saga": SiReduxsaga,
@@ -140,10 +178,12 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   MySQL: SiMysql,
   Supabase: SiSupabase,
   "Firebase / Firestore": SiFirebase,
+  "Firebase (Auth, Firestore, Cloud Messaging)": SiFirebase,
   Redis: SiRedis,
   Keycloak: SiKeycloak,
   "REST APIs": TbApi,
   "WebSocket / Realtime APIs": TbPlugConnected,
+  "WebSockets / Realtime APIs (Socket.IO)": TbPlugConnected,
   "OAuth 2.0": TbKey,
   RBAC: TbUserShield,
   JWT: SiJsonwebtokens,
@@ -189,6 +229,23 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   "Async Communication": TbClockHour4,
   "Distributed Teams": TbUsersGroup,
   "Cross-Timezone Coordination": TbWorldLatitude,
+  "Fully Remote since 2020": TbWorld,
+  "Leading Distributed Teams": TbUsersGroup,
+  "Cross-Timezone Collaboration (IST ↔ US/EU)": TbWorldLatitude,
+
+  // Leadership
+  "Team Leadership": TbUsersGroup,
+  "Hiring & Interviewing": TbUserPlus,
+  Mentoring: TbSchool,
+  "Performance Reviews": TbClipboardCheck,
+  "Sprint Planning": TbCalendarEvent,
+  OKRs: TbTarget,
+  "Technical Direction": TbCompass,
+  "Engineering Standards": TbRuler2,
+  "Code Reviews": TbGitPullRequest,
+  "Project Ownership & Delivery": TbRocket,
+  "Stakeholder Communication": TbMessages,
+  "Technical Documentation": TbFileText,
 
   // Plain-name aliases — used by experience[].techStack, which names
   // per-role tech as it's actually written in that role's bullets, rather
@@ -218,6 +275,27 @@ const SKILL_ICON_MAP: Record<string, IconType> = {
   "Row Level Security": SiPostgresql,
   "Server Actions": SiNextdotjs,
   "Angular-to-React Migration": SiReact,
+
+  // Peppo experience (draft entry)
+  "Apollo Client": SiApollographql,
+  "styled-components": SiStyledcomponents,
+  Express: SiExpress,
+  EJS: SiEjs,
+  "Firebase Cloud Messaging": SiFirebase,
+  "Google Maps Platform": SiGooglemaps,
+  Heap: TbChartDots, // no Heap logo in the icon sets
+  "Facebook Pixel": SiFacebook,
+  "AWS ECS / Fargate": TbBrandAws,
+  Netlify: SiNetlify,
+  ESLint: SiEslint,
+  Prettier: SiPrettier,
+  Husky: SiGit, // Git hooks — no Husky logo in the icon sets
+
+  // Shippable experience (draft entry)
+  "Moment.js": TbClock, // no Moment.js logo in the icon sets
+  Grunt: SiGrunt,
+  JSHint: TbChecks, // no JSHint logo in the icon sets
+  GitHub: SiGithub,
   "react-admin": TbLayoutDashboard,
   "Context Stuffing": TbBooks,
   "Streaming (SSE)": TbBolt,

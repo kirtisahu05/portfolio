@@ -14,6 +14,61 @@ type Message = { role: "user" | "assistant"; content: string; isError?: boolean 
 
 const MAX_HISTORY_TURNS = 6;
 
+// The conversation survives a refresh: saved to this browser's localStorage
+// after each finished answer, restored on load. Per-visitor convenience only —
+// it never leaves the browser. Expires after a week, capped in size, and
+// "New conversation" clears it (shared computers).
+const STORAGE_KEY = "ask-ai-conversation";
+const STORAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+const MAX_STORED_MESSAGES = 40;
+
+function isMessage(m: unknown): m is Message {
+  const v = m as Message;
+  return (
+    !!v &&
+    (v.role === "user" || v.role === "assistant") &&
+    typeof v.content === "string" &&
+    (v.isError === undefined || typeof v.isError === "boolean")
+  );
+}
+
+function loadConversation(): Message[] {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    const data = JSON.parse(raw);
+    if (data?.v !== 1 || typeof data.savedAt !== "number" || Date.now() - data.savedAt > STORAGE_TTL_MS) {
+      window.localStorage.removeItem(STORAGE_KEY);
+      return [];
+    }
+    const messages = Array.isArray(data.messages) ? data.messages.filter(isMessage) : [];
+    // An answer cut off mid-stream (tab closed) leaves an empty reply — drop it.
+    while (messages.length && messages[messages.length - 1].role === "assistant" && !messages[messages.length - 1].content) {
+      messages.pop();
+    }
+    return messages;
+  } catch {
+    return []; // storage blocked or corrupt — start fresh
+  }
+}
+
+function saveConversation(messages: Message[]) {
+  try {
+    const payload = { v: 1, savedAt: Date.now(), messages: messages.slice(-MAX_STORED_MESSAGES) };
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  } catch {
+    // Storage blocked or full — the chat still works, it just won't survive a refresh.
+  }
+}
+
+function clearConversation() {
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // Storage blocked — nothing to clear.
+  }
+}
+
 function updateLastMessage(prev: Message[], next: Partial<Message>): Message[] {
   const updated = [...prev];
   updated[updated.length - 1] = { ...updated[updated.length - 1], ...next };
@@ -28,18 +83,35 @@ export default function AskPage() {
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [awaitingFirstToken, setAwaitingFirstToken] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  // Latest messages for sendMessage — the mount effect sends a handed-off
+  // question right after restoring, before a re-render could refresh the closure.
+  const messagesRef = useRef<Message[]>([]);
+  // A restored conversation shouldn't yank the page down to the bottom on load.
+  const skipNextScrollRef = useRef(false);
 
   useEffect(() => {
+    messagesRef.current = messages;
+    if (skipNextScrollRef.current) {
+      skipNextScrollRef.current = false;
+      return;
+    }
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Save once an answer has finished streaming (never a half-written reply).
+  // An empty list isn't saved here — "New conversation" clears storage itself.
+  useEffect(() => {
+    if (!isStreaming && messages.length > 0) saveConversation(messages);
+  }, [messages, isStreaming]);
 
   const inputDisabled = isStreaming || isRateLimited;
 
   async function sendMessage(text: string) {
     // Drop failed exchanges — the error bubble and the question it answered —
     // so client-side error text never reaches the model as if it had said it.
-    const history = messages
-      .filter((m, i) => !m.isError && !messages[i + 1]?.isError)
+    const current = messagesRef.current;
+    const history = current
+      .filter((m, i) => !m.isError && !current[i + 1]?.isError)
       .map(({ role, content }) => ({ role, content }))
       .slice(-MAX_HISTORY_TURNS);
     setMessages((prev) => [...prev, { role: "user", content: text }, { role: "assistant", content: "" }]);
@@ -98,21 +170,28 @@ export default function AskPage() {
     }
   }
 
-  // A question handed over from the homepage Ask AI card arrives as ?q=…
-  // Send it once, then drop it from the URL so a refresh doesn't re-ask.
+  // On load: restore the saved conversation, then — if a question was handed
+  // over from the homepage Ask AI card as ?q=… — continue it with that
+  // question. The ?q is dropped from the URL so a refresh doesn't re-ask.
   // Read from window.location rather than useSearchParams, which would force
   // this statically rendered page into a Suspense boundary.
   const handedOffRef = useRef(false);
   useEffect(() => {
     if (handedOffRef.current) return;
     handedOffRef.current = true; // guards React's dev double-invoke too
+    const restored = loadConversation();
+    if (restored.length > 0) {
+      messagesRef.current = restored;
+      skipNextScrollRef.current = true;
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time restore from localStorage on mount is intentional
+      setMessages(restored);
+    }
     const q = new URLSearchParams(window.location.search).get("q")?.trim();
     if (!q) return;
     window.history.replaceState(null, "", window.location.pathname);
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time sync from the URL on mount is intentional
+    skipNextScrollRef.current = false; // a new question should scroll into view
     void sendMessage(q.slice(0, 500));
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- run once on mount
-  }, []);
+  }, []); // run once on mount
 
   return (
     <>
@@ -169,6 +248,20 @@ export default function AskPage() {
         </div>
 
         <div className="mt-4 border-t pt-4" style={{ borderColor: "var(--border)" }}>
+          {messages.length > 0 && !isStreaming && (
+            <div className="mb-3 flex justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  clearConversation();
+                  setMessages([]);
+                }}
+                className="font-[var(--font-mono)] text-[11px] text-[var(--text-muted)] transition hover:text-[var(--text-primary)]"
+              >
+                {isSignal ? "$ clear" : "New conversation"}
+              </button>
+            </div>
+          )}
           <ChatInput onSend={sendMessage} disabled={inputDisabled} />
           {isRateLimited && (
             <p className="mt-2 text-xs text-[var(--text-muted)]">

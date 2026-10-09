@@ -157,8 +157,9 @@ export function buildKnowledgeBase(logEntries: LogEntry[] = []): string {
       `DevOps & Tools: ${skills.devops.join(", ")}`,
       `AI & LLM: ${skills.ai.join(", ")}`,
       `AI coding tools (used day to day for writing code): ${skills.aiCoding.join(", ")}`,
+      `Leadership: ${skills.leadership.join(", ")}`,
       `Remote & Async: ${skills.remote.join(", ")}`,
-      `Testing & PM: ${skills.tooling.join(", ")}`,
+      `Testing, Analytics & PM: ${skills.tooling.join(", ")}`,
     ].join("\n")
   );
 

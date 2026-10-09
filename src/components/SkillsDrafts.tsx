@@ -1,36 +1,58 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { skills } from "@/lib/content";
 import { getSkillIcon } from "@/lib/skill-icons";
 import { skillGroups } from "@/components/Skills";
 import Band from "@/components/Band";
 
-// DRAFT — three alternative layouts for the Skills section, rendered under the
-// live one so they can be compared on screen. Development only (see page.tsx);
-// production never renders this. Delete or promote one once a layout is picked.
+// DRAFT — alternative grid layouts for the Skills section's 8 tiles, rendered
+// under the live one so they can be compared on screen. Development only (see
+// page.tsx); production never renders this. Same tiles and content as the live
+// section — only the arrangement changes.
 
-type GroupKey = keyof typeof skills;
-const group = (key: GroupKey) => skillGroups.find((g) => g.key === key)!;
+type GroupKey = (typeof skillGroups)[number]["key"];
 
-function Chips({ k, size = "sm" }: { k: GroupKey; size?: "sm" | "md" }) {
+function Chips({ items }: { items: string[] }) {
   return (
     <div className="flex flex-wrap gap-1.5">
-      {skills[k].map((skill) => {
+      {items.map((skill) => {
         const Icon = getSkillIcon(skill);
         return (
           <span
             key={skill}
-            className={`inline-flex items-center gap-1.5 rounded font-[var(--font-mono)] text-[var(--text-secondary)] ${
-              size === "md" ? "px-2.5 py-1.5 text-[12px]" : "px-2 py-1 text-[11px]"
-            }`}
+            className="inline-flex items-center gap-1.5 rounded px-2 py-1 font-[var(--font-mono)] text-[11px] text-[var(--text-secondary)]"
             style={{ border: "1px solid var(--border)" }}
           >
-            <Icon className={`${size === "md" ? "h-3.5 w-3.5" : "h-3 w-3"} shrink-0`} aria-hidden="true" />
+            <Icon className="h-3 w-3 shrink-0" aria-hidden="true" />
             {skill}
           </span>
         );
       })}
+    </div>
+  );
+}
+
+// One tile, as in the live section: AI & LLM is the dark highlight tile and
+// carries its "AI coding tools" sub-list.
+function Tile({ k, className = "" }: { k: GroupKey; className?: string }) {
+  const g = skillGroups.find((x) => x.key === k)!;
+  const dark = k === "ai";
+  return (
+    <div
+      className={`rounded-lg border p-5 ${dark ? "card-dark" : ""} ${className}`}
+      style={{ borderColor: "var(--border)", background: dark ? undefined : "var(--bg-elevated)" }}
+    >
+      <h4 className="mb-3 font-[var(--font-display)] text-sm font-semibold text-[var(--text-primary)]">{g.label}</h4>
+      <Chips items={skills[k]} />
+      {k === "ai" && (
+        <>
+          <p className="mb-2 mt-4 font-[var(--font-mono)] text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
+            AI coding tools
+          </p>
+          <Chips items={skills.aiCoding} />
+        </>
+      )}
     </div>
   );
 }
@@ -50,114 +72,90 @@ function DraftFrame({ letter, title, note, children }: { letter: string; title: 
   );
 }
 
-// A — Bento: tile size follows how much is in each group, AI gets the dark
-// highlight tile, and the 7 groups fill a 4×4 grid with no orphan card.
-function BentoDraft() {
-  const tiles: { k: GroupKey; span: string; dark?: boolean }[] = [
-    { k: "frontend", span: "lg:col-span-2 lg:row-span-2" },
-    { k: "ai", span: "lg:col-span-2", dark: true },
-    { k: "languages", span: "lg:col-span-1" },
-    { k: "remote", span: "lg:col-span-1" },
-    { k: "backend", span: "lg:col-span-2 lg:row-span-2" },
-    { k: "devops", span: "lg:col-span-2" },
-    { k: "tooling", span: "lg:col-span-2" },
-  ];
+const ZoneLabel = ({ children }: { children: ReactNode }) => (
+  <p className="mb-3 font-[var(--font-mono)] text-[11px] uppercase tracking-[0.14em] text-[var(--text-muted)]">{children}</p>
+);
+
+// A — Masonry: three columns, each tile its natural height, packed top-down so
+// there are no gaps under short tiles.
+function MasonryDraft() {
+  const order: GroupKey[] = ["frontend", "ai", "leadership", "backend", "languages", "remote", "devops", "tooling"];
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {tiles.map(({ k, span, dark }) => (
-        <div
-          key={k}
-          className={`rounded-lg border p-5 ${span} ${dark ? "card-dark" : ""}`}
-          style={{ borderColor: "var(--border)", background: dark ? undefined : "var(--bg-elevated)" }}
-        >
-          <div className="mb-3 flex items-baseline justify-between gap-2">
-            <h4 className="font-[var(--font-display)] text-sm font-semibold text-[var(--text-primary)]">{group(k).label}</h4>
-            <span className="font-[var(--font-mono)] text-[11px] text-[var(--text-muted)]">{skills[k].length}</span>
-          </div>
-          <Chips k={k} />
+    <div className="gap-4 sm:columns-2 lg:columns-3">
+      {order.map((k) => (
+        <div key={k} className="mb-4 break-inside-avoid">
+          <Tile k={k} />
         </div>
       ))}
     </div>
   );
 }
 
-// B — Tabs: one category at a time with larger chips. Short and scannable;
-// the counts still show the breadth at a glance.
-function TabsDraft() {
-  const [active, setActive] = useState<GroupKey>("frontend");
+// B — Two zones: the tech stack in a grid on the left, "how I work" (AI coding,
+// leadership, remote) in a column on the right. Separates what you build with
+// from how you lead.
+function TwoZonesDraft() {
   return (
-    <div className="grid gap-4 md:grid-cols-[220px_1fr]">
-      <div role="tablist" aria-label="Skill categories" className="flex flex-wrap gap-1.5 md:flex-col">
-        {skillGroups.map((g) => {
-          const isActive = g.key === active;
-          return (
-            <button
-              key={g.key}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              onClick={() => setActive(g.key)}
-              className="flex items-center justify-between gap-3 rounded-md border px-3 py-2 text-left text-sm transition"
-              style={{
-                borderColor: isActive ? "var(--accent)" : "var(--border)",
-                background: isActive ? "var(--accent)" : "transparent",
-                color: isActive ? "var(--accent-contrast)" : "var(--text-secondary)",
-              }}
-            >
-              {g.label}
-              <span className="font-[var(--font-mono)] text-[11px] opacity-70">{skills[g.key].length}</span>
-            </button>
-          );
-        })}
+    <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
+      <div>
+        <ZoneLabel>Tech stack</ZoneLabel>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Tile k="frontend" />
+          <Tile k="backend" />
+          <Tile k="languages" />
+          <Tile k="devops" />
+          <Tile k="tooling" className="sm:col-span-2" />
+        </div>
       </div>
-      <div role="tabpanel" className="rounded-lg border p-5" style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}>
-        <h4 className="mb-4 font-[var(--font-display)] text-lg font-semibold text-[var(--text-primary)]">{group(active).label}</h4>
-        <Chips k={active} size="md" />
+      <div>
+        <ZoneLabel>How I work</ZoneLabel>
+        <div className="space-y-4">
+          <Tile k="ai" />
+          <Tile k="leadership" />
+          <Tile k="remote" />
+        </div>
       </div>
     </div>
   );
 }
 
-// C — Stack layers: skills drawn as the layers of a system, top (AI) to
-// foundation (languages), with how-I-work groups as a side rail. Reads like
-// an architecture diagram, which fits a frontend architect.
-function StackDraft() {
-  const layers: { k: GroupKey; layer: string }[] = [
-    { k: "ai", layer: "L4 · intelligence" },
-    { k: "frontend", layer: "L3 · interface" },
-    { k: "backend", layer: "L2 · services & data" },
-    { k: "devops", layer: "L1 · delivery & infra" },
-    { k: "languages", layer: "L0 · foundation" },
-  ];
-  const rails: GroupKey[] = ["tooling", "remote"];
+// C — Six-column bento: tile widths follow item counts on a finer grid —
+// Frontend and Backend share the top row, AI & LLM sits beside a wide
+// Leadership tile, then three equal tiles, and Remote & Async as a slim strip.
+function SixColDraft() {
   return (
-    <div className="grid gap-4 lg:grid-cols-[1fr_260px]">
-      <div className="overflow-hidden rounded-lg border" style={{ borderColor: "var(--border)" }}>
-        {layers.map(({ k, layer }, i) => (
-          <div
-            key={k}
-            className={`grid gap-3 p-4 sm:grid-cols-[170px_1fr] ${i === 0 ? "card-dark" : ""}`}
-            style={{
-              borderTop: i === 0 ? undefined : "1px solid var(--border)",
-              background: i === 0 ? undefined : "var(--bg-elevated)",
-            }}
-          >
-            <div>
-              <p className="font-[var(--font-mono)] text-[10px] uppercase tracking-wide text-[var(--text-muted)]">{layer}</p>
-              <h4 className="mt-0.5 font-[var(--font-display)] text-sm font-semibold text-[var(--text-primary)]">{group(k).label}</h4>
-            </div>
-            <Chips k={k} />
-          </div>
-        ))}
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+      <Tile k="frontend" className="sm:col-span-2 lg:col-span-3" />
+      <Tile k="backend" className="sm:col-span-2 lg:col-span-3" />
+      <Tile k="ai" className="lg:col-span-2" />
+      <Tile k="leadership" className="lg:col-span-4" />
+      <Tile k="languages" className="lg:col-span-2" />
+      <Tile k="devops" className="lg:col-span-2" />
+      <Tile k="tooling" className="sm:col-span-2 lg:col-span-2" />
+      <Tile k="remote" className="sm:col-span-2 lg:col-span-6" />
+    </div>
+  );
+}
+
+// D — Leadership first: for lead/architect roles, the people side leads —
+// Leadership and Remote & Async across the top, AI & LLM highlighted, then the
+// tech stack in an even three-column grid.
+function LeadershipFirstDraft() {
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-4 lg:grid-cols-[2fr_1fr]">
+        <Tile k="leadership" />
+        <Tile k="remote" />
       </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-        {rails.map((k) => (
-          <div key={k} className="rounded-lg border border-dashed p-4" style={{ borderColor: "var(--border-strong)" }}>
-            <p className="font-[var(--font-mono)] text-[10px] uppercase tracking-wide text-[var(--text-muted)]">How I work</p>
-            <h4 className="mb-3 mt-0.5 font-[var(--font-display)] text-sm font-semibold text-[var(--text-primary)]">{group(k).label}</h4>
-            <Chips k={k} />
-          </div>
-        ))}
+      <Tile k="ai" />
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Tile k="frontend" />
+        <Tile k="backend" />
+        <div className="space-y-4">
+          <Tile k="languages" />
+          <Tile k="devops" />
+          <Tile k="tooling" />
+        </div>
       </div>
     </div>
   );
@@ -169,14 +167,17 @@ export default function SkillsDrafts() {
       <p className="font-[var(--font-mono)] text-[11px] uppercase tracking-[0.18em] text-[var(--text-muted)]">
         Skills layout drafts · visible in dev only
       </p>
-      <DraftFrame letter="A" title="Bento grid" note="Tile size follows content; AI highlighted; no orphan card.">
-        <BentoDraft />
+      <DraftFrame letter="A" title="Masonry" note="Three columns, natural tile heights, no gaps.">
+        <MasonryDraft />
       </DraftFrame>
-      <DraftFrame letter="B" title="Category tabs" note="One category at a time — shortest section, larger chips.">
-        <TabsDraft />
+      <DraftFrame letter="B" title="Two zones" note="Tech stack on the left, how I work (AI, leadership, remote) on the right.">
+        <TwoZonesDraft />
       </DraftFrame>
-      <DraftFrame letter="C" title="Stack layers" note="Skills as a system diagram, AI on top to languages at the base.">
-        <StackDraft />
+      <DraftFrame letter="C" title="Six-column bento" note="Finer grid so tile widths match their content.">
+        <SixColDraft />
+      </DraftFrame>
+      <DraftFrame letter="D" title="Leadership first" note="People side on top for lead/architect roles, then the stack.">
+        <LeadershipFirstDraft />
       </DraftFrame>
     </Band>
   );

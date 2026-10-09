@@ -121,6 +121,16 @@ function SignalContact() {
   );
 }
 
+// "Not ready to talk yet? Find me on LinkedIn · GitHub · Medium · Topmate" row
+// under the default-theme Contact section. Hidden for now, not deleted — flip
+// to true to bring it back.
+const SHOW_ELSEWHERE = false;
+
+// The plain email address + "Copy" button under the Contact buttons. Hidden for
+// now, not deleted (the "Email me" button still opens a mail draft) — flip to
+// true to bring it back.
+const SHOW_EMAIL_COPY = false;
+
 const ELSEWHERE: { label: string; href: string; icon: IconType }[] = [
   { label: "LinkedIn", href: profile.links.linkedin, icon: FaLinkedin },
   { label: "GitHub", href: profile.links.github, icon: SiGithub },
@@ -189,18 +199,20 @@ function DefaultContact() {
           </a>
         </div>
 
-        <p className="mt-4 flex items-center justify-center gap-2 text-sm text-[var(--text-muted)]">
-          {profile.email}
-          <button
-            type="button"
-            onClick={copyEmail}
-            aria-label={copied ? "Email copied" : "Copy email address"}
-            className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs text-[var(--accent)] hover:bg-[var(--bg-elevated)]"
-          >
-            {copied ? <TbCheck className="h-3.5 w-3.5" aria-hidden="true" /> : <TbCopy className="h-3.5 w-3.5" aria-hidden="true" />}
-            <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
-          </button>
-        </p>
+        {SHOW_EMAIL_COPY && (
+          <p className="mt-4 flex items-center justify-center gap-2 text-sm text-[var(--text-muted)]">
+            {profile.email}
+            <button
+              type="button"
+              onClick={copyEmail}
+              aria-label={copied ? "Email copied" : "Copy email address"}
+              className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs text-[var(--accent)] hover:bg-[var(--bg-elevated)]"
+            >
+              {copied ? <TbCheck className="h-3.5 w-3.5" aria-hidden="true" /> : <TbCopy className="h-3.5 w-3.5" aria-hidden="true" />}
+              <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
+            </button>
+          </p>
+        )}
 
         <div className="mt-14 grid gap-8 border-t pt-10 text-left sm:grid-cols-3" style={{ borderColor: "var(--border)" }}>
           {contactCta.columns.map((col) => (
@@ -213,23 +225,25 @@ function DefaultContact() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-3 text-sm text-[var(--text-muted)]">
-          <span>{contactCta.elsewhereLabel}</span>
-          {ELSEWHERE.map(({ label, href, icon: Icon }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[var(--text-primary)] transition hover:border-[var(--accent)]"
-              style={{ borderColor: "var(--border)" }}
-            >
-              <Icon className="h-3.5 w-3.5" aria-hidden="true" />
-              {label}
-              <span aria-hidden="true" className="text-[var(--text-muted)]">↗</span>
-            </a>
-          ))}
-        </div>
+        {SHOW_ELSEWHERE && (
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-3 text-sm text-[var(--text-muted)]">
+            <span>{contactCta.elsewhereLabel}</span>
+            {ELSEWHERE.map(({ label, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[var(--text-primary)] transition hover:border-[var(--accent)]"
+                style={{ borderColor: "var(--border)" }}
+              >
+                <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                {label}
+                <span aria-hidden="true" className="text-[var(--text-muted)]">↗</span>
+              </a>
+            ))}
+          </div>
+        )}
       </div>
 
       {embeddable && (
